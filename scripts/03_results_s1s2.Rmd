@@ -12,7 +12,7 @@ library(stringr)
 library(lubridate)
 
 # ---- Path to the Clean2 RData you saved ----
-in_dir <- "C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data"
+in_dir <- "../data/final"
 
 # Option A: load the latest file matching your naming pattern
 rdata_in <- list.files(in_dir, pattern = "^covid_lmr_clean7_\\d{8}\\.RData$", full.names = TRUE)
@@ -78,7 +78,8 @@ Why: quarter aggregation is stable + interpretable for long time series.
 
 
 ```{r}
-setwd("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/covid19lsr/plots")
+if (!dir.exists("../plots")) dir.create("../plots", recursive = TRUE)
+setwd("../plots")
 library(ggplot2)
 library(scales)
 library(forcats)
@@ -505,7 +506,7 @@ fig5
 ```
 
 ```{r}
-setwd("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data")
+setwd("../data/final")
 save(drugcat_plot, file = "drugcat_plot.RData")
 write.csv(study_drug,"study_drug.csv")
 ```

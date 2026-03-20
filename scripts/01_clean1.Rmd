@@ -65,9 +65,9 @@ library(lubridate)
 
 ### 1.1 Load raw REDCap export
 
-data <- read_csv("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data/data_2402.csv")
+data <- read_csv("../data/raw/data_2402.csv")
 
-trial_reference_list <- read_csv("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Result Reporting/trial_reference_list.csv")
+trial_reference_list <- read_csv("../data/raw/trial_reference_list.csv")
 
 # Standardise IDs in reference list upfront (lowercase, trimmed)
 trial_reference_list <- trial_reference_list %>%
@@ -181,7 +181,7 @@ scount(study_table, "Study table")
 chk_studytype<-study_table %>% filter(st_retro_prosp=="retrospective"|st_type=="observational")
 chk<-chk_studytype$st_reg_id
 chk_studytype1<-st_raw %>% filter(str_to_lower(st_reg_id) %in% chk)
-#write.csv(chk_studytype1,"C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/covid19lsr/QC/study_designtype.csv")
+#write.csv(chk_studytype1,"../QC/study_designtype.csv")
 rm(chk_studytype,chk_studytype1)
 ```
 
@@ -217,7 +217,8 @@ table(is.na(country_long$country_raw))
 no_country <- filter(country_long, country_slot_n == 1 & is.na(country_raw))
 chk<-no_country$st_reg_id
 chk_nocountry<-st_raw %>% filter(str_to_lower(st_reg_id) %in% chk)
-write.csv(chk_nocountry,"C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/covid19lsr/QC/no_country.csv")
+if (!dir.exists("../QC")) dir.create("../QC", recursive = TRUE)
+write.csv(chk_nocountry,"../QC/no_country.csv")
 rm(no_country)
 rm(chk_nocountry)
 ```

@@ -237,7 +237,7 @@ unresolved_199 <- chk %>%
   mutate(id = row_number())
 
 
-corrections <- read_csv("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data/drug_others_std.csv")
+corrections <- read_csv("../data/raw/drug related/drug_others_std.csv")
 View(corrections)
 
 # 3. Join corrections onto the unresolved rows
@@ -360,7 +360,7 @@ component_table_clean2 <- component_table_clean2 %>%
 
 ```{r}
 library(readr)
-drug_labels<-read_csv("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data/drug_labels.csv", 
+drug_labels<-read_csv("../data/raw/drug related/drug_labels.csv",
     col_types = cols(med_type_old = col_skip(), 
         med_type = col_skip()))
 
@@ -417,7 +417,7 @@ library(readr)
 library(dplyr)
 
 # 1. Load the new assignments CSV
-new_labels <-  read_csv("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data/drug_labels_new_assignments.csv") %>%
+new_labels <-  read_csv("../data/raw/drug related/drug_labels_new_assignments.csv") %>%
   select(drug_std, broad_cat, drug_class, label) # keep only needed columns
 
 
@@ -525,7 +525,7 @@ pharma_table <- pharma_table %>%
 ```{r}
 
 library(readxl)
-wb_country <- read_excel("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data/wb_country.xlsx")
+wb_country <- read_excel("../data/raw/wb_country.xlsx")
 
 wb_country  <- wb_country  %>% rename(country_code = Code)
 wb_country  <- wb_country  %>% rename(income_group = `Income group`)
@@ -733,11 +733,11 @@ So later analysis chunks don’t depend on re-running everything.
 ## 12. Save Clean2 outputs as .RData
 
 # Choose an output folder (edit as needed)
-out_dir <- "C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data"
+out_dir <- "../data/final"
 if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
 
 # Filename with date stamp (optional)
-rdata_file <- file.path(out_dir, paste0("covid_lmr_clean5_", format(Sys.Date(), "%Y%m%d"), ".RData"))
+rdata_file <- file.path(out_dir, paste0("covid_lmr_clean7_", format(Sys.Date(), "%Y%m%d"), ".RData"))
 
 # Save only key objects (keeps workspace clean + reproducible)
 save(

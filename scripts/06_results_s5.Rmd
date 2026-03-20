@@ -1,6 +1,5 @@
 
 
-```{r}
 ```{r setup, message=FALSE, warning=FALSE}
 library(dplyr)
 library(tidyr)
@@ -8,10 +7,10 @@ library(stringr)
 library(lubridate)
 
 # ---- Path to the Clean2 RData you saved ----
-in_dir <- "C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data"
+in_dir <- "../data/final"
 
 # Option A: load the latest file matching your naming pattern
-rdata_in <- list.files(in_dir, pattern = "^covid_lmr_clean4_\\d{8}\\.RData$", full.names = TRUE)
+rdata_in <- list.files(in_dir, pattern = "^covid_lmr_clean7_\\d{8}\\.RData$", full.names = TRUE)
 stopifnot(length(rdata_in) >= 1)
 rdata_in <- rdata_in[which.max(file.info(rdata_in)$mtime)]
 
