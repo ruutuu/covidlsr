@@ -1,183 +1,199 @@
 ---
-title: "COVID LMR — Analysis (Results Sections 4-5)"
+title: "COVID LMR — Analysis (Results Section 4: Phases, Arms & Sample Sizes)"
 output: html_document
 ---
 
-Cohort: Updates on era, phase category
-```{r}
-# Do you have registration date granular enough to split by:
-# (a) pre-May 2021 / post-May 2021 / post-May 2023?
-cohort<-study_table %>%
-  mutate(era = case_when(
-    reg_date < as.Date("2021-05-26") ~ "Early Pandemic (to May 2021)",
-    reg_date < as.Date("2023-05-05") ~ "Mid-pandemic (May 2021–May 2023)",
-    TRUE                             ~ "Post-PHEIC (May 2023 onwards)"
-  ))
+# Section 4 — Phases, arms, and sample sizes
 
-cohort <- cohort %>%
-  mutate(phase_clean = case_when(
+## Setup
 
-    # ── Exploratory ───────────────────────────────────────────────────────────
-    st_phase == "phase 1"                   ~ "Phase 1",
-    st_phase == "phase 2"                   ~ "Phase 2",
-    st_phase == "phase 1,phase 2"           ~ "Phase 1/2",
-    st_phase == "phase 0"                   ~ "Phase 1",      # early first-in-human
-
-    # ── Confirmatory ──────────────────────────────────────────────────────────
-    st_phase == "phase 3"                   ~ "Phase 3",
-    st_phase == "phase 4"                   ~ "Phase 4",
-    st_phase == "phase 3,phase 4"           ~ "Phase 3/4",
-    st_phase == "phase 2,phase 3"           ~ "Phase 2/3",    # bridge — counts as confirmatory
-
-    # ── Ambiguous multi-phase — take the highest ───────────────────────────────
-    st_phase == "phase 1,phase 2,phase 3"   ~ "Phase 2/3",
-    st_phase == "phase 2,phase 3,phase 4"   ~ "Phase 3/4",
-    st_phase == "phase 2,phase 4"           ~ "Phase 2/3",    # likely data entry error
-
-    # ── Not applicable — interventional but no phase (e.g. device, behavioural)
-    st_phase == "not applicable"            ~ "Not applicable",
-    st_phase == "phase 4,not applicable"    ~ "Phase 4",
-    st_phase == "phase 2,not applicable"    ~ "Phase 2",
-    st_phase == "phase 3,not applicable"    ~ "Phase 3",
-
-    # ── Unknown / ambiguous ───────────────────────────────────────────────────
-  st_phase == "phase 3,unknown"            ~ "Phase 3",
-st_phase == "phase 2,unknown"            ~ "Phase 2",
-st_phase == "not applicable,unknown"     ~ "Not applicable"),
-
-  # Collapsed 3-group version for figures
-  phase_category = case_when(
-    phase_clean %in% c("Phase 1", "Phase 2",
-                       "Phase 1/2")          ~ "Exploratory (Phase 1/2)",
-    phase_clean %in% c("Phase 3", "Phase 4",
-                       "Phase 3/4",
-                       "Phase 2/3")          ~ "Confirmatory (Phase 3/4)",
-    phase_clean == "Not applicable"          ~ "Unspecified",
-    TRUE                                     ~ "Unspecified"
-  ),
-
-  phase_category = factor(phase_category, levels = c( "Unspecified",
-    "Confirmatory (Phase 3/4)",
-    "Exploratory (Phase 1/2)"
-   
-  )))
-
-
-```
-
-#4) Phases, sample sizes and arms
-
-##Fig 4.1 Phase composition by year
-```{r}
-library(tidyverse)
-library(scales)
+```{r setup, message=FALSE, warning=FALSE}
+library(dplyr)
+library(tidyr)
+library(stringr)
 library(lubridate)
-library(tidyverse)
+library(ggplot2)
 library(scales)
-library(lubridate)
+library(patchwork)
+library(tidytext)
+library(gridExtra)
 
-# Fixed theme (no markdown, pure text)
-theme_reg_plotly <- function(base_size = 12) {
-  theme_minimal(base_size = base_size, base_family = '"Open Sans", sans-serif') +
+# ---- Paths ----
+in_dir    <- "../data/final"
+plots_dir <- "../plots"
+if (!dir.exists(plots_dir)) dir.create(plots_dir, recursive = TRUE)
+
+# ---- Helper functions (defined unconditionally) ----
+clean_id <- function(x) str_to_lower(str_trim(as.character(x)))
+parse_dmy_safe <- function(x) {
+  x <- as.character(x)
+  x[x %in% c("", "na", "n/a", "unknown", "-99")] <- NA
+  suppressWarnings(dmy(x))
+}
+
+# ---- Load data (if not already in session from earlier scripts) ----
+if (!exists("study_table")) {
+  rdata_in <- list.files(in_dir, pattern = "^covid_lmr_clean7_\\d{8}\\.RData$", full.names = TRUE)
+  stopifnot(length(rdata_in) >= 1)
+  rdata_in <- rdata_in[which.max(file.info(rdata_in)$mtime)]
+  load(rdata_in)
+
+  study_table   <- study_table   %>% mutate(st_reg_id = clean_id(st_reg_id), reg_date = parse_dmy_safe(st_reg_date))
+  pharma_table  <- pharma_table  %>% mutate(st_reg_id = clean_id(st_reg_id), reg_date = parse_dmy_safe(st_reg_date))
+  country_table <- country_table %>% mutate(st_reg_id = clean_id(st_reg_id))
+  arm_table     <- arm_table     %>% mutate(st_reg_id = clean_id(st_reg_id))
+}
+
+# ---- Colour palettes ----
+drug_cat_colors <- c(
+  "Antimalarials"                = "mistyrose4",
+  "Antivirals (repurposed)"      = "deepskyblue4",
+  "Antivirals (direct-acting)"   = "deepskyblue3",
+  "Corticosteroids"              = "#F58518",
+  "Immunomodulators"             = "indianred3",
+  "Antibody Therapies"           = "lightcoral",
+  "Anticoagulants"               = "palegreen4",
+  "Antibiotics / Antiparasitics" = "pink4",
+  "Anti-inflammatories"          = "lightgoldenrod",
+  "Metabolic agents"             = "#9D755D",
+  "Supportive Care"              = "#D3D3D3",
+  "Other/Unspecified"            = "#BEBEBE"
+)
+
+col_confirm <- "#cd5c5c"   # Indian Red — confirmatory
+col_explore <- "#4682b4"   # Steel Blue — exploratory
+col_unspec  <- "#d3d3d3"   # Light grey — unspecified
+
+# ---- Themes (consistent with 03_results_s1s2.Rmd and 04_results_s3.Rmd) ----
+theme_stacked <- function(base_size = 12) {
+  theme_minimal(base_size = base_size, base_family = "sans") +
     theme(
-      text = element_text(color = "#444444"),
-      plot.title = element_text(size = base_size + 4, face = "bold"),
-      plot.subtitle = element_text(size = base_size, color = "#666666"),
-      axis.title = element_text(face = "bold", size = base_size),
-      axis.text = element_text(size = base_size - 1),
-      legend.position = "top",
-      legend.direction = "horizontal",
+      text               = element_text(color = "#444444"),
+      plot.title         = element_text(size = base_size + 4, face = "bold"),
+      plot.subtitle      = element_text(size = base_size, color = "#666666"),
+      axis.title         = element_text(face = "bold", size = base_size),
+      axis.text          = element_text(size = base_size - 1),
+      legend.position    = "top",
+      legend.direction   = "horizontal",
       legend.justification = "center",
-      panel.background = element_rect(fill = "#f9f9f9", color = NA),
-      plot.background = element_rect(fill = "white", color = NA),
+      panel.background   = element_rect(fill = "#f9f9f9", color = NA),
+      plot.background    = element_rect(fill = "white", color = NA),
       panel.grid.major.y = element_line(color = "#E1E5E9", linewidth = 0.5),
       panel.grid.major.x = element_blank(),
-      plot.margin = margin(20, 20, 20, 20)
+      plot.margin        = margin(20, 20, 20, 20)
     )
 }
 
+theme_bar <- function(base_size = 11) {
+  theme_minimal(base_size = base_size, base_family = "sans") +
+    theme(
+      text               = element_text(color = "#444444"),
+      plot.title         = element_text(face = "bold", size = base_size + 2, hjust = 0, margin = margin(b = 8)),
+      plot.subtitle      = element_text(size = base_size, hjust = 0, margin = margin(b = 6), color = "#666666"),
+      axis.title         = element_text(face = "bold", size = base_size),
+      axis.text          = element_text(size = base_size - 1, color = "#444444"),
+      axis.ticks         = element_line(color = "#444444", linewidth = 0.25),
+      plot.background    = element_rect(fill = "white", color = NA),
+      panel.grid.major.y = element_blank(),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor   = element_blank(),
+      legend.position    = "bottom",
+      legend.title       = element_text(size = base_size - 1),
+      legend.text        = element_text(size = base_size - 2),
+      legend.key.size    = unit(0.8, "lines"),
+      plot.margin        = margin(12, 12, 12, 12)
+    )
+}
 
-# --- 1. Prepare Data ---
-plot_data_half <- cohort %>%
+# ---- Cohort with era and phase classification ----
+cohort <- study_table %>%
   mutate(
-       # Create Half-Year Label (e.g., "2020 H1")
-    half_year = paste0(year(reg_date), " H", semester(reg_date))
-  ) %>%
-  # Filter valid dates
+    era = case_when(
+      reg_date < as.Date("2021-05-26") ~ "Early Pandemic (to May 2021)",
+      reg_date < as.Date("2023-05-05") ~ "Mid-pandemic (May 2021–May 2023)",
+      TRUE                             ~ "Post-PHEIC (May 2023 onwards)"
+    ),
+    phase_clean = case_when(
+      st_phase == "phase 1"                   ~ "Phase 1",
+      st_phase == "phase 2"                   ~ "Phase 2",
+      st_phase == "phase 1,phase 2"           ~ "Phase 1/2",
+      st_phase == "phase 0"                   ~ "Phase 1",
+      st_phase == "phase 3"                   ~ "Phase 3",
+      st_phase == "phase 4"                   ~ "Phase 4",
+      st_phase == "phase 3,phase 4"           ~ "Phase 3/4",
+      st_phase == "phase 2,phase 3"           ~ "Phase 2/3",
+      st_phase == "phase 1,phase 2,phase 3"   ~ "Phase 2/3",
+      st_phase == "phase 2,phase 3,phase 4"   ~ "Phase 3/4",
+      st_phase == "phase 2,phase 4"           ~ "Phase 2/3",
+      st_phase == "not applicable"            ~ "Not applicable",
+      st_phase == "phase 4,not applicable"    ~ "Phase 4",
+      st_phase == "phase 2,not applicable"    ~ "Phase 2",
+      st_phase == "phase 3,not applicable"    ~ "Phase 3",
+      st_phase == "phase 3,unknown"           ~ "Phase 3",
+      st_phase == "phase 2,unknown"           ~ "Phase 2",
+      st_phase == "not applicable,unknown"    ~ "Not applicable"
+    ),
+    phase_category = case_when(
+      phase_clean %in% c("Phase 1", "Phase 2", "Phase 1/2")           ~ "Exploratory (Phase 1/2)",
+      phase_clean %in% c("Phase 3", "Phase 4", "Phase 3/4", "Phase 2/3") ~ "Confirmatory (Phase 3/4)",
+      phase_clean == "Not applicable"                                  ~ "Unspecified",
+      TRUE                                                             ~ "Unspecified"
+    ),
+    phase_category = factor(phase_category, levels = c(
+      "Unspecified", "Confirmatory (Phase 3/4)", "Exploratory (Phase 1/2)"
+    ))
+  )
+```
+
+## Figure 4.1 — Phase composition by half-year
+
+```{r fig41_phase_halfyear, message=FALSE, warning=FALSE}
+plot_data_half <- cohort %>%
+  mutate(half_year = paste0(year(reg_date), " H", semester(reg_date))) %>%
   filter(reg_date >= "2020-01-01", reg_date <= "2025-12-31") %>%
-  
-  # Calculate Counts
   count(half_year, phase_category) %>%
   group_by(half_year) %>%
-  mutate(
-    pct = n / sum(n),
-    total_n = sum(n)
-  )
+  mutate(pct = n / sum(n), total_n = sum(n))
 
-# --- 2. Plot ---
-p1<-ggplot(plot_data_half, aes(x = half_year, y = pct, fill = phase_category)) +
+p1 <- ggplot(plot_data_half, aes(x = half_year, y = pct, fill = phase_category)) +
   geom_col(width = 0.8) +
-  
-  # Percentage Labels (Inside Bars)
-  geom_text(aes(label = percent(pct, accuracy = 1)), 
-            position = position_stack(vjust = 0.5), 
+  geom_text(aes(label = percent(pct, accuracy = 1)),
+            position = position_stack(vjust = 0.5),
             color = "white", size = 3, fontface = "bold") +
-  
-  # Total Count Labels (At Top of Bar)
-  # We use a trick: summarise to get 1 row per half_year for the label
   geom_text(data = plot_data_half %>% select(half_year, total_n) %>% distinct(),
             aes(x = half_year, y = 1.05, label = paste0("N=", total_n), fill = NULL),
             color = "grey20", size = 3) +
-  
   scale_y_continuous(labels = percent_format(), expand = expansion(mult = c(0, 0.15))) +
-  
-  # Subtle Colors
-  scale_fill_manual(values = c( "Unspecified" = "#d3d3d3",
-    "Confirmatory (Phase 3/4)" = "#cd5c5c",  # Indian Red
-    "Exploratory (Phase 1/2)" = "#4682b4"   # Steel Blue
-                         # Light Grey
+  scale_fill_manual(values = c(
+    "Unspecified"              = col_unspec,
+    "Confirmatory (Phase 3/4)" = col_confirm,
+    "Exploratory (Phase 1/2)"  = col_explore
   )) +
-  
   labs(
-    title = "Phase Composition of COVID-19 Trials (Half-Yearly 2020-2025)",
-    subtitle = "Proportion of trials by phase; Total registered trials (N) at top",
-    x = NULL,
-    y = "Proportion of New Trials",
-    fill = NULL
+    title    = "Figure 4.1. Phase composition of COVID-19 trials (half-yearly 2020–2025)",
+    subtitle = "Proportion of trials by phase; total registered trials (N) at top",
+    x = NULL, y = "Proportion of new trials", fill = NULL
   ) +
-  theme_reg_plotly(base_size = 10) +
+  theme_stacked(base_size = 10) +
   theme(
-    legend.position = "top",
-    axis.text.x = element_text(angle = 45, hjust = 1), # Rotate labels for readability
+    legend.position    = "top",
+    axis.text.x        = element_text(angle = 45, hjust = 1),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor = element_blank()
+    panel.grid.minor   = element_blank()
   )
 
-rm(plot_data_half)
+ggsave(file.path(plots_dir, "fig41_phase_by_halfyear.png"), p1, width = 12, height = 7, dpi = 300, bg = "white")
+p1
 ```
 
+## Figure 4.2 — Phase composition by era
 
-```{r}
-library(tidyverse)
-library(scales)
-library(lubridate)
-library(patchwork)
-
-# ── Colour palette (matches figures above) ────────────────────────────────────
-col_confirm    <- "#cd5c5c"   # Indian Red — confirmatory
-col_explore    <- "#4682b4"   # Steel Blue — exploratory
-col_unspec     <- "#d3d3d3"   # Light grey — unspecified
-col_discredit  <- "#cd5c5c"
-col_novel      <- "#4682b4"
-col_other      <- "#aab4c8"
-
-# ── FIG 3.2: Phase × era stacked bar ─────────────────────────────────────────
+```{r fig42_phase_era, message=FALSE, warning=FALSE}
 fig3_2_data <- cohort %>%
   filter(!is.na(phase_category)) %>%
   count(era, phase_category) %>%
   group_by(era) %>%
-  mutate(pct = n / sum(n),
-         total_n = sum(n)) %>%
+  mutate(pct = n / sum(n), total_n = sum(n)) %>%
   ungroup() %>%
   mutate(era = factor(era, levels = c(
     "Early Pandemic (to May 2021)",
@@ -185,11 +201,9 @@ fig3_2_data <- cohort %>%
     "Post-PHEIC (May 2023 onwards)"
   )))
 
-era_totals <- fig3_2_data %>%
-  select(era, total_n) %>% distinct()
+era_totals <- fig3_2_data %>% select(era, total_n) %>% distinct()
 
-fig3_2 <- ggplot(fig3_2_data,
-                 aes(x = era, y = pct, fill = phase_category)) +
+fig3_2 <- ggplot(fig3_2_data, aes(x = era, y = pct, fill = phase_category)) +
   geom_col(width = 0.6) +
   geom_text(aes(label = percent(pct, accuracy = 1)),
             position = position_stack(vjust = 0.5),
@@ -197,30 +211,30 @@ fig3_2 <- ggplot(fig3_2_data,
   geom_text(data = era_totals,
             aes(x = era, y = 1.06, label = paste0("N=", total_n), fill = NULL),
             colour = "black", size = 3.5, fontface = "bold") +
-  scale_y_continuous(labels = percent_format(),
-                     expand = expansion(mult = c(0, 0.12))) +
+  scale_y_continuous(labels = percent_format(), expand = expansion(mult = c(0, 0.12))) +
   scale_fill_manual(values = c(
     "Confirmatory (Phase 3/4)" = col_confirm,
     "Exploratory (Phase 1/2)"  = col_explore,
     "Unspecified"              = col_unspec
   )) +
-  labs(title = "Confirmatory trial share fell from 49% to 30% post-PHEIC",
+  labs(title = "Figure 4.2. Confirmatory trial share fell from 49% to 30% post-PHEIC",
        x = NULL, y = "Proportion of trials", fill = NULL) +
-  theme_reg_plotly(base_size = 11) +
-  theme(legend.position = "top",
-        axis.text.x = element_text(angle = 20, hjust = 1),
-        panel.grid.major.x = element_blank(),
-        panel.grid.minor = element_blank())+coord_flip()
+  theme_stacked(base_size = 11) +
+  theme(
+    legend.position    = "top",
+    axis.text.x        = element_text(angle = 20, hjust = 1),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor   = element_blank()
+  ) +
+  coord_flip()
 
-
+ggsave(file.path(plots_dir, "fig42_phase_by_era.png"), fig3_2, width = 10, height = 6, dpi = 300, bg = "white")
+fig3_2
 ```
 
+## Figure 4.3 — Top drugs by era and WHO evidence status
 
-
-```{r}
-library(tidytext)   # for reorder_within(); or use tidyr alternative below
-
-# ── WHO evidence classification vectors ──────────────────────────────────────
+```{r fig43_drugs_era, message=FALSE, warning=FALSE}
 discredited_drugs <- c(
   "hydroxychloroquine", "azithromycin", "lopinavir/ritonavir",
   "ivermectin", "favipiravir", "chloroquine"
@@ -232,26 +246,17 @@ novel_drugs_vec <- c(
   "monoclonal antibodies unknown/not on list"
 )
 
-# ── Join: bring era from cohort into drugcat_plot ─────────────────────────────
-# NOTE: do NOT create drug_class — use broad_cat_display already in drugcat_plot
 drug_era <- drugcat_plot %>%
-  left_join(
-    cohort %>% select(st_reg_id, era),
-    by = "st_reg_id"
-  ) %>%
+  left_join(cohort %>% select(st_reg_id, era), by = "st_reg_id") %>%
   filter(!is.na(drug_std), !is.na(era)) %>%
-  # Add WHO evidence status as a separate display variable
   mutate(who_status = case_when(
     drug_std %in% discredited_drugs ~ "WHO rec. against",
     drug_std %in% novel_drugs_vec   ~ "Novel / emerging",
     TRUE                            ~ "Other"
   ))
 
-# ── Quick QC: confirm join worked ────────────────────────────────────────────
 drug_era %>% count(era)
-# Should give ~1971 / 755 / 251 rows (one row per trial×drug)
 
-# ── Top 10 per era ────────────────────────────────────────────────────────────
 top10_per_era <- drug_era %>%
   count(era, drug_std, who_status, display_group, sort = TRUE) %>%
   mutate(era = factor(era, levels = c(
@@ -264,327 +269,165 @@ top10_per_era <- drug_era %>%
   ungroup() %>%
   mutate(drug_std = reorder_within(drug_std, n, era))
 
-# ── Plot ──────────────────────────────────────────────────────────────────────
-fig3_3 <- ggplot(top10_per_era,
-                 aes(x = n, y = drug_std, fill = who_status)) +
+fig3_3 <- ggplot(top10_per_era, aes(x = n, y = drug_std, fill = who_status)) +
   geom_col(width = 0.75) +
-  facet_wrap(~ era, scales = "free_y", ncol = 3) +
+  facet_wrap(~ era, scales = "free", ncol = 3) +
   scale_y_reordered() +
   scale_fill_manual(values = c(
-    "WHO rec. against" = "#cd5c5c",
-    "Novel / emerging" = "#4682b4",
+    "WHO rec. against" = col_confirm,
+    "Novel / emerging" = col_explore,
     "Other"            = "#aab4c8"
   )) +
   labs(
-    title = "Discredited drugs persisted across all eras (top 10 per era)",
-    x     = "Number of trials",
-    y     = NULL,
-    fill  = NULL
+    title = "Figure 4.3. Discredited drugs persisted across all eras (top 20 per era)",
+    x = "Number of trials", y = NULL, fill = NULL
   ) +
-  theme_reg_plotly(base_size = 10) +
+  theme_stacked(base_size = 10) +
   theme(
     legend.position    = "top",
     panel.grid.major.y = element_blank(),
     strip.text         = element_text(face = "bold", size = 9)
-  )+facet_wrap(~ era, scales = "free", ncol = 3)
+  )
 
-
+ggsave(file.path(plots_dir, "fig43_drugs_by_era.png"), fig3_3, width = 14, height = 6, dpi = 300, bg = "white")
 fig3_3
-
-# ggsave("fig3_3_drugs.png", fig3_3, width = 14, height = 6, dpi = 300)
-
 ```
 
-Arms over Era
-```{r}
-library(tidyverse)
-library(lubridate)
-library(scales)
-library(gridExtra)
-library(patchwork)
-# ── STEP 1: High-confidence explicit arms dataset ─────────────────────────────
-# ── STEP 1: High-confidence explicit arms dataset ─────────────────────────────
-cohort_arms <- cohort %>%
-    filter(!is.na(st_sample), st_sample > 0) %>%
-    mutate(
-        arm_category = case_when(
-            st_intv_arms == 2 ~ "2 Arms",
-            st_intv_arms == 3 ~ "3 Arms", 
-            st_intv_arms >= 4 ~ "4+ Arms",
-            TRUE ~ "Single Arm / Other"
-        )
-    ) %>%
-    filter(arm_category != "Single Arm / Other")   
+## Figure 4.4 — Trial arm complexity by era
 
-# QC
+```{r fig44_arms_era, message=FALSE, warning=FALSE}
+cohort_arms <- cohort %>%
+  filter(!is.na(st_sample), st_sample > 0) %>%
+  mutate(arm_category = case_when(
+    st_intv_arms == 2 ~ "2 Arms",
+    st_intv_arms == 3 ~ "3 Arms",
+    st_intv_arms >= 4 ~ "4+ Arms",
+    TRUE              ~ "Single Arm / Other"
+  )) %>%
+  filter(arm_category != "Single Arm / Other")
+
 cat("Explicit arms dataset: N =", nrow(cohort_arms), "\n")
 cohort_arms %>% count(arm_category) %>% print()
 
-# ── FIG 4.2: Arm complexity over time ─────────────────────────────────────────
 plot_data_arms <- cohort_arms %>%
-    count(era, arm_category) %>%
-    group_by(era) %>%
-    mutate(
-        total_n = sum(n),
-        pct = n / total_n
-    ) %>%
-    ungroup()
+  count(era, arm_category) %>%
+  group_by(era) %>%
+  mutate(total_n = sum(n), pct = n / total_n) %>%
+  ungroup()
 
 fig4_2 <- ggplot(plot_data_arms, aes(y = era, x = pct, fill = arm_category)) +
-    geom_col(position = "fill", width = 0.8) +
-    geom_text(aes(label = n), 
-              position = position_stack(vjust = 0.5), 
-              color = "white", size = 4, fontface = "bold") +
-    geom_text(data = plot_data_arms %>% 
-                  distinct(era, total_n),
-              aes(x = 1.03, y = era, label = paste0("N=", total_n)),
-              inherit.aes = FALSE,
-              color = "black", size = 4.2, fontface = "bold",
-              hjust = 1) +
-    scale_x_continuous(labels = scales::percent_format(),
-                       expand = expansion(mult = c(0, 0.1))) +
-    scale_fill_manual(values = c(
-        "2 Arms" = "#4D4D4D",
-        "3 Arms" = "#2E86C1", 
-        "4+ Arms" = "#C0392B"
-    )) +
-    labs(title = "Trial Arm Complexity Over Time",
-         x = "Share of All Multi-Arm Trials",
-         y = "Registration Period") +
-    theme_minimal(base_size = 14) +
-    theme(
-        plot.title = element_text(face = "bold", hjust = 0.5),
-        legend.position = "bottom",
-        axis.text.y = element_text(size = 12)
-    )
+  geom_col(position = "fill", width = 0.8) +
+  geom_text(aes(label = n),
+            position = position_stack(vjust = 0.5),
+            color = "white", size = 4, fontface = "bold") +
+  geom_text(data = plot_data_arms %>% distinct(era, total_n),
+            aes(x = 1.03, y = era, label = paste0("N=", total_n)),
+            inherit.aes = FALSE, color = "black", size = 4.2, fontface = "bold", hjust = 1) +
+  scale_x_continuous(labels = percent_format(), expand = expansion(mult = c(0, 0.1))) +
+  scale_fill_manual(values = c("2 Arms" = "#4D4D4D", "3 Arms" = "#2E86C1", "4+ Arms" = "#C0392B")) +
+  labs(title = "Figure 4.4. Trial arm complexity by era",
+       x = "Share of all multi-arm trials", y = "Registration period") +
+  theme_bar(base_size = 14) +
+  theme(
+    plot.title       = element_text(face = "bold", hjust = 0.5),
+    legend.position  = "bottom",
+    axis.text.y      = element_text(size = 12)
+  )
 
-
+ggsave(file.path(plots_dir, "fig44_arm_complexity_by_era.png"), fig4_2, width = 10, height = 6, dpi = 300, bg = "white")
+fig4_2
 ```
 
-##Fig 4.2: Study arms (no) over time
+## Figure 4.5 — Arm complexity over time (half-yearly)
 
-```{r}
-
-library(tidyverse)
-library(scales)
-library(lubridate)
-
-# --- 1. Prepare Data ---
+```{r fig45_arms_time, message=FALSE, warning=FALSE}
 plot_data_arms_v2 <- cohort %>%
   mutate(
-    # --- The Hybrid Time Bucket Logic ---
     time_label = case_when(
-      year(reg_date) >= 2024 ~ as.character(year(reg_date)), # "2024", "2025"
-      TRUE ~ paste0(year(reg_date), " H", semester(reg_date)) # "2020 H1", etc.
+      year(reg_date) >= 2024 ~ as.character(year(reg_date)),
+      TRUE                   ~ paste0(year(reg_date), " H", semester(reg_date))
     ),
-    # Create a sort order variable so ggplot knows 2020 H1 < 2024
     sort_date = case_when(
       year(reg_date) >= 2024 ~ floor_date(reg_date, "year"),
-      TRUE ~ floor_date(reg_date, "halfyear")
+      TRUE                   ~ floor_date(reg_date, "halfyear")
     ),
-    
-    # Categorize Arms
     arm_category = case_when(
       st_intv_arms == 2 ~ "2 Arms (Standard)",
       st_intv_arms == 3 ~ "3 Arms",
       st_intv_arms >= 4 ~ "4+ Arms (Multi-Arm)",
-      TRUE ~ "Single Arm / Other"
+      TRUE              ~ "Single Arm / Other"
     )
   ) %>%
   filter(arm_category != "Single Arm / Other") %>%
-  # Count
   count(sort_date, time_label, arm_category) %>%
-  group_by(sort_date, time_label) %>% # Group by both to keep label
-  mutate(
-    total_n = sum(n),
-    pct = n / total_n
-  ) %>% filter(!time_label=="NA HNA")
+  group_by(sort_date, time_label) %>%
+  mutate(total_n = sum(n), pct = n / total_n) %>%
+  filter(time_label != "NA HNA")
 
-# --- 2. Plot ---
-p6<-ggplot(plot_data_arms_v2, aes(x = reorder(time_label, sort_date), y = pct, fill = arm_category)) +
-  geom_col(position = "fill", width = 0.8) + # Width fixed for categorical x-axis
-  
-  # Absolute Count Labels
-  geom_text(aes(label = n), 
-            position = position_stack(vjust = 0.5), 
+p6 <- ggplot(plot_data_arms_v2, aes(x = reorder(time_label, sort_date), y = pct, fill = arm_category)) +
+  geom_col(position = "fill", width = 0.8) +
+  geom_text(aes(label = n),
+            position = position_stack(vjust = 0.5),
             color = "white", size = 3, fontface = "bold") +
-  
-  # Total Count Labels
   geom_text(data = plot_data_arms_v2 %>% select(time_label, sort_date, total_n) %>% distinct(),
             aes(x = time_label, y = 1.05, label = total_n, fill = NULL),
             color = "black", size = 3.5, fontface = "bold") +
-  
   scale_y_continuous(labels = percent_format(), expand = expansion(mult = c(0, 0.1))) +
-  
-  # Colors
   scale_fill_manual(values = c(
-    "2 Arms (Standard)" = "#999999",
-    "3 Arms" = "#377eb8",
+    "2 Arms (Standard)"   = "#999999",
+    "3 Arms"              = "#377eb8",
     "4+ Arms (Multi-Arm)" = "#e41a1c"
   )) +
-  
   labs(
-    title = "Figure 9A. Evolution of Trial Complexity",
-    subtitle = "Number of trials by intervention arms (Total count at top)",
-    x = NULL,
-    y = "Proportion of Registered Trials",
-    fill = "Trial Design"
+    title    = "Figure 4.5. Evolution of trial complexity",
+    subtitle = "Number of trials by intervention arms (total count at top)",
+    x = NULL, y = "Proportion of registered trials", fill = "Trial design"
   ) +
-  theme_reg_plotly(base_size = 14) +
+  theme_stacked(base_size = 14) +
   theme(
-    legend.position = "top",
+    legend.position    = "top",
     panel.grid.major.x = element_blank(),
-    panel.grid.minor = element_blank(),
-    axis.text.x = element_text(angle = 45, hjust = 1)
+    panel.grid.minor   = element_blank(),
+    axis.text.x        = element_text(angle = 45, hjust = 1)
   )
 
-
+ggsave(file.path(plots_dir, "fig45_arm_complexity_over_time.png"), p6, width = 12, height = 7, dpi = 300, bg = "white")
+p6
 ```
 
+## Figure 4.6 — Sample size per arm by phase and intervention category
 
-##Fig 4.3 (Alt) Sample sizes by Int group and phase in 2 time periods
-
-```{r}
-
-
-rm(plot_data_violin,plot_data_periods,plot_data_classes,plot_data_classes1,p1_class,p2_class,p3_class,n_labels,n_labels_class)
-library(tidyverse)
-library(scales)
-library(lubridate)
-
-
-pharma_table$st_reg_date<-pharma_table$reg_date
-# --- Step 2: Clean & Classify ---
+```{r fig46_sample_phase_category, message=FALSE, warning=FALSE}
 plot_data_scatter <- pharma_table %>%
-  # Filter valid data
-  filter(!is.na(st_reg_date) & !is.na(arm_n_planned) & arm_n_planned > 0) %>%
+  filter(!is.na(reg_date), !is.na(arm_n_planned), arm_n_planned > 0) %>%
   mutate(
-    # Clean Phase (Check for NA first)
-    st_phase = ifelse(is.na(st_phase), "Unknown", st_phase),
+    st_phase     = ifelse(is.na(st_phase), "Unknown", st_phase),
     phase_simple = case_when(
       str_detect(st_phase, "phase 3|phase 4") ~ "Phase 3/4 (Confirmatory)",
       str_detect(st_phase, "phase 1|phase 2") ~ "Phase 1/2 (Exploratory)",
       TRUE ~ "Other"
-    )  ) %>%
-  # Remove "Other" categories
-  filter(display_group != "Other") %>%
-  filter(phase_simple != "Other")
-
-# --- Step 3: Verify Data Exists ---
-if(nrow(plot_data_scatter) == 0) stop("Data is empty after filtering! Check join or regex.")
-
-
-library(tidyverse)
-library(scales)
-library(lubridate)
-
-# --- 1. Prepare Data & N Labels ---
-plot_data_box_time <- plot_data_scatter %>%
-    mutate(era = case_when(
-    reg_date < as.Date("2021-05-26") ~ "Early Pandemic (to May 2021)",
-    reg_date < as.Date("2023-05-05") ~ "Mid-pandemic (May 2021–May 2023)",
-    TRUE                             ~ "Post-PHEIC (May 2023 onwards)"
-  )) %>% filter(!display_group=="Supportive Care")
-
-# Calculate N per group for labels
-n_labels <- plot_data_box_time %>%
-    group_by(era, display_group, phase_simple) %>%
-    summarise(n = n(), .groups = "drop") %>%
-    mutate(
-        # Position the label slightly below the boxplot (log scale)
-        y_pos = 1, 
-        phase_label = paste0("n=", n)
     )
+  ) %>%
+  filter(display_group != "Other", phase_simple != "Other")
 
-# --- 2. Plot Faceted Boxplot ---
-p10<-ggplot(plot_data_box_time, 
-       aes(x = arm_n_planned, 
-           y = display_group, 
-           fill = phase_simple)) +
-    
-    # A. Boxplot (horizontal after flip)
-    geom_boxplot(
-        alpha = 0.6, 
-        outlier.shape = 1,
-        outlier.size = 1,
-        width = 0.7,
-        position = position_dodge(width = 0.8)
-    ) +
-    
-    # B. Add N Labels (adjusted for horizontal layout)
-    geom_text(
-        data = n_labels,
-        aes(x = y_pos,  # now x since flipped
-            label = phase_label, 
-            group = phase_simple),
-        position = position_dodge(width = 0.8),
-        size = 2.5,
-        hjust = 1,
-        color = "black",
-        fontface = "bold"
-    ) +
-    
-    # C. Facet by Time Period
-    facet_wrap(~era, ncol = 1, scales = "free_x") +
-    
-    # D. Reference Lines (now vertical because flipped)
-    geom_vline(xintercept = 100, linetype = "dashed", color = "grey50") +
-    geom_vline(xintercept = 500, linetype = "dashed", color = "black") +
-    
-    # E. Log Scale
-    scale_x_log10(
-        labels = label_number(scale_cut = cut_short_scale()),
-        limits = c(0.8, NA)
-    ) +
-    
-    scale_fill_manual(values = c(
-        "Phase 1/2 (Exploratory)" = "#4575b4", 
-        "Phase 3/4 (Confirmatory)" = "#d73027"
-    )) +
-    
-    # F. Labels
-    labs(
-        title = "Figure 10. Evolution of Trial Power: Early vs Late Pandemic",
-        subtitle = "Planned sample size per arm (n = number of trials)",
-        x = "Sample Size per Arm (Log10 Scale)",
-        y = NULL,
-        fill = "Trial Phase"
-    ) +
-    
-    theme_minimal(base_size = 12) +
-    theme(
-        legend.position = "top",
-        strip.text = element_text(face = "bold", size = 12),
-        panel.grid.major.y = element_blank()
-    )
+if (nrow(plot_data_scatter) == 0) stop("Data is empty after filtering! Check join or regex.")
 
-
-```
-
-
-```{r}
-# ── TWO SEPARATE PLOTS by phase (no n<3 categories) ─────────────────────────
-
-# 1. FILTER: Remove categories with n<3 pharma trials per era/phase combo
 plot_data_clean <- plot_data_scatter %>%
   mutate(era = case_when(
     reg_date < as.Date("2021-05-26") ~ "Early Pandemic (to May 2021)",
     reg_date < as.Date("2023-05-05") ~ "Mid-pandemic (May 2021–May 2023)",
-    TRUE ~ "Post-PHEIC (May 2023 onwards)"
+    TRUE                             ~ "Post-PHEIC (May 2023 onwards)"
   )) %>%
   filter(display_group != "Supportive Care") %>%
-  # Remove rare categories (n<3 total per era/phase/display_group)
   group_by(era, phase_simple, display_group) %>%
   filter(n() >= 3) %>%
   ungroup()
 
-# N labels (only for kept groups)
 n_labels <- plot_data_clean %>%
   group_by(era, display_group, phase_simple) %>%
   summarise(n = n(), .groups = "drop") %>%
   mutate(y_pos = 1, phase_label = paste0("n=", n))
 
-# ── PLOT 1: Phase 1/2 Exploratory ──────────────────────────────────────────
 p10_exploratory <- plot_data_clean %>%
   filter(phase_simple == "Phase 1/2 (Exploratory)") %>%
   ggplot(aes(x = arm_n_planned, y = display_group, fill = phase_simple)) +
@@ -595,13 +438,13 @@ p10_exploratory <- plot_data_clean %>%
   facet_wrap(~era, ncol = 1, scales = "free_x") +
   geom_vline(xintercept = c(100, 500), linetype = "dashed", color = "grey50") +
   scale_x_log10(labels = label_number(scale_cut = cut_short_scale()), limits = c(0.8, NA)) +
-  scale_fill_manual(values = "#4575b4") +  # Single color
-  labs(title = "Figure 10a. Exploratory Trials (Phase 1/2)",
-       subtitle = "Sample size per arm (n≥3 categories only)",
-       x = "Sample Size per Arm (Log10)", y = NULL, fill = NULL) +
-  theme_minimal(12) + theme(legend.position = "none", strip.text = element_text(face = "bold"))
+  scale_fill_manual(values = col_explore) +
+  labs(title = "Figure 4.6a. Exploratory trials (Phase 1/2)",
+       subtitle = "Sample size per arm (n ≥ 3 categories only)",
+       x = "Sample size per arm (log10)", y = NULL, fill = NULL) +
+  theme_bar(base_size = 12) +
+  theme(legend.position = "none", strip.text = element_text(face = "bold"))
 
-# ── PLOT 2: Phase 3/4 Confirmatory ─────────────────────────────────────────
 p10_confirmatory <- plot_data_clean %>%
   filter(phase_simple == "Phase 3/4 (Confirmatory)") %>%
   ggplot(aes(x = arm_n_planned, y = display_group, fill = phase_simple)) +
@@ -612,115 +455,70 @@ p10_confirmatory <- plot_data_clean %>%
   facet_wrap(~era, ncol = 1, scales = "free_x") +
   geom_vline(xintercept = c(100, 500), linetype = "dashed", color = "grey50") +
   scale_x_log10(labels = label_number(scale_cut = cut_short_scale()), limits = c(0.8, NA)) +
-  scale_fill_manual(values = "#d73027") +  # Single color
-  labs(title = "Figure 10b. Confirmatory Trials (Phase 3/4)",
-       subtitle = "Sample size per arm (n≥3 categories only)",
-       x = "Sample Size per Arm (Log10)", y = NULL, fill = NULL) +
-  theme_minimal(12) + theme(legend.position = "none", strip.text = element_text(face = "bold"))
+  scale_fill_manual(values = col_confirm) +
+  labs(title = "Figure 4.6b. Confirmatory trials (Phase 3/4)",
+       subtitle = "Sample size per arm (n ≥ 3 categories only)",
+       x = "Sample size per arm (log10)", y = NULL, fill = NULL) +
+  theme_bar(base_size = 12) +
+  theme(legend.position = "none", strip.text = element_text(face = "bold"))
 
-# ── SAVE INDIVIDUALLY ──────────────────────────────────────────────────────
-ggsave("fig10a_exploratory.png", p10_exploratory, width = 10, height = 8, dpi = 300)
-ggsave("fig10b_confirmatory.png", p10_confirmatory, width = 10, height = 8, dpi = 300)
-
-# View
+ggsave(file.path(plots_dir, "fig46a_sample_exploratory.png"),   p10_exploratory, width = 10, height = 8, dpi = 300, bg = "white")
+ggsave(file.path(plots_dir, "fig46b_sample_confirmatory.png"),  p10_confirmatory, width = 10, height = 8, dpi = 300, bg = "white")
 p10_exploratory
 p10_confirmatory
-
 ```
 
+## Figure 4.7 — Phase trial size distributions by year
 
-##Fig 4.4A Phase 1/2 Trial Size Distributions 
-##Fig 4.4B Phase 3/4 Trial Size Distributions
-```{r}
-library(tidyverse)
-library(scales)
-library(lubridate)
-
-# --- 1. Prepare Data ---
-# We keep the raw data this time (no pre-summarising median) for boxplots
+```{r fig47_phase_size_by_year, message=FALSE, warning=FALSE}
 plot_data_raw <- cohort %>%
-#  filter(st_reg_date >= "2020-01-01", st_reg_date <= "2025-12-31") %>%
   mutate(
-    year = year(reg_date),
+    year           = year(reg_date),
     st_sample_clean = as.numeric(str_remove_all(as.character(st_sample), "[,a-zA-Z]")),
-    phase_simple = case_when(
+    phase_simple   = case_when(
       str_detect(st_phase, "phase 3|phase 4") ~ "Phase 3/4 (Confirmatory)",
       str_detect(st_phase, "phase 1|phase 2") ~ "Phase 1/2 (Exploratory)",
       TRUE ~ "Other"
     )
-  ) 
+  ) %>%
+  filter(!is.na(st_sample_clean), st_sample_clean > 0, phase_simple != "Other")
 
-
-
-plot_data_raw <-plot_data_raw %>%
-  filter(!is.na(st_sample_clean) & st_sample_clean > 0, phase_simple != "Other")
-
-# --- 2. Create a Label Helper DataFrame ---
-# This calculates where to put the "n=" label (placed slightly above the 75th percentile)
 n_labels <- plot_data_raw %>%
   group_by(year, phase_simple) %>%
   summarise(
-    n = n(),
-    # Position the label at the 75th percentile (top of box) * 1.5 for clearance
-    y_pos = quantile(st_sample_clean, 0.75, na.rm = TRUE) * 1.5, 
+    n     = n(),
+    y_pos = quantile(st_sample_clean, 0.75, na.rm = TRUE) * 1.5,
     .groups = "drop"
   )
 
-# --- 3. Plot A: Phase 1/2 (Exploratory) ---
-p1_box <- ggplot(plot_data_raw %>% filter(phase_simple == "Phase 1/2 (Exploratory)"), 
+p1_box <- ggplot(plot_data_raw %>% filter(phase_simple == "Phase 1/2 (Exploratory)"),
        aes(x = factor(year), y = st_sample_clean)) +
-  
-  # A. The Boxplot
-  geom_boxplot(fill = "#4575b4", alpha = 0.2, outlier.color = "#4575b4", outlier.alpha = 0.5) +
-  
-  # B. The N Labels
+  geom_boxplot(fill = col_explore, alpha = 0.2, outlier.color = col_explore, outlier.alpha = 0.5) +
   geom_text(data = n_labels %>% filter(phase_simple == "Phase 1/2 (Exploratory)"),
             aes(x = factor(year), y = y_pos, label = paste0("n=", n)),
             vjust = 0, size = 3.5, fontface = "bold", color = "black") +
-  
-  # C. Reference Line
   geom_hline(yintercept = 100, linetype = "dashed", color = "grey50") +
   annotate("text", x = 0.6, y = 110, label = "Target (100)", hjust = 0, size = 3, color = "grey50") +
-  
-  # D. Scales & Formatting
   scale_y_log10(labels = label_number(scale_cut = cut_short_scale())) +
-  labs(
-    title = "Figure 11A. Phase 1/2 Trial Size Distributions",
-    subtitle = "Boxplots showing median, IQR, and outliers. 'n=' indicates total trials.",
-    x = NULL,
-    y = "Sample Size (Log Scale)"
-  ) +
-  theme_minimal(base_size = 14)
+  labs(title    = "Figure 4.7A. Phase 1/2 trial size distributions",
+       subtitle = "Boxplots showing median, IQR, and outliers. 'n=' indicates total trials.",
+       x = NULL, y = "Sample size (log scale)") +
+  theme_bar(base_size = 14)
 
-# --- 4. Plot B: Phase 3/4 (Confirmatory) ---
-p2_box <- ggplot(plot_data_raw %>% filter(phase_simple == "Phase 3/4 (Confirmatory)"), 
+p2_box <- ggplot(plot_data_raw %>% filter(phase_simple == "Phase 3/4 (Confirmatory)"),
        aes(x = factor(year), y = st_sample_clean)) +
-  
-  # A. The Boxplot
-  geom_boxplot(fill = "#d73027", alpha = 0.2, outlier.color = "#d73027", outlier.alpha = 0.5) +
-  
-  # B. The N Labels
+  geom_boxplot(fill = col_confirm, alpha = 0.2, outlier.color = col_confirm, outlier.alpha = 0.5) +
   geom_text(data = n_labels %>% filter(phase_simple == "Phase 3/4 (Confirmatory)"),
             aes(x = factor(year), y = y_pos, label = paste0("n=", n)),
             vjust = 0, size = 3.5, fontface = "bold", color = "black") +
-  
-  # C. Reference Line
   geom_hline(yintercept = 500, linetype = "dashed", color = "black") +
   annotate("text", x = 0.6, y = 550, label = "Target (500)", hjust = 0, size = 3, fontface = "bold") +
-  
-  # D. Scales & Formatting
   scale_y_log10(labels = label_number(scale_cut = cut_short_scale())) +
-  labs(
-    title = "Figure 11B. Phase 3/4 Trial Size Distributions",
-    subtitle = "Boxplots showing median, IQR, and outliers. 'n=' indicates total trials.",
-    x = NULL,
-    y = "Sample Size (Log Scale)"
-  ) +
-  theme_minimal(base_size = 14)
+  labs(title    = "Figure 4.7B. Phase 3/4 trial size distributions",
+       subtitle = "Boxplots showing median, IQR, and outliers. 'n=' indicates total trials.",
+       x = NULL, y = "Sample size (log scale)") +
+  theme_bar(base_size = 14)
 
-# --- 5. Display ---
 print(p1_box)
 print(p2_box)
-
-
 ```
