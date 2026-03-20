@@ -1,79 +1,119 @@
+---
+title: "COVID LMR — Analysis (Results Section 5: Geography & IPD Sharing)"
+output: html_document
+---
 
+# Section 5 — Geographic distribution and IPD sharing
+
+## Setup
 
 ```{r setup, message=FALSE, warning=FALSE}
 library(dplyr)
 library(tidyr)
 library(stringr)
 library(lubridate)
+library(ggplot2)
+library(scales)
 
-# ---- Path to the Clean2 RData you saved ----
-in_dir <- "../data/final"
+# ---- Paths ----
+in_dir    <- "../data/final"
+plots_dir <- "../plots"
+if (!dir.exists(plots_dir)) dir.create(plots_dir, recursive = TRUE)
 
-# Option A: load the latest file matching your naming pattern
-rdata_in <- list.files(in_dir, pattern = "^covid_lmr_clean7_\\d{8}\\.RData$", full.names = TRUE)
-stopifnot(length(rdata_in) >= 1)
-rdata_in <- rdata_in[which.max(file.info(rdata_in)$mtime)]
-
-load(rdata_in)
-
-# Expect these to exist from Clean1/Clean2
-stopifnot(exists("study_table"))
-stopifnot(exists("country_table"))
-stopifnot(exists("arm_table"))
-stopifnot(exists("pharma_table"))
-
-cat("Loaded:", basename(rdata_in), "\n")
-cat("Unique studies (study_table):", n_distinct(study_table$st_reg_id), "\n")
-
-
+# ---- Helper functions (defined unconditionally) ----
 clean_id <- function(x) str_to_lower(str_trim(as.character(x)))
-
 parse_dmy_safe <- function(x) {
   x <- as.character(x)
   x[x %in% c("", "na", "n/a", "unknown", "-99")] <- NA
   suppressWarnings(dmy(x))
 }
 
+# ---- Load data (if not already in session from earlier scripts) ----
+if (!exists("study_table")) {
+  rdata_in <- list.files(in_dir, pattern = "^covid_lmr_clean7_\\d{8}\\.RData$", full.names = TRUE)
+  stopifnot(length(rdata_in) >= 1)
+  rdata_in <- rdata_in[which.max(file.info(rdata_in)$mtime)]
+  load(rdata_in)
+
+  cat("Loaded:", basename(rdata_in), "\n")
+  cat("Unique studies (study_table):", n_distinct(study_table$st_reg_id), "\n")
+
+  study_table   <- study_table   %>% mutate(st_reg_id = clean_id(st_reg_id), reg_date = parse_dmy_safe(st_reg_date))
+  country_table <- country_table %>% mutate(st_reg_id = clean_id(st_reg_id))
+  arm_table     <- arm_table     %>% mutate(st_reg_id = clean_id(st_reg_id))
+  pharma_table  <- pharma_table  %>% mutate(st_reg_id = clean_id(st_reg_id), reg_date = parse_dmy_safe(st_reg_date))
+}
+
+# ---- Era classification (consistent with 03–05 scripts) ----
+era_levels <- c(
+  "Early Pandemic (to May 2021)",
+  "Mid-pandemic (May 2021–May 2023)",
+  "Post-PHEIC (May 2023 onwards)"
+)
+
 study_table <- study_table %>%
-  mutate(
-    st_reg_id = clean_id(st_reg_id),
-    reg_date  = parse_dmy_safe(st_reg_date)
-  )
-
-country_table <- country_table %>%
-  mutate(st_reg_id = clean_id(st_reg_id))
-
-arm_table <- arm_table %>%
-  mutate(st_reg_id = clean_id(st_reg_id))
-
-pharma_table <- pharma_table %>%
-  mutate(
-    st_reg_id = clean_id(st_reg_id),
-    reg_date  = parse_dmy_safe(st_reg_date)
-  )
-```
-
-```{r}
-study_table<-study_table %>%
-  mutate(era = case_when(
-    reg_date < as.Date("2021-05-26") ~ "Pre-paper (to May 2021)",
+  mutate(era = factor(case_when(
+    reg_date < as.Date("2021-05-26") ~ "Early Pandemic (to May 2021)",
     reg_date < as.Date("2023-05-05") ~ "Mid-pandemic (May 2021–May 2023)",
     TRUE                             ~ "Post-PHEIC (May 2023 onwards)"
-  ))
+  ), levels = era_levels))
 
+# ---- Cohort IDs ----
+cohort_ids <- study_table$st_reg_id
 
-# ── SECTION 5: Geographic analysis (country_table) ────────────────────────────
+# ---- Income group colour palette ----
+income_colors <- c(
+  "High income"          = "#1f77b4",
+  "Upper middle income"  = "#2ca02c",
+  "Lower middle income"  = "yellow3",
+  "Low income"           = "orange1"
+)
 
-# 5.1 Country_table already has trial-country rows with income_group
-geo_summary <- country_table %>%
-  filter(st_reg_id %in% cohort_ids) %>%  # Only cohort trials
-  count(era = study_table$era[match(st_reg_id, study_table$st_reg_id)],  # Merge era
-        country_std, income_group, name = "n_countries") %>%
-  group_by(era, country_std, income_group) %>%
-  summarise(n_trials = sum(n_countries), .groups = "drop") %>%
-  filter(!is.na(income_group))
+# ---- Themes (consistent with 03–05 scripts) ----
+theme_bar <- function(base_size = 11) {
+  theme_minimal(base_size = base_size, base_family = "sans") +
+    theme(
+      text               = element_text(color = "#444444"),
+      plot.title         = element_text(face = "bold", size = base_size + 2, hjust = 0, margin = margin(b = 8)),
+      plot.subtitle      = element_text(size = base_size, hjust = 0, margin = margin(b = 6), color = "#666666"),
+      axis.title         = element_text(face = "bold", size = base_size),
+      axis.text          = element_text(size = base_size - 1, color = "#444444"),
+      axis.ticks         = element_line(color = "#444444", linewidth = 0.25),
+      plot.background    = element_rect(fill = "white", color = NA),
+      panel.grid.major.y = element_blank(),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor   = element_blank(),
+      legend.position    = "bottom",
+      legend.title       = element_text(size = base_size - 1),
+      legend.text        = element_text(size = base_size - 2),
+      legend.key.size    = unit(0.8, "lines"),
+      plot.margin        = margin(12, 12, 12, 12)
+    )
+}
 
-# Better: direct join for era
+theme_stacked <- function(base_size = 12) {
+  theme_minimal(base_size = base_size, base_family = "sans") +
+    theme(
+      text               = element_text(color = "#444444"),
+      plot.title         = element_text(size = base_size + 4, face = "bold"),
+      plot.subtitle      = element_text(size = base_size, color = "#666666"),
+      axis.title         = element_text(face = "bold", size = base_size),
+      axis.text          = element_text(size = base_size - 1),
+      legend.position    = "top",
+      legend.direction   = "horizontal",
+      legend.justification = "center",
+      panel.background   = element_rect(fill = "#f9f9f9", color = NA),
+      plot.background    = element_rect(fill = "white", color = NA),
+      panel.grid.major.y = element_line(color = "#E1E5E9", linewidth = 0.5),
+      panel.grid.major.x = element_blank(),
+      plot.margin        = margin(20, 20, 20, 20)
+    )
+}
+```
+
+## Data preparation
+
+```{r geo_prep, message=FALSE, warning=FALSE}
 geo_data <- country_table %>%
   inner_join(study_table %>% select(st_reg_id, era), by = "st_reg_id") %>%
   filter(st_reg_id %in% cohort_ids) %>%
@@ -81,179 +121,125 @@ geo_data <- country_table %>%
 
 # QC
 geo_data %>% count(era, income_group)
+```
 
+## Figure 5.1 — Top 10 countries by registration era
 
-# ── FIG 10: Top 10 countries (HIGH→LOW ORDER within ggplot) ───────────────────
+```{r fig51_top_countries, message=FALSE, warning=FALSE}
 top10_countries <- geo_data %>%
   filter(!is.na(country_std)) %>%
   group_by(era) %>%
   slice_max(n_trial_countries, n = 10, with_ties = FALSE) %>%
   ungroup() %>%
-  # Create explicit ranking for perfect ordering
   group_by(era) %>%
   mutate(rank = row_number()) %>%
   ungroup() %>%
-  mutate(
-    # Order: era + rank (highest first)
-    country_ordered = reorder(country_std, -rank)
-  )
+  mutate(country_ordered = reorder(country_std, -rank))
 
-fig10 <- ggplot(top10_countries, aes(y = country_ordered, x = n_trial_countries, 
-                                    fill = income_group)) +
+fig51 <- ggplot(top10_countries, aes(y = country_ordered, x = n_trial_countries,
+                                     fill = income_group)) +
   geom_col(position = "stack", alpha = 0.9, width = 0.75) +
   facet_wrap(~era, scales = "free_y", ncol = 1) +
-  scale_fill_manual(values = c(
-    "High income" = "#1f77b4",
-    "Upper middle income" = "#2ca02c", 
-    "Lower middle income" = "yellow3",
-    "Low income" = "orange1"
-  )) +
-  labs(title = "Top 10 Countries by Registration Era",
-       x = "Number of Trials", y = "Country") +
-  theme_minimal(base_size = 13) +
+  scale_fill_manual(values = income_colors) +
+  labs(title    = "Figure 5.1. Top 10 countries by registration era",
+       x = "Number of trials", y = "Country", fill = "Income group") +
+  theme_bar(base_size = 13) +
   theme(legend.position = "bottom",
         strip.text = element_text(face = "bold"))
 
-fig10
+ggsave(file.path(plots_dir, "fig51_top10_countries_by_era.png"), fig51, width = 10, height = 12, dpi = 300, bg = "white")
+fig51
+```
 
+## Figure 5.2 — Income group composition by era
 
-# ── FIG 12: Income stacked (era chronological) ────────────────────────────────
-era_order <- c("Pre-paper (to May 2021)", 
-               "Mid-pandemic (May 2021–May 2023)", 
-               "Post-PHEIC (May 2023 onwards)")
-
-# ── FIG 12: Income composition as 3 PIE CHARTS ────────────────────────────────
-fig12_data <- geo_data %>%
+```{r fig52_income_pies, message=FALSE, warning=FALSE}
+fig52_data <- geo_data %>%
   filter(!is.na(income_group)) %>%
   count(era, income_group, wt = n_trial_countries, name = "trials") %>%
   group_by(era) %>%
   mutate(pct = trials / sum(trials)) %>%
   ungroup()
 
-# Prettier colors
 pie_colors <- c(
-  "High income" = "skyblue3",        # Bright blue
-  "Upper middle income" = "skyblue4", # Vibrant orange
-  "Lower middle income" = "darkgreen", # Fresh green  
-  "Low income" = "darkred"           # Strong red
+  "High income"         = "skyblue3",
+  "Upper middle income" = "skyblue4",
+  "Lower middle income" = "darkgreen",
+  "Low income"          = "darkred"
 )
 
-fig12 <- fig12_data %>%
+fig52 <- fig52_data %>%
   ggplot(aes(x = "", y = pct, fill = income_group)) +
   geom_col(width = 1, position = position_stack()) +
-  geom_text(aes(label = scales::percent(pct, accuracy = 1)), 
+  geom_text(aes(label = scales::percent(pct, accuracy = 1)),
             position = position_stack(vjust = 0.5),
             color = "white", size = 5, fontface = "bold") +
   coord_polar("y", start = 0) +
   facet_wrap(~era, ncol = 3) +
   scale_fill_manual(values = pie_colors) +
-  labs(title = "Geographic Representation by Era") +
+  labs(title = "Figure 5.2. Geographic representation by era") +
   theme_void(base_size = 14) +
   theme(
     legend.position = "bottom",
-    legend.title = element_text(face = "bold", size = 13),
-    legend.text = element_text(size = 12),
-    strip.text = element_text(face = "bold", size = 14, hjust = 0.5),
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 16)
+    legend.title    = element_text(face = "bold", size = 13),
+    legend.text     = element_text(size = 12),
+    strip.text      = element_text(face = "bold", size = 14, hjust = 0.5),
+    plot.title      = element_text(face = "bold", hjust = 0.5, size = 16)
   ) +
   guides(fill = guide_legend(nrow = 1))
 
-fig12
-
-
+ggsave(file.path(plots_dir, "fig52_income_composition_by_era.png"), fig52, width = 12, height = 6, dpi = 300, bg = "white")
+fig52
 ```
 
-```{r}
-# ── Interventions by Income Group + Era (3 panels) ────────────────────────────
-drug_geo_era <- study_drug %>%
-  left_join(country_table %>% 
-              select(st_reg_id, country_std, income_group),
-            by = "st_reg_id") %>%
-  inner_join(study_table %>% select(st_reg_id, era), by = "st_reg_id") %>%
-  filter(!is.na(income_group), 
-         !is.na(broad_cat_display),
-         st_reg_id %in% cohort_ids)
+## Figure 5.3 — Top interventions by era and income group
 
-# Summary table
+```{r fig53_interventions_income, message=FALSE, warning=FALSE}
+drug_geo_era <- study_drug %>%
+  left_join(country_table %>% select(st_reg_id, country_std, income_group), by = "st_reg_id") %>%
+  inner_join(study_table %>% select(st_reg_id, era), by = "st_reg_id") %>%
+  filter(!is.na(income_group), !is.na(broad_cat_display), st_reg_id %in% cohort_ids)
+
 drug_summary <- drug_geo_era %>%
   count(era, income_group, broad_cat_display, sort = TRUE)
 
-
-
-# Use your drug_summary (already perfect!)
-# Top 10 interventions OVERALL per era (not per income)
-top_per_era <- drug_summary %>%
-  group_by(era) %>%
-  slice_max(n, n = 10, with_ties = FALSE) %>%
-  ungroup()
-
-# FIG 13: Era | Intervention | Income breakdown
-fig13 <- ggplot(top_per_era, 
-                aes(x = reorder(broad_cat_display, n), 
-                    y = n, fill = income_group)) +
-  geom_col(position = "dodge", alpha = 0.85, width = 0.9) +
-  facet_wrap(~era, scales = "free_x", ncol = 1) +
-  coord_flip() +
-  scale_fill_manual(values = c(
-    "High income" = "steelblue",
-    "Upper middle income" = "steelblue4", 
-    "Lower middle income" = "yellow3",
-    "Low income" = "orange"
-  )) +
-  labs(title = "FIG 13: COVID Interventions by Era & Income Group",
-       subtitle = "Top 10 categories per era | Multi-national trials in all locations",
-       x = "Intervention Category", y = "# Drug-Trial-Country Registrations") +
-  theme_minimal(base_size = 12) +
-  theme(legend.position = "bottom",
-        strip.text = element_text(face = "bold", size = 13),
-        axis.text.y = element_text(size = 10))
-
-fig13
-
-
-```
-
-
-```{r}
-# ── FIXED: Global Top 10 interventions (consistent across eras) ───────────────
-global_top10 <- drug_summary %>%
+# Global top 7 categories (consistent across eras)
+global_top <- drug_summary %>%
   count(broad_cat_display, wt = n, name = "total_n") %>%
   slice_max(total_n, n = 7) %>%
   arrange(desc(total_n)) %>%
-  mutate(order_rank = row_number()) %>%
   pull(broad_cat_display)
 
-# Filter + explicit ordering
 plot_data <- drug_summary %>%
-  filter(broad_cat_display %in% global_top10) %>%
-  mutate(cat_ordered = factor(broad_cat_display, 
-                             levels = rev(global_top10)))
+  filter(broad_cat_display %in% global_top) %>%
+  mutate(cat_ordered = factor(broad_cat_display, levels = rev(global_top)))
 
-# PLOT - explicit factors = no reorder errors
-fig13_fixed <- ggplot(plot_data, aes(x = cat_ordered, y = n, fill = income_group)) +
+fig53 <- ggplot(plot_data, aes(x = cat_ordered, y = n, fill = income_group)) +
   geom_col(position = "dodge", alpha = 0.85, width = 0.9) +
   facet_wrap(~era, scales = "free_y", ncol = 1) +
   coord_flip() +
   scale_fill_manual(values = c(
-    "High income" = "steelblue",
-    "Upper middle income" = "steelblue4", 
+    "High income"         = "steelblue",
+    "Upper middle income" = "steelblue4",
     "Lower middle income" = "yellow3",
-    "Low income" = "orange"
+    "Low income"          = "orange"
   )) +
-  labs(title = "FIG 13: Top COVID Interventions by Era & Income Group",
-       subtitle = "Global top-10 categories shown consistently",
-       x = "Intervention Category", y = "# Registrations") +
-  theme_minimal(base_size = 12) +
+  labs(title    = "Figure 5.3. Top COVID interventions by era and income group",
+       subtitle = "Global top-7 categories shown consistently across eras",
+       x = "Intervention category", y = "Number of registrations",
+       fill = "Income group") +
+  theme_bar(base_size = 12) +
   theme(legend.position = "bottom",
-        strip.text = element_text(face = "bold"),
-        axis.text.y = element_text(size = 10))
+        strip.text      = element_text(face = "bold"),
+        axis.text.y     = element_text(size = 10))
 
-fig13_fixed
-
+ggsave(file.path(plots_dir, "fig53_interventions_by_era_income.png"), fig53, width = 12, height = 10, dpi = 300, bg = "white")
+fig53
 ```
 
-```{r}
-# ── 6.1 IPD intent by era ─────────────────────────────────────────────────────
+## Figure 5.4 — IPD sharing intent by registration era
+
+```{r fig54_ipd_era, message=FALSE, warning=FALSE}
 ipd_data <- study_table %>%
   filter(st_reg_id %in% cohort_ids) %>%
   count(era, plan_ipd_share_yn, name = "n_trials") %>%
@@ -261,68 +247,65 @@ ipd_data <- study_table %>%
   mutate(pct = n_trials / sum(n_trials)) %>%
   ungroup()
 
-# FIG 13: IPD intent trends
-fig13_ipd <- ggplot(ipd_data, aes(x = era, y = pct, fill = plan_ipd_share_yn)) +
-  geom_col(position = "fill", width = 0.75) + coord_flip()+
-  geom_text(aes(label = paste0(n_trials, "\n(", percent(pct, accuracy = 1), ")")), 
+ipd_colors <- c(
+  "yes"                      = "green4",
+  "no"                       = "pink3",
+  "no information provided"  = "#95a5a6",
+  "undecided"                = "#95a5b3"
+)
+
+fig54 <- ggplot(ipd_data, aes(x = era, y = pct, fill = plan_ipd_share_yn)) +
+  geom_col(position = "fill", width = 0.75) +
+  coord_flip() +
+  geom_text(aes(label = paste0(n_trials, "\n(", percent(pct, accuracy = 1), ")")),
             position = position_stack(vjust = 0.5),
             color = "white", fontface = "bold", size = 3.2) +
   scale_y_continuous(labels = percent_format()) +
-  scale_fill_manual(values = c(
-    "yes" = "green4",      # Green
-    "no" = "pink3",       # Red
-    "no information provided" = "#95a5a6", # Grey
-    "undecided" = "#95a5b3"  # Orange
-  )) +
-  labs(title = "FIG 13: IPD Sharing Intent by Registration Era",
-       subtitle = "Counts (pct) shown | Cohort trials only",
-       y = "Share of Trials") +
-  theme_minimal(base_size = 14) +
+  scale_fill_manual(values = ipd_colors) +
+  labs(title    = "Figure 5.4. IPD sharing intent by registration era",
+       subtitle = "Counts (%) shown | Cohort trials only",
+       x = NULL, y = "Share of trials", fill = "IPD sharing intent") +
+  theme_stacked(base_size = 14) +
   theme(legend.position = "bottom",
         axis.text.x = element_text(angle = 15, hjust = 1))
 
-# ── 6.3 IPD by geography ─────────────────────────────────────────────────────
+ggsave(file.path(plots_dir, "fig54_ipd_intent_by_era.png"), fig54, width = 10, height = 6, dpi = 300, bg = "white")
+fig54
+```
+
+## Figure 5.5 — IPD sharing intent by country income group
+
+```{r fig55_ipd_income, message=FALSE, warning=FALSE}
 ipd_geo <- study_table %>%
-  left_join(country_table %>% filter(country_slot_n == 1) %>% 
+  left_join(country_table %>% filter(country_slot_n == 1) %>%
               select(st_reg_id, income_group),
             by = "st_reg_id") %>%
   filter(!is.na(income_group)) %>%
-    count(income_group, plan_ipd_share_yn, name = "n_trials") %>%
+  count(income_group, plan_ipd_share_yn, name = "n_trials") %>%
   group_by(income_group) %>%
   mutate(pct = n_trials / sum(n_trials))
 
-# FIG 14: IPD by income group
-# ── FIG 14: IPD Intent by Income Group (HORIZONTAL BARS) ─────────────────────
-fig14_ipd_horizontal <- ggplot(ipd_geo, 
-                               aes(y = income_group, 
-                                   x = pct, fill = plan_ipd_share_yn)) +
+fig55 <- ggplot(ipd_geo, aes(y = income_group, x = pct, fill = plan_ipd_share_yn)) +
   geom_col(position = "stack", alpha = 0.85, width = 0.75) +
-  geom_text(aes(label = paste0(n_trials, " (", percent(pct, accuracy = 1), ")")), 
+  geom_text(aes(label = paste0(n_trials, " (", percent(pct, accuracy = 1), ")")),
             position = position_stack(vjust = 0.5),
-            color = "white", fontface = "bold", size = 3.5)+
+            color = "white", fontface = "bold", size = 3.5) +
   scale_x_continuous(labels = percent_format(), expand = expansion(mult = c(0, 0.05))) +
-  scale_fill_manual(values = c(
-     "yes" = "green4",      # Green
-    "no" = "pink3",       # Red
-    "no information provided" = "#95a5a6", # Grey
-    "undecided" = "#95a5b3", "NA"="lightgrey"            # Light grey
-  )) +
-  labs(title = "FIG 14: IPD Sharing Intent by Country Income Group",
+  scale_fill_manual(values = c(ipd_colors, "NA" = "lightgrey")) +
+  labs(title    = "Figure 5.5. IPD sharing intent by country income group",
        subtitle = "Counts (% within income group) | Primary country analysis",
-       x = "Share of Trials", y = "World Bank Income Group") +
-  theme_minimal(base_size = 14) +
+       x = "Share of trials", y = "World Bank income group",
+       fill = "IPD sharing intent") +
+  theme_bar(base_size = 14) +
   theme(
-    legend.position = "bottom",
-    legend.title = element_text(face = "bold", size = 12),
-    axis.text.y = element_text(size = 12, face = "bold"),
-    panel.grid.minor = element_blank(),
+    legend.position    = "bottom",
+    legend.title       = element_text(face = "bold", size = 12),
+    axis.text.y        = element_text(size = 12, face = "bold"),
     panel.grid.major.x = element_line(color = "grey90", linewidth = 0.5),
-    plot.margin = margin(20, 40, 20, 20)
+    plot.margin        = margin(20, 40, 20, 20)
   ) +
-  guides(fill = guide_legend(nrow = 1, title = "IPD Sharing Intent"))
+  guides(fill = guide_legend(nrow = 1, title = "IPD sharing intent"))
 
-fig14_ipd_horizontal
-
-
+ggsave(file.path(plots_dir, "fig55_ipd_intent_by_income.png"), fig55, width = 10, height = 6, dpi = 300, bg = "white")
+fig55
 ```
-
