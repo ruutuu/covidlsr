@@ -1,0 +1,288 @@
+
+
+# --- PART 2: Sample Size Preparation (Section 3) ---
+```{r}
+cohort_ss <- cohort %>%
+  mutate(
+    # Convert sample size to numeric
+    st_sample_n = suppressWarnings(as.numeric(st_sample)),
+    
+    # Ensure date is Date object
+    reg_date = as.Date(reg_date),
+    
+    # Quarter Date (for reference)
+    reg_qdate = floor_date(reg_date, "quarter"),
+    
+    # Pretty Quarter Label
+    time_window = paste0("Q", quarter(reg_date), " ", year(reg_date)),
+    
+    # Half-Year Label (H1/H2)
+    half_year = case_when(
+      is.na(reg_date) ~ NA_character_,
+      month(reg_date) <= 6 ~ paste0("H1 ", year(reg_date)),
+      TRUE ~ paste0("H2 ", year(reg_date))
+    )
+  )
+
+# Define Half-Year Levels chronologically
+# This ensures the plot order is correct (H1 2020, H2 2020, etc.)
+half_levels <- cohort_ss %>%
+  filter(!is.na(reg_date)) %>%
+  distinct(reg_date, half_year) %>%
+  arrange(reg_date) %>%
+  pull(half_year) %>%
+  unique()
+
+cohort_ss$half_year <- factor(cohort_ss$half_year, levels = half_levels)
+
+# QC Check
+cohort_ss %>%
+  summarise(
+    n_studies = n_distinct(st_reg_id),
+    pct_sample_missing = mean(is.na(st_sample_n))
+  )
+
+
+```
+
+
+#Section 3  Sample size distribution and trends
+3.0 Prep: derive time windows + numeric planned sample size
+Why: sample size is stored as character sometimes; convert once.
+Why time windows: required for stratified distribution plots.
+
+```{r}
+cohort_ss <- cohort %>%
+  mutate(
+    st_sample_n = suppressWarnings(as.numeric(st_sample)),
+    
+    reg_date = as.Date(reg_date),
+    
+    # Quarter date
+    reg_qdate = floor_date(reg_date, "quarter"),
+    
+    # Pretty label like "Q1 2020"
+    time_window = paste0(
+      "Q", quarter(reg_qdate), " ", year(reg_qdate)),
+    
+    half_year = case_when(
+      is.na(reg_date) ~ NA_character_,
+      month(reg_date) <= 6 ~ paste0("H1 ", year(reg_date)),
+      TRUE ~ paste0("H2 ", year(reg_date)))
+    
+  )
+
+# Order chronologically
+quarter_levels <- cohort_ss %>%
+  distinct(reg_qdate, time_window) %>%
+  arrange(reg_qdate) %>%
+  pull( time_window)
+
+cohort_ss$time_window <- factor(
+  cohort_ss$time_window,
+  levels = quarter_levels
+)
+
+# Order chronologically
+half_levels <- cohort_ss %>%
+  distinct(reg_qdate, half_year) %>%
+  arrange(reg_qdate) %>%
+  pull( half_year)
+
+cohort_ss$half_year <- factor(
+  cohort_ss$half_year,
+  levels = unique(half_levels))
+
+
+# QC
+cohort_ss %>%
+  summarise(
+    n_studies = n_distinct(st_reg_id),
+    pct_sample_missing = mean(is.na(st_sample_n))
+  )
+
+```
+##Figure 6A — Overall sample size distribution
+
+What it shows: how fragmented vs scaled the trial landscape is, overall.
+```{r}
+
+
+## Figure 6A table ----
+# Why: use numeric sample sizes only; keep NAs out of distribution computations.
+fig6_overall <- cohort_ss %>%
+  filter(!is.na(st_sample_n)) %>%
+  select(st_reg_id, st_sample_n, reg_date, time_window)
+
+
+```
+##Figure 6B — Sample size distribution by time window
+
+What it shows: whether median/IQR moved over time (bigger, better-powered trials vs persistent small trials).,
+
+```{r}
+
+fig6_by_time <- cohort_ss %>%
+  filter(!is.na(st_sample_n), !time_window=="QNA NA") %>%
+  select(st_reg_id, st_sample_n, time_window, half_year)
+
+
+#Figure 6 summary table (medians/IQR) to report in text
+## Summary stats for reporting ----
+fig6_stats <- cohort_ss %>%
+  filter(!time_window=="QNA NA") %>% 
+  group_by(half_year) %>%
+  summarise(
+    n_studies = n_distinct(st_reg_id),
+    n_with_sample = sum(!is.na(st_sample_n)),
+    median = median(st_sample_n, na.rm = TRUE),
+    q1 = quantile(st_sample_n, 0.25, na.rm = TRUE),
+    q3 = quantile(st_sample_n, 0.75, na.rm = TRUE),
+    
+    .groups = "drop"
+  )
+
+fig6_stats
+
+p6b <- ggplot(fig6_by_time, aes(x = half_year, y = st_sample_n)) +
+  annotation_logticks(sides = "l", linewidth = 0.4, color = "#999999") + 
+  geom_violin(fill = "#f0f8ff", alpha = 0.6, color = "white", linewidth = 0.3, width = 0.85) +
+  geom_boxplot(fill = "#1f77b4", alpha = 0.7, width = 0.55, 
+               outlier.color = "#ff7f00", outlier.alpha = 0.7, outlier.size = 1.1) +
+  
+  # Labels: Q1 (left/blue), Median (center/white), Q3 (right/blue)
+  geom_text(data = fig6_stats, aes(x = half_year, y = q1, label = comma(round(q1))), 
+            nudge_x = -0.15, nudge_y = -0.1, size = 3, color = "#2E86C1", fontface = "bold") +
+  geom_text(data = fig6_stats, aes(x = half_year, y = q3, label = comma(round(q3))), 
+            nudge_x = 0.2, nudge_y = 0.08, size = 3, color = "#2E86C1", fontface = "bold") +
+  geom_text(data = fig6_stats, aes(x = half_year, y = median, label = comma(round(median))), 
+            nudge_x = 0, nudge_y = 0.1, size = 3, color = "#FFFFFF", fontface = "bold") +
+  
+  scale_y_log10(
+    breaks = c(10, 50, 100, 500, 1000, 5000, 10000, 50000),
+    labels = scales::comma_format(accuracy = 1)
+  ) +
+  scale_x_discrete(expand = expansion(add = c(0.3, 0.5))) +
+  labs(
+    title = "Figure 6B. Planned sample size evolution by time window",
+    subtitle = "Violin = density; Q1/Median/Q3 labeled; log10 scale",
+    x = NULL,
+    y = "Planned sample size (log10)"
+  ) +
+  theme_plotly_static(base_size = 11) +
+  theme(
+    axis.text.x = element_text(angle = 35, hjust = 1, vjust = 1, size = 9),
+    axis.text.y = element_text(size = 9),
+    panel.grid.major.y = element_line(color = "#E1E5E9", linewidth = 0.6),
+    plot.subtitle = element_text(size = 10, color = "#666666", face = "italic"),
+    plot.title = element_text(margin = margin(b = 10))
+  )
+
+ggsave("fig6b_publication.png", p6b, width = 12, height = 8, dpi = 300, bg = "white")
+p6b
+
+
+
+```
+
+
+
+##Figure 6C — Sample size distribution by intervention pre/post 2022
+```{r}
+library(tidyverse)
+library(scales)
+library(lubridate)
+
+fig6c_data <- fig6c_data %>%
+  group_by(display_group, phase) %>%
+  mutate(n_in_group = n()) %>%
+  ungroup()
+
+ggplot(fig6c_data,
+       aes(x      = st_sample,
+           y      = display_group,
+           fill   = phase,
+           colour = phase)) +
+
+  geom_vline(xintercept = 100,
+             linetype = "dotted",
+             colour   = "red",
+             linewidth = 0.7) +
+  annotate("text", x = 105, y = "Supportive Care",  # use actual factor level not 0.5
+           label = "N = 100", hjust = 0,
+           colour = "red", size = 2.8) +
+
+  geom_boxplot(
+   data = ~filter(., n_in_group >= 10),
+   aes(fill = phase),
+    position      = position_dodge(width = 0.7),
+    width         = 0.55,
+    outlier.size  = 0.5,
+    outlier.alpha = 0.3,
+    #colour        = "white",
+    linewidth     = 0.4,
+    alpha         = 0.85
+  ) +
+
+  stat_summary(
+    aes(fill = phase),
+    fun      = median,
+    geom     = "point",
+    shape    = 21,
+    size     = 2.5,
+    colour   = "grey20",
+    position = position_dodge(width = 0.7)
+  ) +
+
+  geom_text(
+    data = fig6c_counts,
+    aes(x = 50000, y = display_group,
+        label = paste0("n=", n_trials),
+        colour = phase),
+    position    = position_dodge(width = 0.7),
+    hjust       = 1, size = 2.4,
+    inherit.aes = FALSE,
+    show.legend = FALSE
+  ) +
+
+  # ── ADD THIS LINE — overrides theme_pub's scale_y_continuous ──
+  scale_y_discrete() +
+
+  scale_x_log10(
+    breaks = c(10, 50, 100, 500, 1000, 5000, 50000),
+    labels = c("10", "50", "100", "500", "1k", "5k", "50k"),
+    expand = expansion(mult = c(0.02, 0.05))
+  ) +
+  scale_fill_manual(
+    values = c("Pandemic (2020–2022)" = "#0077BB",
+               "Endemic (2023–2025)"  = "#EE7733"),
+    name = NULL
+  ) +
+  scale_colour_manual(
+    values = c("Pandemic (2020–2022)" = "#0077BB",
+               "Endemic (2023–2025)"  = "#EE7733"),
+    name = NULL
+  ) +
+
+  labs(
+    title    = "Figure 6C. Planned sample size by intervention category and phase",
+    subtitle = "Log scale  |  Red line = N 100  |  Dot = median  |  Box = IQR",
+    x        = "Planned sample size (log scale)",
+    y        = NULL
+  ) +
+  theme_pub(base_size = 11) +
+  theme(
+    legend.position      = "top",
+    legend.justification = "left",
+    panel.grid.major.y   = element_line(colour = "grey92", linewidth = 0.4),
+    axis.text.y          = element_text(size = 9)
+  ) +
+  geom_jitter(
+  data = ~filter(., n_in_group < 10),
+  aes(colour = phase),
+  width = 0, height = 0.15,
+  size = 2, alpha = 0.7
+)
+
+
+```

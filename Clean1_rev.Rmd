@@ -1,0 +1,390 @@
+---
+title: "Clean 1 (QC / checking) — revised"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 8,
+  fig.height = 5,
+  dpi = 300,
+  fig.align = "center",
+  out.width = "100%"
+)
+
+# Core libs
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(lubridate)
+  library(scales)
+})
+
+theme_pub <- function(base_size = 12, base_family = "sans") {
+  ggplot2::theme_minimal(base_size = base_size, base_family = base_family) +
+    ggplot2::theme(
+      plot.title.position = "plot",
+      plot.title = element_text(face = "bold"),
+      plot.subtitle = element_text(margin = margin(b = 6)),
+      axis.title = element_text(face = "bold"),
+      axis.text.x = element_text(angle = 45, hjust = 1),
+      panel.grid.minor = element_blank(),
+      panel.grid.major.x = element_blank(),
+      legend.title = element_text(face = "bold"),
+      legend.position = "right"
+    )
+}
+```
+
+
+```{r helpers}
+# Small helper for QC logging (safe if not present in downstream scripts)
+report_step <- function(df_in, df_out, msg) {
+  cat("\n\n---", msg, "---\n")
+  cat("Rows in :", nrow(df_in), "\n")
+  cat("Rows out:", nrow(df_out), "\n")
+  invisible(df_out)
+}
+```
+
+
+```{r original-clean1, echo=TRUE}
+# ---- ORIGINAL CONTENT (unchanged) ----
+## 1. Setup
+
+
+library(readr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(countrycode)
+library(lubridate)
+
+### 1.1 Load raw REDCap export
+
+data <- read_csv("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data/data_2402.csv")
+
+trial_reference_list <- read_csv("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Result Reporting/trial_reference_list.csv")
+
+# Standardise IDs in reference list upfront (lowercase, trimmed)
+trial_reference_list <- trial_reference_list %>%
+  mutate(st_reg_id = str_to_lower(str_trim(st_reg_id)))
+```
+
+## 2. Helper functions
+
+```{r helpers, message=FALSE}
+# Standard text cleaning (keeps NA as NA; makes values consistent for filtering)
+clean_txt <- function(x) {
+  x <- as.character(x)
+  x <- str_replace_all(x, "\\s+", " ") |> str_trim() |> str_to_lower()
+  x[x %in% c("", "na", "n/a", "unknown", "-99")] <- NA
+  x
+}
+
+# REDCap-style yes/checked handling
+is_yes <- function(x) {
+  x <- clean_txt(x)
+  x %in% c("yes", "y", "true", "1", "checked", "selected")
+}
+
+# Report how many rows removed at each filtering step
+report_step <- function(prev_df, new_df, step_name) {
+  prev_n <- nrow(prev_df)
+  new_n  <- nrow(new_df)
+  removed <- prev_n - new_n
+  cat(sprintf("%-35s: removed %5d | remaining %5d\n", step_name, removed, new_n))
+  invisible(new_df)
+}
+
+# Country cleaning (keeps original casing; avoids treating continents as NA by accident)
+clean_country <- function(x) {
+  x <- as.character(x)
+  x <- str_replace_all(x, "\\s+", " ") |> str_trim()
+  x <- na_if(x, "")
+  x <- na_if(x, "-99")
+  x <- na_if(x, "Unknown")
+  x <- na_if(x, "UNKNOWN")
+  x <- na_if(x, "NA")
+  x <- na_if(x, "N/A")
+  x
+}
+
+# Report how many rows removed at each filtering step
+scount <- function(df, step_name) {
+ n <- length(unique(df$st_reg_id))
+  cat(sprintf("Unique studies in table %-35s: %5d " , step_name, n))
+  invisible(df)
+}
+```
+
+## 3. Study-level table
+
+### 3.1 Extract study-level rows (non-repeating instrument rows) 
+
+```{r study-extract}
+study_table <- subset(data, is.na(data$redcap_repeat_instrument))
+st_raw<-subset(data, is.na(data$redcap_repeat_instrument))
+```
+
+### 3.3 Apply study-level filtering (step-wise with counts)
+
+**Data is all studies from DAG (Pharma RCTs)**
+**study_table is the main table at study level** This will undergo filtering based on inclusion exclusion
+1) Eligible
+2) Not cancelled
+3) Registered after March 2020
+4) Pharmaceuticals only
+5) RCTs (Prospective + Interventional)?
+
+
+```{r study-filter}
+
+# Clean all values to make filtering robust (lowercase, trim, NA handling)
+st0 <- study_table %>%
+  mutate(across(where(is.character), clean_txt))
+
+cat(sprintf("%-35s: removed %5d | remaining %5d\n", "Start (cleaned)", 0, nrow(st0)))
+
+# 0) Filter to only trial IDs present in trial_reference_list (de-duplicated trial IDs, do not contain multiple registrations of the same trial)
+st_ref_ids <- trial_reference_list %>% distinct(st_reg_id)
+
+st0 <- st0 %>% semi_join(st_ref_ids, by = "st_reg_id")
+report_step(study_table, st0, "Filter to trial reference list")
+
+# 1) Eligible = Yes
+st1 <- st0 %>% filter(is_yes(st_elig_yn))
+report_step(st0, st1, "Eligible = Yes")
+
+# 2) Exclude cancelled (NA treated as not cancelled)
+st2 <- st1 %>% filter(!is_yes(st_cancelled))
+report_step(st1, st2, "Exclude cancelled")
+
+# 3) Registered after March 2020
+st3 <- st2 %>%
+  mutate(reg_date = dmy(st_reg_date)) %>%
+  filter(is.na(reg_date) | reg_date >= as.Date("2020-03-01"))
+report_step(st2, st3, "Exclude before March 2020")
+
+# Final study cohort
+study_table <- st3
+rm(st0, st1, st2, st3, st_ref_ids)
+
+scount(study_table, "Study table")
+
+```
+
+```{r}
+chk_studytype<-study_table %>% filter(st_retro_prosp=="retrospective"|st_type=="observational")
+chk<-chk_studytype$st_reg_id
+chk_studytype1<-st_raw %>% filter(str_to_lower(st_reg_id) %in% chk)
+#write.csv(chk_studytype1,"C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/covid19lsr/QC/study_designtype.csv")
+rm(chk_studytype,chk_studytype1)
+```
+
+
+## 4. Study–Country table
+
+### 4.1 Pivot country slots (st_ctry1_name … st_ctry7_name) to long format
+
+```{r country-extract}
+ctry_cols <- grep("^st_ctry\\d+_name$", names(study_table), value = TRUE)
+
+if (!"st_reg_id" %in% names(study_table)) stop("st_reg_id not found in `study_table`.")
+if (length(ctry_cols) == 0) warning("No st_ctry*_name columns found. Will rely on st_countries parsing only (not implemented here).")
+
+country_long <- study_table %>%
+  select(st_reg_id, all_of(ctry_cols)) %>%
+  pivot_longer(
+    cols = all_of(ctry_cols),
+    names_to = "country_slot",
+    values_to = "country_raw"
+  ) %>%
+  mutate(
+    country_raw = clean_country(country_raw),
+    country_slot_n = readr::parse_number(country_slot)
+  ) %>%
+  select(st_reg_id, country_raw, country_slot_n)
+
+# Quick diagnostics
+length(unique(country_long$st_reg_id))
+table(is.na(country_long$country_raw))
+
+# Trials where the first slot is missing (potentially need st_countries parsing later)
+no_country <- filter(country_long, country_slot_n == 1 & is.na(country_raw))
+chk<-no_country$st_reg_id
+chk_nocountry<-st_raw %>% filter(str_to_lower(st_reg_id) %in% chk)
+write.csv(chk_nocountry,"C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/covid19lsr/QC/no_country.csv")
+rm(no_country)
+rm(chk_nocountry)
+```
+
+### 4.2 Keep non-missing countries + standardise via countrycode
+(not filtering the country_table with cohort_ids)
+
+```{r country-standardise}
+country_table <- country_long %>%
+  filter(!(is.na(country_raw)&country_slot_n>1)) %>% #Remove pivot artifacts only (not missing countries
+  distinct(st_reg_id, country_raw, .keep_all = TRUE) %>%
+  arrange(st_reg_id, country_raw)
+
+report_step(country_long,country_table, "Remove pivot artifacts only (not missing countries)")
+length(unique(country_table$st_reg_id))
+
+# Small normalisations (minimal change from your version)
+country_table$country_raw <- gsub("asia (except japan)", "Asia", country_table$country_raw, fixed = TRUE)
+
+country_table$country_code <- countrycode(country_table$country_raw, origin = "country.name", destination = "iso3c")
+country_table$country_std  <- countryname(country_table$country_raw)
+
+rm(country_long)
+scount(country_table,"Country")
+```
+
+## 5. Arm-level table
+
+### 5.1 Extract “Study Arm” repeating instrument rows
+
+```{r arm-extract}
+
+arm_raw <- data %>%
+  filter(redcap_repeat_instrument == "Study Arm") %>%
+  mutate(
+    st_reg_id      = str_to_lower(str_trim(st_reg_id)),
+    arm_id         = suppressWarnings(as.integer(redcap_repeat_instance)),
+    across(where(is.character), clean_txt),
+    sa_num_intv    = suppressWarnings(as.integer(sa_num_intv)),
+    sa_num_planned = suppressWarnings(as.numeric(sa_num_planned))
+  )
+
+scount(arm_raw, "Arm raw")
+
+```
+
+### 5.3 Join study-level fields and compute arm planned N
+
+```{r}
+
+
+arm_tbl <- arm_raw %>%
+  select(
+    st_reg_id, redcap_repeat_instance, arm_id,
+    sa_num_intv, sa_combi, sa_crossover, sa_num_planned,
+    any_of(c(
+      paste0("sa_intv", 1:10, "_target"),
+      paste0("sa_intv", 1:10, "_med_type"),
+      paste0("sa_intv", 1:10, "_drug_all"),
+      paste0("sa_intv", 1:10, "_all"),
+      paste0("sa_intv", 1:10, "_desc"),
+      paste0("sa_intv", 1:10, "_atmp"),
+      paste0("sa_intv", 1:10, "_drug_oth")
+    ))
+  ) %>%
+  left_join(
+    study_table %>% select(st_reg_id, st_reg_date, st_design, st_phase, st_sample, st_intv_arms),
+    by = "st_reg_id"
+  ) %>%
+  mutate(
+    st_sample     = suppressWarnings(as.numeric(st_sample)),
+    st_intv_arms  = suppressWarnings(as.integer(st_intv_arms)),
+    arm_n_planned = dplyr::coalesce(
+      sa_num_planned,
+      if_else(!is.na(st_sample) & !is.na(st_intv_arms) & st_intv_arms > 0,
+              st_sample / st_intv_arms,
+              as.numeric(NA))
+    ),
+    arm_n_source = case_when(
+      !is.na(sa_num_planned)                                                                ~ "sa_num_planned",
+      is.na(sa_num_planned) & !is.na(st_sample) & !is.na(st_intv_arms) & st_intv_arms > 0 ~ "st_sample/st_intv_arms",
+      TRUE                                                                                   ~ NA_character_
+    )
+  )
+
+arm_table <- arm_tbl %>%
+  select(
+    st_reg_id,
+    arm_id = redcap_repeat_instance,
+    st_reg_date, st_design, st_phase, st_sample, st_intv_arms,
+    sa_num_intv, sa_combi, sa_crossover, sa_num_planned,
+    arm_n_planned, arm_n_source,
+    any_of(c(
+      paste0("sa_intv", 1:10, "_target"),
+      paste0("sa_intv", 1:10, "_med_type"),
+      paste0("sa_intv", 1:10, "_drug_all"),
+      paste0("sa_intv", 1:10, "_all"),
+      paste0("sa_intv", 1:10, "_desc"),
+      paste0("sa_intv", 1:10, "_atmp"),
+      paste0("sa_intv", 1:10, "_drug_oth")
+    ))
+  )
+
+arm_table %>% summarise(n_arms = n(), n_trials = n_distinct(st_reg_id))
+scount(arm_table, "arm")
+
+```
+
+
+### 5.2 Arm level diagnostics
+
+There are reg_ids in arm table that are not htere in study table and vice-a-versa
+
+```{r}
+
+
+# 1) Unique ID sets
+ids_st_raw  <- st_raw        %>% distinct(st_reg_id)
+cohort_ids  <- study_table   %>% distinct(st_reg_id)
+ids_arm     <- arm_table     %>% distinct(st_reg_id)
+
+# 2) Mismatch lists
+ids_in_arm_not_in_cohort  <- ids_arm       %>% anti_join(cohort_ids, by = "st_reg_id")
+ids_in_cohort_not_in_arm  <- cohort_ids    %>% anti_join(ids_arm,    by = "st_reg_id")
+
+cat("Unique studies in RAW study rows:  ", nrow(ids_st_raw), "\n")
+cat("Unique studies in STUDY COHORT:    ", nrow(cohort_ids), "\n")
+cat("Unique studies with ARM rows:      ", nrow(ids_arm),    "\n\n")
+cat("ARM present but NOT in cohort:     ", nrow(ids_in_arm_not_in_cohort), "\n")
+cat("In cohort but NO arms:             ", nrow(ids_in_cohort_not_in_arm), "\n\n")
+cat("Arm coverage among cohort studies: ",
+    round(100 * (nrow(cohort_ids) - nrow(ids_in_cohort_not_in_arm)) / nrow(cohort_ids), 1),
+    "%\n")
+
+# 3) Audit WHY arm-present studies are not in cohort
+study_flags <- st_raw %>%
+  mutate(across(where(is.character), clean_txt)) %>%
+  mutate(
+    flag_eligible      = is_yes(st_elig_yn),
+    flag_not_cancelled = !is_yes(st_cancelled),
+    flag_interventional = is.na(st_type) | str_detect(st_type, "interventional"),
+    flag_rct           = !is.na(st_design) & str_detect(st_design, "rct"),
+    reg_date_parsed    = suppressWarnings(dmy(st_reg_date)),
+    flag_year_2020     = is.na(reg_date_parsed) | reg_date_parsed >= as.Date("2020-03-01")
+  ) %>%
+  select(st_reg_id, starts_with("flag_"), reg_date_parsed, st_design, st_type, st_elig_yn, st_cancelled)
+
+arm_not_in_cohort_audit <- ids_in_arm_not_in_cohort %>%
+  left_join(study_flags, by = "st_reg_id") %>%
+  mutate(
+    exclusion_reason = case_when(
+      is.na(flag_eligible)    ~ "missing flags / study row missing after cleaning",
+      !flag_eligible          ~ "ineligible (st_elig_yn != yes)",
+      !flag_not_cancelled     ~ "cancelled",
+      !flag_interventional    ~ "not interventional (st_type)",
+      !flag_rct               ~ "not RCT (st_design)",
+      !flag_year_2020         ~ "registered before 03-2020",
+      TRUE                    ~ "passes these flags — check other filters"
+    )
+  )
+
+arm_not_in_cohort_audit %>% count(exclusion_reason, sort = TRUE)
+
+```
+```{r}
+rm( arm_not_in_cohort_audit, arm_raw,arm_tbl,                     ids_arm,        ids_in_arm_not_in_cohort,ids_in_cohort_not_in_arm,
+ids_st_raw,st_raw,study_flags )
+```
+
+```

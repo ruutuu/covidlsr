@@ -1,0 +1,595 @@
+---
+title: "COVID LMR — Analysis (Results Sections 1–2)"
+output: html_document
+---
+
+# 0) Setup + Load Clean2 objects
+
+```{r setup, message=FALSE, warning=FALSE}
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(lubridate)
+
+# ---- Path to the Clean2 RData you saved ----
+in_dir <- "C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data"
+
+# Option A: load the latest file matching your naming pattern
+rdata_in <- list.files(in_dir, pattern = "^covid_lmr_clean7_\\d{8}\\.RData$", full.names = TRUE)
+stopifnot(length(rdata_in) >= 1)
+rdata_in <- rdata_in[which.max(file.info(rdata_in)$mtime)]
+
+load(rdata_in)
+
+# Expect these to exist from Clean1/Clean2
+stopifnot(exists("study_table"))
+stopifnot(exists("country_table"))
+stopifnot(exists("arm_table"))
+stopifnot(exists("pharma_table"))
+
+cat("Loaded:", basename(rdata_in), "\n")
+cat("Unique studies (study_table):", n_distinct(study_table$st_reg_id), "\n")
+
+
+clean_id <- function(x) str_to_lower(str_trim(as.character(x)))
+
+parse_dmy_safe <- function(x) {
+  x <- as.character(x)
+  x[x %in% c("", "na", "n/a", "unknown", "-99")] <- NA
+  suppressWarnings(dmy(x))
+}
+
+study_table <- study_table %>%
+  mutate(
+    st_reg_id = clean_id(st_reg_id),
+    reg_date  = parse_dmy_safe(st_reg_date)
+  )
+
+country_table <- country_table %>%
+  mutate(st_reg_id = clean_id(st_reg_id))
+
+arm_table <- arm_table %>%
+  mutate(st_reg_id = clean_id(st_reg_id))
+
+pharma_table <- pharma_table %>%
+  mutate(
+    st_reg_id = clean_id(st_reg_id),
+    reg_date  = parse_dmy_safe(st_reg_date)
+  )
+```
+
+
+2) Define analytic cohort 
+**We keep NA dates (so we don't drop studies just because date is missing).**
+
+```{r}
+cohort <- study_table 
+cohort_ids <- cohort %>% distinct(st_reg_id)
+n_distinct(study_table$st_reg_id)
+n_distinct(cohort$st_reg_id)
+
+```
+
+
+#Section 1 — Overview
+
+## Figure 2. New registrations per quarter + cumulative
+Why: quarter aggregation is stable + interpretable for long time series.
+
+
+```{r}
+setwd("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/covid19lsr/plots")
+library(ggplot2)
+library(scales)
+library(forcats)
+fmt_qtr <- function(d) paste0("Q", quarter(d), " ", year(d))
+
+qtr_breaks <- function(x) {
+  seq(from = floor_date(min(x, na.rm = TRUE), "quarter"),
+      to   = ceiling_date(max(x, na.rm = TRUE), "quarter"),
+      by   = "2 quarters")
+}
+
+# Packages
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(scales)
+
+# Plotly-style theme for static publication plots
+theme_plotly_static <- function(base_size = 12) {
+  theme_minimal(base_size = base_size, base_family = '"Open Sans", sans-serif') +
+    theme(
+      text = element_text(color = "#444444"),
+      plot.title = element_text(
+        face = "bold", size = base_size + 2, hjust = 0, margin = margin(b = 8)
+      ),
+      axis.title = element_text(face = "bold", size = base_size),
+      axis.text = element_text(size = base_size - 1, color = "#444444"),
+      axis.ticks = element_line(color = "#444444", linewidth = 0.25),
+     # panel.background = element_rect(fill = "#f9f9f9", color = NA),
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor = element_blank(),
+      panel.grid.major.y = element_line(color = "#E1E5E9", linewidth = 0.5),
+      plot.margin = margin(12, 12, 12, 12),
+      legend.position = "bottom"
+    )
+}
+
+# Data prep
+reg_by_q <- cohort %>%
+  filter(!is.na(reg_date)) %>%
+  mutate(reg_qdate = floor_date(reg_date, "quarter")) %>%
+  count(reg_qdate, name = "n_new") %>%
+  arrange(reg_qdate) %>%
+  mutate(n_cum = cumsum(n_new))
+
+# P2a: New registrations bar
+p2a <- ggplot(reg_by_q, aes(x = reg_qdate, y = n_new)) +
+  geom_col(width = 75, fill = "#1f77b4") +
+  geom_text(aes(label = comma(n_new)), vjust = -0.3, size = 3.3, 
+            fontface = "bold", color = "#444444") +
+  scale_x_date(breaks = qtr_breaks(reg_by_q$reg_qdate), labels = fmt_qtr,
+               expand = expansion(mult = c(0.01, 0.03))) +
+  scale_y_continuous(labels = comma, expand = expansion(mult = c(0, 0.13))) +
+  labs(title = "New pharmaceutical RCT registrations per quarter",
+       x = NULL, y = "Number of new registrations") +
+  theme_plotly_static(12) +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+ggsave("p2a_publication.png", p2a, width = 10, height = 6, dpi = 300)
+
+# P2b: Cumulative line
+p2b <- ggplot(reg_by_q, aes(x = reg_qdate, y = n_cum)) +
+  geom_line(linewidth = 1.2, color = "#1B4F72") +
+  geom_point(size = 2.5, color = "#1B4F72") +
+  scale_x_date(breaks = qtr_breaks(reg_by_q$reg_qdate), labels = fmt_qtr,
+               expand = expansion(mult = c(0.01, 0.02))) +
+  scale_y_continuous(labels = comma, expand = expansion(mult = c(0, 0.06))) +
+  labs(title = "Cumulative pharmaceutical RCT registrations",
+       x = NULL, y = "Cumulative registrations") +
+  theme_plotly_static(12) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggsave("p2b_publication.png", p2b, width = 10, height = 6, dpi = 300)
+
+# View
+print(p2a)
+print(p2b)
+
+
+```
+
+# Section 2 — Intervention landscape
+
+2.1 Build study–drug table (denominator = studies; unit = study×drug)
+
+ Why:
+ - pharma_table is at component/arm granularity.
+ - For Figures 3–5, you want "how many studies tested drug X?"
+ - So you collapse to one row per (study, drug_std).
+
+ IMPORTANT:
+ We do NOT filter out "other"/oxygen/etc here unless you explicitly decide later.
+ We only filter pharma_table to the cohort IDs to avoid contamination from excluded studies.
+ 
+
+
+##Figure 3. Number of RCTs by intervention (Top N)
+ Why: "n trials for drug X" must be counted at study-level (not arm/components).
+
+##Figure 4. Sample size by intervention (Top N)
+Why:
+ previous manuscript uses STUDY-level planned sample size (st_sample),
+ and then summarises within the set of studies that include a given intervention.This answers: "If we focus on drug X, how large is the planned evidence base around X?"
+
+ NOTE: If a study tests multiple drugs, its st_sample contributes to each of those drugs’ totals. That's okay for "drug-centric portfolio size", but you should state it explicitly in Methods.
+```{r}
+pharma_table<-pharma_table %>% filter(!drug_std=="azd1222")
+cohort <- study_table 
+cohort_ids <- cohort %>% distinct(st_reg_id)
+
+
+pharma_in_cohort <- pharma_table %>%
+  semi_join(cohort_ids, by = "st_reg_id")
+
+only_supportive<-pharma_study_flags %>% filter(study_type=="Supportive-only") %>% select(st_reg_id) %>% distinct()
+
+
+# If your pharma_table already has drug_std and med_type cleaned, use them directly:
+study_drug <- pharma_in_cohort %>%
+  filter(!is.na(drug_std), drug_std != "") %>% 
+ # filter(!st_reg_id %in% only_supportive$st_reg_id) %>% 
+  distinct(st_reg_id, drug_std, .keep_all = TRUE) 
+
+# Quick coverage
+
+study_drug_filtered<- study_drug %>% filter(!display_group=="Supportive Care") %>% filter(!drug_std=="antibiotics")
+
+drugcat_plot <- study_drug_filtered %>%
+  mutate(
+    reg_date  = as.Date(st_reg_date, format = "%d/%m/%Y"),
+    reg_year  = year(reg_date),
+    reg_month = month(reg_date),
+
+    time_period = case_when(
+      reg_year == 2020 & reg_month <= 3  ~ "2020 Q1",
+      reg_year == 2020 & reg_month <= 6  ~ "2020 Q2",
+      reg_year == 2020 & reg_month <= 9  ~ "2020 Q3",
+      reg_year == 2020 & reg_month <= 12 ~ "2020 Q4",
+      reg_year == 2021 & reg_month <= 3  ~ "2021 Q1",
+      reg_year == 2021 & reg_month <= 6  ~ "2021 Q2",
+      reg_year == 2021 & reg_month <= 9  ~ "2021 Q3",
+      reg_year == 2021 & reg_month <= 12 ~ "2021 Q4",
+      reg_year == 2022 & reg_month <= 6  ~ "2022 H1",
+      reg_year == 2022 & reg_month <= 12 ~ "2022 H2",
+      reg_year == 2023                   ~ "2023",
+      reg_year %in% c(2024, 2025)        ~ "2024–25",
+      TRUE                               ~ NA_character_
+    ),
+
+    time_period = factor(time_period, levels = c(
+      "2020 Q1", "2020 Q2", "2020 Q3", "2020 Q4",
+      "2021 Q1", "2021 Q2", "2021 Q3", "2021 Q4",
+      "2022 H1", "2022 H2",
+      "2023",
+      "2024–25"
+    ))
+  )
+
+```
+
+```{r}
+
+library(ggplot2)
+# Your palette & data prep (unchanged)
+
+broad_cat_colors <-c(
+  "Antimalarials"              = "mistyrose4",
+  "Supportive Care"            = "#D3D3D3",
+  "Antivirals (repurposed)"    = "deepskyblue4",
+  "Antibody Therapies"         = "lightcoral",
+  "Other/Unspecified"          = "#BEBEBE",  # If still needed
+  "Immunomodulators"           = "indianred3",
+  "Corticosteroids"            = "#F58518",
+  "Metabolic agents"           = "#9D755D",
+  "Antivirals (direct-acting)" = "deepskyblue3",
+  "Anticoagulants"             = "palegreen4",
+  "Anti-inflammatories"        = "lightgoldenrod",
+  "Antibiotics / Antiparasitics" = "pink4"
+)
+
+# Plotly-style theme (uniform across all your plots)
+theme_plotly_pub <- function(base_size = 11) {
+  theme_minimal(base_size = base_size, base_family = '"Open Sans", sans-serif') +
+    theme(
+      text = element_text(color = "#444444"),
+      plot.title = element_text(face = "bold", size = base_size + 2, hjust = 0, margin = margin(b = 8)),
+      plot.subtitle = element_text(size = base_size, hjust = 0, margin = margin(b = 6), color = "#666666"),
+      axis.title = element_text(face = "bold", size = base_size),
+      axis.text = element_text(size = base_size - 1, color = "#444444"),
+      axis.ticks = element_line(color = "#444444", linewidth = 0.25),
+    #  panel.background = element_rect(fill = "#f9f9f9", color = NA),
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.grid.major.y = element_blank(),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor = element_blank(),
+      legend.position = "bottom",
+      legend.title = element_text(size = base_size - 1),
+      legend.text = element_text(size = base_size - 2),
+      legend.key.size = unit(0.8, "lines"),
+      plot.margin = margin(12, 12, 12, 12)
+    )
+}
+
+topN <- 30
+
+# ── Figure 3: RCT counts by intervention (Top 30) ──────────────────────────
+fig3_counts <- study_drug_filtered %>%
+  count(drug_std, display_group, name = "n_studies") %>%
+  arrange(desc(n_studies)) %>% slice_head(n = topN)
+
+p3 <- fig3_counts %>%
+  mutate(drug_std = reorder(drug_std, n_studies)) %>%
+  ggplot(aes(x = drug_std, y = n_studies, fill = display_group)) +
+  geom_col(width = 0.85) +
+  geom_text(aes(label = comma(n_studies)), hjust = -0.12, size = 3.2, 
+            fontface = "bold", color = "#444444") +
+  coord_flip(clip = "off") +
+  scale_y_continuous(labels = comma, expand = expansion(mult = c(0, 0.15))) +
+  scale_fill_manual(values = broad_cat_colors, name = "Drug category") +
+  labs(
+    title = paste0("Figure 3. Number of RCTs including each intervention (Top ", topN, ")"),
+    x = NULL,
+    y = "Number of RCTs (unique studies)"
+  ) +
+  theme_plotly_pub(11) + guides(fill = guide_legend(nrow = 3, byrow = TRUE))
+
+ggsave("fig3_publication.png", p3, width = 12, height = 9, dpi = 300)
+p3
+
+# ── Figure 4: Total sample size by intervention (Top 30) ─────────────────────
+fig4_sum <- study_drug_filtered %>%
+  
+  group_by(drug_std, display_group) %>%
+  summarise(
+    n_studies = n_distinct(st_reg_id),
+    total_planned = sum(st_sample, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(total_planned)) %>% slice_head(n = topN)
+
+p4 <- fig4_sum %>%
+  mutate(drug_std = reorder(drug_std, total_planned)) %>%
+  ggplot(aes(x = drug_std, y = total_planned, fill = display_group)) +
+  geom_col(width = 0.85) +
+  geom_text(aes(label = comma(total_planned)), hjust = -0.10, size = 3.0, 
+            fontface = "bold", color = "#444444") +
+  coord_flip(clip = "off") +
+  scale_y_continuous(labels = comma, expand = expansion(mult = c(0, 0.18))) +
+  scale_fill_manual(values = broad_cat_colors, name = "Drug category") +
+  labs(
+    title = paste0("Figure 4. Total planned sample size across RCTs including each intervention (Top ", topN, ")"),
+    subtitle = "Total planned = sum of study-level planned sample size among studies that include the intervention",
+    x = NULL,
+    y = "Total planned participants"
+  ) +
+  theme_plotly_pub(11) +
+  guides(fill = guide_legend(nrow = 3, byrow = TRUE))
+
+ggsave("fig4_publication.png", p4, width = 12, height = 9, dpi = 300)
+p4
+
+
+```
+
+
+```{r}
+# No join needed — display_group already on study_drug_filtered
+drugcat_plot <- study_drug_filtered %>%
+  mutate(
+    reg_date  = as.Date(st_reg_date, format = "%d/%m/%Y"),
+    reg_year  = year(reg_date),
+    reg_month = month(reg_date),
+
+    time_period = case_when(
+      reg_year == 2020 & reg_month <= 3  ~ "2020 Q1",
+      reg_year == 2020 & reg_month <= 6  ~ "2020 Q2",
+      reg_year == 2020 & reg_month <= 9  ~ "2020 Q3",
+      reg_year == 2020 & reg_month <= 12 ~ "2020 Q4",
+      reg_year == 2021 & reg_month <= 3  ~ "2021 Q1",
+      reg_year == 2021 & reg_month <= 6  ~ "2021 Q2",
+      reg_year == 2021 & reg_month <= 9  ~ "2021 Q3",
+      reg_year == 2021 & reg_month <= 12 ~ "2021 Q4",
+      reg_year == 2022 & reg_month <= 6  ~ "2022 H1",
+      reg_year == 2022 & reg_month <= 12 ~ "2022 H2",
+      reg_year == 2023                   ~ "2023",
+      reg_year %in% c(2024, 2025)        ~ "2024–25",
+      TRUE                               ~ NA_character_
+    ),
+
+    time_period = factor(time_period, levels = c(
+      "2020 Q1", "2020 Q2", "2020 Q3", "2020 Q4",
+      "2021 Q1", "2021 Q2", "2021 Q3", "2021 Q4",
+      "2022 H1", "2022 H2",
+      "2023",
+      "2024–25"
+    ))
+  )
+
+# Aggregate for Figure 5
+plot_data_fig5 <- drugcat_plot %>%
+  filter(
+    !is.na(display_group),
+    display_group != "Other/Unspecified",
+    !is.na(time_period)
+  ) %>%
+  distinct(st_reg_id, drug_std, time_period, display_group) %>%
+  count(time_period, display_group, name = "n_studies")
+
+# Check totals per period
+plot_data_fig5 %>%
+  group_by(time_period) %>%
+  summarise(total = sum(n_studies)) %>%
+  print()
+
+```
+
+##Figure 5. Intervention mix over time (stacked bar/area input)
+(NEEDS TO BE UPDATED)
+Why:
+This tracks how intervention classes change over time.
+ We use med_type as your intervention category label.
+If med_type is missing, we keep it visible as "unknown" (no silent dropping).
+
+
+```{r}
+# Your data prep & palette (unchanged)
+library(patchwork)
+library(scales)
+
+plot_data_fig5 <- drugcat_plot %>%
+  filter(!is.na(display_group), display_group != "Other/Unspecified", !is.na(time_period)) %>%
+  mutate(time_period_collapsed = fct_collapse(time_period, "2023–25" = c("2023", "2024–25"))) %>%
+  distinct(st_reg_id, drug_std, time_period_collapsed, display_group) %>%
+  count(time_period_collapsed, display_group, name = "n_studies") %>%
+  mutate(time_period_collapsed = factor(time_period_collapsed, levels = c(
+    "2020 Q1","2020 Q2","2020 Q3","2020 Q4", "2021 Q1","2021 Q2","2021 Q3","2021 Q4",
+    "2022 H1","2022 H2","2023–25"
+  )))
+
+stack_order <- c("Antimalarials", "Antivirals (repurposed)", "Antivirals (direct-acting)",
+                 "Corticosteroids", "Immunomodulators", "Antibody Therapies",
+                 "Anticoagulants", "Antibiotics / Antiparasitics", "Anti-inflammatories",
+                 "Metabolic agents", "Supportive Care")
+
+plot_data_fig5 <- plot_data_fig5 %>% mutate(display_group = factor(display_group, levels = stack_order))
+
+period_totals <- plot_data_fig5 %>% group_by(time_period_collapsed) %>% 
+  summarise(total = sum(n_studies), .groups = "drop")
+
+display_palette <- c(
+  "Antimalarials"              = "mistyrose4",
+  "Supportive Care"            = "#D3D3D3",
+  "Antivirals (repurposed)"    = "deepskyblue4",
+  "Antibody Therapies"         = "lightcoral",
+  "Other/Unspecified"          = "#BEBEBE",  # If still needed
+  "Immunomodulators"           = "indianred3",
+  "Corticosteroids"            = "#F58518",
+  "Metabolic agents"           = "#9D755D",
+  "Antivirals (direct-acting)" = "deepskyblue3",
+  "Anticoagulants"             = "palegreen4",
+  "Anti-inflammatories"        = "lightgoldenrod",
+  "Antibiotics / Antiparasitics" = "pink4"
+)
+
+# Plotly publication theme
+theme_plotly_pub <- function(base_size = 11) {
+  theme_minimal(base_size = base_size, base_family = '"Open Sans", sans-serif') +
+    theme(
+      text = element_text(color = "#444444"),
+      plot.title = element_text(face = "bold", size = base_size + 1.5, hjust = 0),
+      axis.title = element_text(face = "bold", size = base_size),
+      axis.text = element_text(size = base_size - 1),
+      axis.ticks = element_line(color = "#444444", linewidth = 0.25),
+      panel.background = element_rect(fill = "#f9f9f9", color = NA),
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.grid.major.y = element_line(color = "#E1E5E9", linewidth = 0.5),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor = element_blank(),
+      legend.position = "none",
+      plot.margin = margin(8, 8, 8, 8)
+    )
+}
+
+# Panel A: Absolute counts
+pA <- ggplot(plot_data_fig5, aes(x = time_period_collapsed, y = n_studies, fill = display_group)) +
+  geom_col(width = 0.82, colour = "white", linewidth = 0.2) +
+  geom_text(data = period_totals, aes(x = time_period_collapsed, y = total, label = total),
+            inherit.aes = FALSE, vjust = -0.35, size = 3, colour = "#444444", fontface = "bold") +
+  scale_fill_manual(values = display_palette, name = NULL) +
+  scale_y_continuous(labels = comma, expand = expansion(mult = c(0, 0.08))) +
+  labs(title = "A. Trial volume", x = NULL, y = "Number of RCTs") +
+  theme_plotly_pub(11) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Panel B: Proportional
+pB <- ggplot(plot_data_fig5, aes(x = time_period_collapsed, y = n_studies, fill = display_group)) +
+  geom_col(position = "fill", width = 0.82, colour = "white", linewidth = 0.2) +
+  scale_fill_manual(values = display_palette, name = "Intervention category") +
+  scale_y_continuous(labels = percent_format(accuracy = 1), expand = expansion(mult = c(0, 0.02))) +
+  labs(title = "B. Category share", x = NULL, y = "% of RCTs") +
+  theme_plotly_pub(11) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "bottom", legend.text = element_text(size = 9),
+        legend.title = element_blank()) +
+  guides(fill = guide_legend(nrow = 2, byrow = TRUE))
+
+# Combined (verified: categories identical across panels)
+fig5 <- pA + pB + 
+  plot_layout(widths = c(1.4, 1), heights = 1) +
+  plot_annotation(
+    title = "Figure 5. COVID-19 RCT intervention category mix over time",
+    subtitle = "Quarters: 2020–2021 | Half-years: 2022 | Combined: 2023–2025 | Numbers = total RCTs per period",
+    theme = theme(
+      plot.title = element_text(size = 14, face = "bold", family = '"Open Sans", sans-serif'),
+      plot.subtitle = element_text(size = 10, color = "#666666", family = '"Open Sans", sans-serif')
+    )
+  )
+
+ggsave("fig5_publication.png", fig5, width = 14, height = 8, dpi = 300)
+fig5
+
+
+```
+
+```{r}
+setwd("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data")
+save(drugcat_plot, file = "drugcat_plot.RData")
+write.csv(study_drug,"study_drug.csv")
+```
+
+
+```{r}
+# ── Figure 3 Extension: RCT counts by intervention (Top 30) *by era* ────────
+# Three separate plots: one per era, using the cohort era variable
+cohort<-study_table %>%
+  mutate(era = case_when(
+    reg_date < as.Date("2021-05-26") ~ "Early Pandemic (to May 2021)",
+    reg_date < as.Date("2023-05-05") ~ "Mid-pandemic (May 2021–May 2023)",
+    TRUE                             ~ "Post-PHEIC (May 2023 onwards)"
+  ))
+topN <- 30
+
+# Filter to study-drug level with era (assuming study_table has one row per study)
+study_drug_era <- cohort %>%
+  select(st_reg_id, era, reg_date) %>%
+  left_join(study_drug_filtered %>% select(st_reg_id, drug_std, display_group), 
+            by = "st_reg_id") %>%  filter(!is.na(drug_std))
+
+
+# ── Figure 3: Top interventions by era, SIDE-BY-SIDE (3 columns) ──────────────
+library(patchwork)
+
+# ── FIXED: Clean drug names only (no era suffix) ────────────────────────────
+
+fig3_era_plots_clean <- study_drug_era %>%
+  count(era, drug_std, display_group, name = "n_studies") %>%
+  group_by(era) %>%
+  slice_max(n_studies, n = 30) %>%  # All top30 (auto-trims sparse Mid/Post)
+  filter(n_studies > 1) %>%  # Drop tiny bars (<4 trials)
+  ungroup() %>%
+  mutate(era_label = str_wrap(era, 25))
+
+
+# Early (reorder within Early only)
+p_early <- fig3_era_plots_clean %>%
+  filter(era == "Early Pandemic (to May 2021)") %>%
+  mutate(drug_std = reorder(drug_std, n_studies)) %>%  # Clean: no era suffix
+  ggplot(aes(x = drug_std, y = n_studies, fill = display_group)) +
+  geom_col(width = 0.85) + geom_text(aes(label = comma(n_studies)), hjust = -0.1, size = 3.2, fontface = "bold") +
+  coord_flip(clip = "off") + scale_y_continuous(labels = comma, expand = expansion(mult = c(0, 0.2))) +
+  scale_fill_manual(values = broad_cat_colors) + labs(title = "Early (top 30)", x = NULL, y = "RCTs") +
+  theme_plotly_pub(11) + theme(legend.position = "none")
+
+# Mid (reorder within Mid only)
+p_mid <- fig3_era_plots_clean %>%
+  filter(era == "Mid-pandemic (May 2021–May 2023)") %>%
+  mutate(drug_std = reorder(drug_std, n_studies)) %>%
+  ggplot(aes(x = drug_std, y = n_studies, fill = display_group)) +
+  geom_col(width = 0.85) + geom_text(aes(label = comma(n_studies)), hjust = -0.1, size = 3.2, fontface = "bold") +
+  coord_flip(clip = "off") + scale_y_continuous(labels = comma, expand = expansion(mult = c(0, 0.15))) +
+  scale_fill_manual(values = broad_cat_colors) + labs(title = "Mid (top 15)", x = NULL, y = NULL) +
+  theme_plotly_pub(11) + theme(legend.position = "none")
+
+# Post (reorder within Post only)
+p_post <- fig3_era_plots_clean %>%
+  filter(era == "Post-PHEIC (May 2023 onwards)") %>%
+  mutate(drug_std = reorder(drug_std, n_studies)) %>%
+  ggplot(aes(x = drug_std, y = n_studies, fill = display_group)) +
+  geom_col(width = 0.85) + geom_text(aes(label = comma(n_studies)), hjust = -0.1, size = 3.2, fontface = "bold") +
+  coord_flip(clip = "off") + scale_y_continuous(labels = comma, expand = expansion(mult = c(0, 0.15))) +
+  scale_fill_manual(values = broad_cat_colors) + labs(title = "Post-PHEIC (top 10)", x = NULL, y = NULL) +
+  theme_plotly_pub(11) + theme(legend.position = "none")
+
+# Combine (same as before)
+library(patchwork)
+
+
+p3_final <- (p_early | p_mid | p_post) + 
+  plot_layout(widths = c(1.2, 1, 0.8)) +  # Early wider, Post narrowest
+  plot_annotation(
+    title = "Figure 3. Top interventions by era",
+    subtitle = "95% trial decline: HCQ → ritonavir/O2 consolidation",
+    caption = "Drug category legend below",
+    theme = theme_plotly_pub()
+  ) &
+  theme(legend.position = "none")
+
+
+ggsave("fig3_clean_labels.png", p3_final_fixed, width = 18, height = 12, dpi = 300)
+p3_final_fixed
+
+```
+

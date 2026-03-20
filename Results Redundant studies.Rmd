@@ -1,0 +1,180 @@
+
+
+```{r}
+library(tidyverse)
+library(lubridate)
+
+# --- 1. Filter Data for Each Drug (Strict Logic) ---
+
+# A. Hydroxychloroquine (Standard)
+hcq_data <- pharma_table1 %>%
+  filter(drug_std %in% c("hydroxychloroquine", "chloroquine")) %>%
+  mutate(plot_group = "Hydroxychloroquine")
+
+# B. Ivermectin (Standard)
+ivm_data <- pharma_table1 %>%
+  filter(drug_std == "ivermectin") %>%
+  mutate(plot_group = "Ivermectin")
+
+# C. Convalescent Plasma (Use Class/Label)
+cp_data <- pharma_table1 %>%
+  filter(drug_class == "Convalescent plasma" | label == "Immunotherapy (Conv. Plasma)") %>%
+  mutate(plot_group = "Convalescent Plasma")
+
+# D. Lopinavir/Ritonavir (Combo Check)
+# We need to find arms that have BOTH.
+# Step 1: Identify Arm IDs that have Lopinavir
+lop_arms <- pharma_table1 %>% 
+  filter(drug_std == "lopinavir") %>% 
+  select(st_reg_id, arm_id)
+
+# Step 2: Identify Arm IDs that have Ritonavir
+rit_arms <- pharma_table1 %>% 
+  filter(drug_std == "ritonavir") %>% 
+  select(st_reg_id, arm_id)
+
+# Step 3: Keep only the INTERSECTION (Arms with both)
+combo_arms <- inner_join(lop_arms, rit_arms, by = c("st_reg_id", "arm_id"))
+
+# Step 4: Filter the main table for these validated combo arms
+lpv_data <- pharma_table1 %>%
+  semi_join(combo_arms, by = c("st_reg_id", "arm_id")) %>%
+  # Just keep one row per arm to avoid double plotting (since 2 rows exist per combo)
+  distinct(st_reg_id, arm_id, .keep_all = TRUE) %>%
+  mutate(plot_group = "Lopinavir/Ritonavir")
+
+
+# --- 2. Combine & Clean for Plotting ---
+all_target_data <- bind_rows(hcq_data, ivm_data, cp_data, lpv_data) %>%
+  filter(st_reg_date >= "2020-01-01", st_reg_date <= "2025-12-31") %>%
+  mutate(
+    year = year(st_reg_date),
+    phase_simple = case_when(
+      str_detect(st_phase, "phase 3|phase 4") ~ "Phase 3/4 (Confirmatory)",
+      str_detect(st_phase, "phase 1|phase 2") ~ "Phase 1/2 (Exploratory)",
+      TRUE ~ "Other"
+    )
+  ) %>%
+  filter(phase_simple != "Other")
+
+# --- 3. Define Stop Dates ---
+stop_lines <- tibble(
+  plot_group = c("Hydroxychloroquine", "Ivermectin", "Lopinavir/Ritonavir", "Convalescent Plasma"),
+  stop_date = as.Date(c("2020-07-04", "2021-03-31", "2020-07-04", "2021-12-07")),
+  label = c("WHO Stop (July '20)", "WHO Stop (Mar '21)", "WHO Stop (July '20)", "WHO Stop (Dec '21)")
+)
+
+# --- 4. Plot Function (To keep it clean) ---
+plot_redundancy <- function(data_subset, group_name) {
+  
+  stop_info <- stop_lines %>% filter(plot_group == group_name)
+  
+  p <- ggplot(data_subset, aes(x = st_reg_date, y = phase_simple, color = phase_simple)) +
+    
+    # Jittered Points
+    geom_jitter(height = 0.2, width = 0, size = 3, alpha = 0.6) +
+    
+    # Stop Line
+    geom_vline(xintercept = as.numeric(stop_info$stop_date), linetype = "dashed", color = "red", size = 1) +
+    annotate("text", x = stop_info$stop_date + 20, y = 2.4, 
+             label = stop_info$label, hjust = 0, color = "red", fontface = "bold") +
+    
+    # Formatting
+    scale_x_date(date_breaks = "1 year", date_labels = "%Y", limits = as.Date(c("2020-01-01", "2025-12-31"))) +
+    scale_color_manual(values = c("Phase 1/2 (Exploratory)" = "#4575b4", "Phase 3/4 (Confirmatory)" = "#d73027")) +
+    labs(
+      title = paste("Redundant trial?:", group_name),
+      #subtitle = "Blue dots (Exploratory) after Red Line = Research Waste",
+      x = NULL, y = NULL, color = NULL
+    ) +
+    theme_minimal(base_size = 14) +
+    theme(legend.position = "top", panel.grid.major.y = element_blank())
+  
+  print(p)
+}
+
+# --- 5. Generate Plots ---
+unique_groups <- unique(all_target_data$plot_group)
+
+for(g in unique_groups) {
+  plot_redundancy(all_target_data %>% filter(plot_group == g), g)
+}
+
+```
+
+
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(scales)
+
+# --- 1. Define Stop Dates ---
+# WHO/NIH Guidelines generally recommended against routine use outside trials by mid-2021
+# (e.g., NIH Guidelines: Feb 2021 for Zinc/Vit C in non-deficient patients)
+stop_lines_supplements <- tibble(
+  plot_group = c("Zinc", "Vitamin C"),
+  stop_date = as.Date(c("2021-02-11", "2021-02-11")), 
+  label = c("NIH Guidelines: Against (Feb '21)", "NIH Guidelines: Against (Feb '21)")
+)
+
+# --- 2. Filter Data for Zinc & Vitamin C ---
+# We use str_detect to catch "zinc sulfate", "zinc chloride", etc.
+supplements_data <- pharma_table1 %>%
+  filter(
+    str_detect(str_to_lower(drug_std), "zinc|vitamin c|ascorbic")
+  ) %>%
+  mutate(
+    year = year(st_reg_date),
+    phase_simple = case_when(
+      str_detect(st_phase, "phase 3|phase 4") ~ "Confirmatory (Phase 3/4)",
+      str_detect(st_phase, "phase 1|phase 2") ~ "Exploratory (Phase 1/2)",
+      TRUE ~ "Other"
+    ),
+    plot_group = case_when(
+      str_detect(str_to_lower(drug_std), "zinc") ~ "Zinc",
+      str_detect(str_to_lower(drug_std), "vitamin c|ascorbic") ~ "Vitamin C",
+      TRUE ~ "Other"
+    )
+  ) %>%
+  filter(phase_simple != "Other", plot_group != "Other", 
+         st_reg_date >= "2020-01-01", st_reg_date <= "2025-12-31")
+
+# --- 3. Plot Function ---
+plot_supplement <- function(data_subset, group_name) {
+  
+  stop_info <- stop_lines_supplements %>% filter(plot_group == group_name)
+  
+  p <- ggplot(data_subset, aes(x = st_reg_date, y = phase_simple, color = phase_simple)) +
+    
+    # Jittered Points
+    geom_jitter(height = 0.2, width = 0, size = 3, alpha = 0.6) +
+    
+    # Stop Line
+    geom_vline(xintercept = as.numeric(stop_info$stop_date), linetype = "dashed", color = "red", size = 1) +
+    annotate("text", x = stop_info$stop_date + 20, y = 2.4, 
+             label = stop_info$label, hjust = 0, color = "red", fontface = "bold") +
+    
+    # Formatting
+    scale_x_date(date_breaks = "1 year", date_labels = "%Y", limits = as.Date(c("2020-01-01", "2025-12-31"))) +
+    scale_color_manual(values = c("Exploratory (Phase 1/2)" = "#4575b4", "Confirmatory (Phase 3/4)" = "#d73027")) +
+    labs(
+      title = paste("Redundancy Check:", group_name),
+      subtitle = "Persistence of exploratory trials (Blue) after negative guidelines suggests waste.",
+      x = NULL, y = NULL, color = NULL
+    ) +
+    theme_minimal(base_size = 14) +
+    theme(legend.position = "top", panel.grid.major.y = element_blank())
+  
+  print(p)
+}
+
+# --- 4. Generate Plots ---
+unique_groups_supp <- unique(supplements_data$plot_group)
+
+for(g in unique_groups_supp) {
+  plot_supplement(supplements_data %>% filter(plot_group == g), g)
+}
+
+```
+

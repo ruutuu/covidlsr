@@ -1,0 +1,753 @@
+---
+title: "Clean 2 (Standardisation / QC) — revised"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 8,
+  fig.height = 5,
+  dpi = 300,
+  fig.align = "center",
+  out.width = "100%"
+)
+
+# Core libs
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(lubridate)
+  library(scales)
+})
+
+theme_pub <- function(base_size = 12, base_family = "sans") {
+  ggplot2::theme_minimal(base_size = base_size, base_family = base_family) +
+    ggplot2::theme(
+      plot.title.position = "plot",
+      plot.title = element_text(face = "bold"),
+      plot.subtitle = element_text(margin = margin(b = 6)),
+      axis.title = element_text(face = "bold"),
+      axis.text.x = element_text(angle = 45, hjust = 1),
+      panel.grid.minor = element_blank(),
+      panel.grid.major.x = element_blank(),
+      legend.title = element_text(face = "bold"),
+      legend.position = "right"
+    )
+}
+```
+
+
+```{r helpers}
+clean_txt <- function(x) {
+  x %>%
+    as.character() %>%
+    stringr::str_squish() %>%
+    stringr::str_to_lower()
+}
+```
+
+
+# ---- ORIGINAL CONTENT (mostly unchanged) ----
+
+
+* Fixes the **missing object** issue (`component-role-missingness-qc` → `component_role_missingness_qc`)
+* Makes the intervention logic **explicit and testable** (placebo/SOC empties are expected)
+* Ensures **alignment to your master cohort**: interventions are restricted to `study_table$st_reg_id` (so you don’t accidentally analyse arms from trials that didn’t pass study filters)
+* Produces two analysis-ready tables you’ll re-use everywhere:
+
+  * `arm_drug_table` (arm–drug)
+  * `study_drug_table` (study–drug)
+
+## 1. Setup
+
+```{r setup, message=FALSE, warning=FALSE}
+library(dplyr)
+library(tidyr)
+library(stringr)
+
+# A stable master ID set (use this to align ALL downstream tables)
+master_ids <- unique(study_table$st_reg_id)
+
+## 2. Helper checks (minimal)
+
+
+n_study <- length(master_ids)
+n_arm   <- length(unique(arm_table$st_reg_id))
+
+cat("Unique studies in study_table:", n_study, "\n")
+cat("Unique studies in arm_table  :", n_arm, "\n")
+
+# Reg_ids present in arms but not in filtered study cohort
+arm_not_in_study <- setdiff(unique(arm_table$st_reg_id), master_ids)
+study_not_in_arm <- setdiff(master_ids, unique(arm_table$st_reg_id))
+
+cat("Reg_ids in arm_table but NOT in study_table:", length(arm_not_in_study), "\n")
+cat("Reg_ids in study_table but NOT in arm_table:", length(study_not_in_arm), "\n")
+```
+
+## 3. Align arms to the study cohort
+
+**Why we do this:**
+Your `study_table` is the “source of truth” cohort (eligible, not cancelled, etc.).
+So for analysis we **semi-join** arms to the master cohort.
+We still keep a QC list (`arm_not_in_study`) if you want to inspect what got excluded later.
+
+```{r align-arms-to-study, message=FALSE, warning=FALSE}
+arm_table_aligned <- arm_table %>%
+  semi_join(study_table %>% select(st_reg_id), by = "st_reg_id")
+
+cat("Arms after aligning to study cohort:\n")
+print(arm_table_aligned %>% summarise(n_arms = n(),
+                                     n_trials = n_distinct(st_reg_id)))
+
+```
+
+## 4. Build a component-level table (arm × component-slot)
+
+**Why we do this:**
+In your REDCap export, interventions are stored as up to 3 component slots per arm:
+
+* `sa_intv1_*`, `sa_intv2_*`, `sa_intv3_*`
+
+To analyse interventions consistently, we pivot those slots long, giving:
+
+* **1 row = 1 arm-component slot**
+
+This makes it easy to classify placebo vs pharmacological vs SOC.
+
+
+```{r component-table-build, message=FALSE, warning=FALSE}
+
+# Safety check: confirm at least intv1 core columns exist
+needed_cols <- c("sa_intv1_target", "sa_intv1_med_type", "sa_intv1_drug_all")
+missing_cols <- setdiff(needed_cols, names(arm_table_aligned))
+if (length(missing_cols) > 0) stop("Missing expected intervention columns: ", paste(missing_cols, collapse = ", "))
+
+# Show which intv slots are actually present (useful for QC)
+intv_cols_present <- grep("^sa_intv([1-9]|10)_", names(arm_table_aligned), value = TRUE)
+cat("Intervention columns found in arm_table_aligned:\n")
+print(intv_cols_present)
+
+# Pivot all 7 sub-fields across intv1–10
+component_table <- arm_table_aligned %>%
+  pivot_longer(
+    cols         = matches("^sa_intv([1-9]|10)_(target|med_type|drug_all|all|desc|atmp|drug_oth)$"),
+    names_to     = c("component_index", ".value"),
+    names_pattern = "^sa_intv([1-9]|10)_(target|med_type|drug_all|all|desc|atmp|drug_oth)$"
+  ) %>%
+  mutate(
+    component_index = as.integer(component_index),
+    target    = clean_txt(target),
+    med_type  = clean_txt(med_type),
+    drug_all  = clean_txt(drug_all),
+    atmp      = clean_txt(atmp),
+    drug_oth  = clean_txt(drug_oth)
+  )
+
+# Quick size check before any dropping
+cat("Component table (pre-cleaning):\n")
+print(component_table %>% summarise(
+  n_rows       = n(),
+  n_trials     = n_distinct(st_reg_id),
+  n_arms       = n_distinct(st_reg_id, arm_id),
+  n_slots_1to3 = sum(component_index <= 3),
+  n_slots_4to10 = sum(component_index >= 4)
+))
+
+# Quick look at missingness per sub-field (to inform blank-dropping decision later)
+cat("\nMissingness per sub-field:\n")
+component_table %>%
+  summarise(across(c(target, med_type, drug_all, all, desc, atmp, drug_oth),
+                   ~ mean(is.na(.)))) %>%
+  print()
+
+```
+
+
+```{r component-table-drop-blanks, message=FALSE, warning=FALSE}
+
+component_table_clean <- component_table %>%
+  mutate(
+    is_blank_slot = is.na(target) & is.na(med_type) & is.na(drug_all) & 
+                    is.na(all) & is.na(desc)
+  ) %>%
+  filter(!is_blank_slot) %>%
+  select(-is_blank_slot)
+
+cat("Component table after dropping blank slots:\n")
+print(component_table_clean %>% summarise(
+  n_rows        = n(),
+  n_trials      = n_distinct(st_reg_id),
+  n_arms        = n_distinct(st_reg_id, arm_id),
+  n_slots_1to3  = sum(component_index <= 3),
+  n_slots_4to10 = sum(component_index >= 4)
+))
+
+# Sanity check: how many rows were dropped
+cat("\nRows dropped as blank pivot artifacts:", nrow(component_table) - nrow(component_table_clean), "\n")
+cat("Rows retained:                        ", nrow(component_table_clean), "\n")
+
+```
+```{r}
+# Keep only pharmacological + ATMP components
+component_table_clean <- component_table_clean %>%
+  filter(target %in% c(
+    "pharmacological interventions",
+    "advanced therapy medicinal products (atmp)"
+  ))
+
+cat("After restricting to pharma + ATMP targets:\n")
+print(component_table_clean %>% summarise(
+  n_rows   = n(),
+  n_trials = n_distinct(st_reg_id),
+  n_arms   = n_distinct(st_reg_id, arm_id)
+))
+
+# Optional: check target counts to confirm
+print(table(component_table_clean$target))
+
+
+component_table_clean <- component_table_clean %>%
+  mutate(
+    drug_std = case_when(
+      !is.na(drug_all) ~ drug_all,
+      target == "advanced therapy medicinal products (atmp)" ~ atmp,
+      TRUE ~ NA_character_
+    )
+  )
+
+# QC: how many still missing after this rule?
+component_table_clean %>%
+  summarise(
+    n_rows        = n(),
+    n_missing_std = sum(is.na(drug_std))
+  ) %>%
+  print()
+
+```
+
+
+
+```{r}
+chk<-component_table_clean %>% filter(is.na(drug_std))
+unresolved_199 <- chk %>% 
+  mutate(id = row_number())
+
+
+corrections <- read_csv("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data/drug_others_std.csv")
+View(corrections)
+
+# 3. Join corrections onto the unresolved rows
+unresolved_199_joined <-  left_join( unresolved_199 ,corrections %>% select(id, drug_std_extracted),  by = "id")
+
+
+# Join extracted values back to FULL component_table_clean
+component_table_clean1 <- component_table_clean %>%
+  left_join(
+    unresolved_199_joined %>% 
+      select(st_reg_id, arm_id, component_index, drug_std_extracted),
+    by = c("st_reg_id", "arm_id", "component_index")
+  )
+
+# Check it worked (should show 199 rows with extracted values)
+component_table_clean1 %>%
+  filter(is.na(drug_std)) %>%  # original missing rows
+  count(is.na(drug_std_extracted)) %>%
+  print()
+
+
+component_table_clean1 <- component_table_clean1 %>%
+  mutate(
+    drug_std = coalesce(drug_std, drug_std_extracted))
+
+component_table_clean1 %>%
+  summarise(
+    n_rows        = n(),
+    n_missing_std = sum(is.na(drug_std)),
+    n_pharma      = sum(target == "pharmacological interventions"),
+    n_atmp        = sum(target == "advanced therapy medicinal products (atmp)")
+  ) %>%
+  print()
+```
+
+```{r}
+component_table_clean2 <- component_table_clean1 %>%
+  mutate(
+    # --- Clean drug_std → drug_std_cleaned (light formatting only) ---
+    drug_std_cleaned = drug_std %>%
+      str_to_lower() %>%
+      str_replace_all("\\(.*?\\)", " ") %>%               # remove parentheses notes
+      str_replace_all("[^a-z0-9\\+\\/\\-\\,\\s]", " ") %>% # keep separators
+      str_replace_all("\\s+", " ") %>%
+      str_trim() %>%
+      na_if(""),  # empty strings → NA
+      
+    # --- Apply synonym harmonisation → drug_std2 ---
+    drug_std2 = case_when(
+      # Painkillers
+      str_detect(drug_std_cleaned, "acetaminophen|paracetamol") ~ "paracetamol",
+      
+      # Zinc variants
+      str_detect(drug_std_cleaned, "zinc\\s*(sulphate|chloride|citrate)?") ~ "zinc (any salt)",
+      
+      # Anticoagulants
+      str_detect(drug_std_cleaned, "enoxaparin") ~ "enoxaparin",
+      
+      # Antivirals/cough
+      str_detect(drug_std_cleaned, "bromhexine") ~ "bromhexine",
+      
+      # Saline
+      str_detect(drug_std_cleaned, "saline") ~ "saline",
+      
+      # Typos
+      drug_std_cleaned == "leflunoide" ~ "leflunomide",
+      
+      # Monoclonals
+      str_detect(drug_std_cleaned, "monoclonal\\s*antibod") ~ "monoclonal antibody (unspecified)",
+      
+      # Protease inhibitors
+      str_detect(drug_std_cleaned, "protease inhibitor") ~ "protease inhibitor (unspecified)",
+      
+      # Default: keep original
+      TRUE ~ drug_std_cleaned
+    )
+  ) %>%
+  select(-drug_std_cleaned)  # drop intermediate
+
+# QC: compare before/after
+component_table_clean2 %>%
+  filter(!is.na(drug_std)) %>%
+  count(drug_std, drug_std2) %>%
+  filter(drug_std != drug_std2) %>%
+  print(n = 50)
+
+
+
+
+# STAGE 1: Clean drug_std (raw → cleaned name)
+# ============================================================
+component_table_clean2 <- component_table_clean2 %>%
+  mutate(
+    drug_std2 = case_when(
+      # --- Previously confirmed fixes ---
+      drug_std2 == "others"                            ~ "other",
+      drug_std2 == "antipyretics"                      ~ "antipyretic",
+      drug_std2 == "anti-tussive"                      ~ "antitussives",
+      drug_std2 == "anticoagulants"                    ~ "anticoagulation",
+      drug_std2 == "anti-coagulant"                    ~ "anticoagulation",
+      drug_std2 == "local anaesthetic"                 ~ "anaesthetic",
+      drug_std2 == "adamumab"                          ~ "adalimumab",
+      drug_std2 == "leflunomide"                       ~ "leflunoide",
+      drug_std2 == "camostat mesylat"                  ~ "camostat mesilate",
+      drug_std2 == "lipoic acid"                       ~ "alpha-lipoic acid",
+      drug_std2== "protease inhibitor (unspecified)"  ~ "protease inhibitors unknown/not on list",
+      drug_std2 == "monoclonal antibody (unspecified)" ~ "monoclonal antibodies unknown/not on list",
+      drug_std2 == "icatibant acetate"                 ~ "icatibant",
+      drug_std2 == "leukine"                           ~ "sargramostim",
+      drug_std2 == "vitamin b complex"                 ~ "vitamin b",
+      drug_std2 == "vitamin super b-complex"           ~ "vitamin b",
+      TRUE ~ drug_std2
+    )
+  )
+
+
+
+
+```
+
+```{r}
+library(readr)
+drug_labels<-read_csv("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data/drug_labels.csv", 
+    col_types = cols(med_type_old = col_skip(), 
+        med_type = col_skip()))
+
+# 2. Clean column names and select the useful ones
+drug_labels <- drug_labels %>%
+    select(drug_std, broad_cat, drug_class, label, who_status) %>%
+  # Handle duplicates: keep the row with non-NA broad_cat (most complete)
+  group_by(drug_std) %>%
+  slice_head(n = 1) %>%  # first occurrence if tie
+  ungroup() %>%
+  filter(!is.na(drug_std))  # drop any blank drug_std2
+
+component_table_clean2$drug_std_old<-component_table_clean2$drug_std
+component_table_clean2$drug_std<-component_table_clean2$drug_std2
+component_table_clean2$drug_all<-NULL
+component_table_clean2$drug_std2<-NULL
+# 3. Join to your main table
+component_table_clean3 <- component_table_clean2 %>%
+  left_join(
+    drug_labels,
+    by = "drug_std"
+  )
+
+# 4. QC: join success rate
+component_table_clean3 %>%
+  summarise(
+    n_rows_total     = n(),
+    n_with_labels    = sum(!is.na(broad_cat)),
+    n_with_class     = sum(!is.na(drug_class)),
+    n_with_label     = sum(!is.na(label)),
+    n_join_success   = sum(!is.na(broad_cat) | !is.na(drug_class) | !is.na(label))
+  ) %>%
+  print()
+
+# 5. Show top 10 drugs with labels
+component_table_clean3 %>%
+  filter(!is.na(broad_cat)) %>%
+  count(drug_std, broad_cat, sort = TRUE) %>%
+  head(10) %>%
+  print()
+```
+Current drug columns:
+
+drug_all          # raw source
+drug_oth          # raw fallback  
+desc              # raw messy text
+atmp              # raw ATMP source  
+drug_std          # rule-based + extracted  
+drug_std_extracted # manual corrections
+drug_std_old      # ? (seems redundant)
+
+```{r}
+library(readr)
+library(dplyr)
+
+# 1. Load the new assignments CSV
+new_labels <-  read_csv("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data/drug_labels_new_assignments.csv") %>%
+  select(drug_std, broad_cat, drug_class, label) # keep only needed columns
+
+
+# 2. Fill in missing broad_cat/drug_class/label using new assignments
+component_table_clean4 <- component_table_clean3 %>%
+  left_join(
+    new_labels,
+    by = "drug_std",
+    suffix = c("", "_new")   # new columns get _new suffix
+  ) %>%
+  mutate(
+    # Fill only where original join left NAs
+    broad_cat  = coalesce(broad_cat,  broad_cat_new),
+    drug_class = coalesce(drug_class, drug_class_new),
+    label      = coalesce(label,      label_new)
+  ) %>%
+  select(-broad_cat_new, -drug_class_new, -label_new)  # drop temp columns
+
+# 3. QC: how many still missing after both joins?
+component_table_clean4 %>%
+  summarise(
+    n_total         = n(),
+    n_with_labels   = sum(!is.na(broad_cat)),
+    n_still_missing = sum(is.na(broad_cat))
+  ) %>%
+  print()
+
+# 4. Check what is still missing
+component_table_clean4 %>%
+  filter(is.na(broad_cat)) %>%
+  count(drug_std, sort = TRUE) %>%
+  print(n = 20)
+
+```
+```{r}
+pharma_table<- component_table_clean4 %>%
+  select(
+    # --- Trial identifiers ---
+    st_reg_id, arm_id, component_index,
+
+    # --- Trial-level descriptors ---
+    st_reg_date, st_design, st_phase, st_sample, st_intv_arms,
+
+    # --- Arm-level descriptors ---
+    sa_num_intv, sa_combi, sa_crossover, sa_num_planned,
+    arm_n_planned, arm_n_source,
+
+    # --- Intervention classification ---
+    target, med_type,
+
+    # --- Final drug columns only ---
+    drug_std,           # final cleaned drug name
+    broad_cat,          # high-level category
+    drug_class,         # specific class
+    label,              # human-readable label
+    who_status          # WHO trial status
+  )
+
+```
+
+
+## 12. Save key tables (optional but recommended)
+```{r}
+pharma_table <- pharma_table %>%
+  mutate(drug_std = case_when(
+
+    # Sofosbuvir — registry typo
+    drug_std == "sofusbovir"                        ~ "sofosbuvir",
+    drug_std == "sofosbovir"                        ~ "sofosbuvir",
+
+    # Vitamin D: D, D3, and cholecalciferol are the same compound
+    drug_std %in% c("vitamin d3",
+                    "cholecalciferol",
+                    "vitamin d3 (cholecalciferol)") ~ "vitamin d",
+
+    # Lopinavir/ritonavir: DO NOT merge into one row here.
+    # They appear as separate arm components in your table.
+    # They will be visually co-located on figures via broad_cat = "Antivirals"
+    # and flagged as a combination pair in the Methods note.
+
+    # Hydroxychloroquine vs chloroquine: KEEP SEPARATE.
+    # Different compounds; chloroquine is more toxic and was quickly abandoned.
+    # Merging would obscure that story.
+
+    TRUE ~ drug_std
+  ))
+
+
+# ── STEP 3: Handle "corticosteroids" catch-all ───────────────────────────────
+# These are entries where the registrant did not specify which corticosteroid.
+# They are genuine unknowns — do NOT merge with dexamethasone/methylprednisolone.
+# Rename for clarity so they are distinguishable in figures.
+
+pharma_table <- pharma_table %>%
+  mutate(drug_std = if_else(drug_std == "corticosteroids",
+                            "corticosteroids (unspecified)",
+                            drug_std))
+
+
+# ── STEP 4: Enforce correct broad_cat for all drugs ──────────────────────────
+
+```
+
+
+```{r}
+
+library(readxl)
+wb_country <- read_excel("C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data/wb_country.xlsx")
+
+wb_country  <- wb_country  %>% rename(country_code = Code)
+wb_country  <- wb_country  %>% rename(income_group = `Income group`)
+
+country_table<-left_join(country_table,wb_country[,c("country_code","income_group")],by='country_code')
+```
+
+```{r}
+ 
+
+# ── OPTION 1: Load purrr (simplest if you already use tidyverse) ──────────────
+library(purrr)
+
+# ── OPTION 2: Replace map_lgl with base R sapply — no extra package needed ───
+# Change this line:
+#   filter(map_lgl(drugs_in_arm, ~ "ritonavir" %in% .)) 
+# To this:
+#   filter(sapply(drugs_in_arm, function(x) "ritonavir" %in% x))
+
+# ── Full corrected block ──────────────────────────────────────────────────────
+arm_drug_combos <- pharma_table %>%
+  group_by(st_reg_id, arm_id) %>%
+  summarise(
+    drugs_in_arm     = list(unique(drug_std)),
+    has_lopinavir    = "lopinavir"  %in% drug_std,
+    has_nirmatrelvir = any(str_detect(drug_std, "nirmatrelvir|pf-07321332")),
+    has_atazanavir   = "atazanavir" %in% drug_std,
+    .groups = "drop"
+  )
+
+ritonavir_recode <- arm_drug_combos %>%
+  filter(sapply(drugs_in_arm, function(x) "ritonavir" %in% x)) %>%   # <-- fixed
+  mutate(ritonavir_label = case_when(
+    has_lopinavir    ~ "lopinavir/ritonavir",
+    has_nirmatrelvir ~ "nirmatrelvir/ritonavir",
+    has_atazanavir   ~ "atazanavir/ritonavir",
+    TRUE             ~ "ritonavir (boosted, unspecified)"
+  )) %>%
+  select(st_reg_id, arm_id, ritonavir_label)
+
+# Apply recode to ritonavir rows
+pharma_table <- pharma_table %>%
+  left_join(ritonavir_recode, by = c("st_reg_id", "arm_id")) %>%
+  mutate(drug_std = if_else(
+    drug_std == "ritonavir" & !is.na(ritonavir_label),
+    ritonavir_label,
+    drug_std
+  )) %>%
+  select(-ritonavir_label)
+
+# Apply same recode to lopinavir rows in the same arms
+pharma_table <- pharma_table %>%
+  left_join(ritonavir_recode, by = c("st_reg_id", "arm_id")) %>%
+  mutate(drug_std = case_when(
+    drug_std == "lopinavir" & ritonavir_label == "lopinavir/ritonavir" 
+      ~ "lopinavir/ritonavir",
+    TRUE ~ drug_std
+  )) %>%
+  select(-ritonavir_label)
+
+# QC
+pharma_table %>%
+  filter(str_detect(drug_std, "ritonavir|lopinavir")) %>%
+  count(drug_std, sort = TRUE)
+pharma_table <- pharma_table %>%
+  mutate(broad_cat_display = case_when(
+    str_detect(broad_cat, "^Antivirals")           ~ "Antivirals",
+    str_detect(broad_cat, "^Immunotherapies")      ~ broad_cat,  # keep granular
+    str_detect(broad_cat, "^Anti.inflammatories")  ~ "Anti-inflammatories",
+    TRUE                                           ~ broad_cat
+  ))
+
+
+pharma_table <- pharma_table %>%
+  mutate(display_group = case_when(
+
+    # ── 1. ANTIMALARIALS ──────────────────────────────────────────────────────
+    label == "Antimalarials"                                        ~ "Antimalarials",
+
+    # ── 2. ANTIVIRALS (REPURPOSED) ────────────────────────────────────────────
+    label == "Antivirals (Antiretrovirals)"                         ~ "Antivirals (repurposed)",
+    label == "Antivirals (Broad-spectrum/Other)"                    ~ "Antivirals (repurposed)",
+    label == "Immunotherapy (Innate/Other)" &
+      drug_std %in% c("interferons", "interferon beta -1a")         ~ "Antivirals (repurposed)",
+
+    # ── 3. ANTIVIRALS (DIRECT-ACTING) ─────────────────────────────────────────
+    label == "Antivirals (Direct-acting)"                           ~ "Antivirals (direct-acting)",
+
+    # ── 4. CORTICOSTEROIDS ────────────────────────────────────────────────────
+    label %in% c("Corticosteroids (Systemic)",
+                 "Corticosteroids (Inhaled)")                       ~ "Corticosteroids",
+
+    # ── 5. IMMUNOMODULATORS ───────────────────────────────────────────────────
+    label %in% c("Immunotherapy (IL-6 blockers)",
+                 "Immunotherapy (JAK inhibitors)",
+                 "Immunotherapy (Other kinases)",
+                 "Immunotherapy (BTK inhibitors)",
+                 "Immunotherapy (Small molecule)",
+                 "Immunotherapy (Other biologics)", "Immunotherapies (other immunomodulators")                 ~ "Immunomodulators",
+
+    # ── 6. ANTIBODY THERAPIES ─────────────────────────────────────────────────
+    label %in% c("Immunotherapy (Anti-spike mAbs)",
+                 "Immunotherapy (Conv. Plasma)")                    ~ "Antibody Therapies",
+
+    # ── 7. ANTICOAGULANTS ─────────────────────────────────────────────────────
+    label %in% c("Anticoagulants (Heparins)",
+                 "Anticoagulants (Non-heparin)")                    ~ "Anticoagulants",
+
+    # ── 8. ANTI-INFLAMMATORIES ────────────────────────────────────────────────
+    label %in% c("Anti-inflammatories (Non-NSAID)",
+                 "Anti-inflammatories (NSAIDs)")                    ~ "Anti-inflammatories",
+
+    # ── 9. ANTIPARASITICS ─────────────────────────────────────────────────────
+    label == "Antiparasitics"                                       ~ "Antiparasitics",
+
+    # ── 10. METABOLIC AGENTS ──────────────────────────────────────────────────
+    label %in% c("Metabolic agents (Statins)",
+                 "Metabolic agents (SGLT-2 inhibitors)",
+                 "Metabolic agents (Insulin-sensitizing)",
+                 "Metabolic agents (Other)")                        ~ "Metabolic agents",
+
+    # ── 11. SUPPORTIVE CARE ───────────────────────────────────────────────────
+    label %in% c("Vitamins & Supplements",
+                 "Respiratory/Hemodynamic Support",
+                 "Other Supportive Care")                           ~ "Supportive Care",
+
+    # ── 12. OTHER/UNSPECIFIED — kept separate, filter out before plotting ──────
+    label == "Other/Uncategorized"                                  ~ "Other/Unspecified",
+    label == "Immunotherapy (Innate/Other)"                         ~ "Other/Unspecified",
+    label == "Anti-depressants"                                     ~ "Other/Unspecified",
+    is.na(label)                                                    ~ "Other/Unspecified",
+    TRUE                                                  ~ "Other/Unspecified"  ))
+
+
+```
+
+```{r}
+
+cohort <- study_table 
+cohort_ids <- cohort %>% distinct(st_reg_id)
+
+
+pharma_in_cohort <- pharma_table %>%
+  semi_join(cohort_ids, by = "st_reg_id")
+
+
+
+# If your pharma_table already has drug_std and med_type cleaned, use them directly:
+study_drug <- pharma_in_cohort %>%
+  filter(!is.na(drug_std), drug_std != "") %>% 
+  distinct(st_reg_id, drug_std, .keep_all = TRUE) 
+
+
+# Ensure st_sample numeric (used in Figure 4 summaries)
+study_drug <- study_drug %>%
+  mutate(st_sample = suppressWarnings(as.numeric(st_sample))) %>% 
+   filter(!drug_std == "antibiotics") 
+
+# Quick coverage
+c(
+  n_studies_in_cohort      = n_distinct(cohort$st_reg_id),
+  n_studies_with_any_drug  = n_distinct(study_drug$st_reg_id),
+  n_unique_drugs           = n_distinct(study_drug$drug_std)
+)
+
+study_drug_filtered<- study_drug %>% filter(!drug_std=="other")
+
+drugcat_plot <- study_drug_filtered %>%
+  mutate(
+    reg_date  = as.Date(st_reg_date, format = "%d/%m/%Y"),
+    reg_year  = year(reg_date),
+    reg_month = month(reg_date),
+
+    time_period = case_when(
+      reg_year == 2020 & reg_month <= 3  ~ "2020 Q1",
+      reg_year == 2020 & reg_month <= 6  ~ "2020 Q2",
+      reg_year == 2020 & reg_month <= 9  ~ "2020 Q3",
+      reg_year == 2020 & reg_month <= 12 ~ "2020 Q4",
+      reg_year == 2021 & reg_month <= 3  ~ "2021 Q1",
+      reg_year == 2021 & reg_month <= 6  ~ "2021 Q2",
+      reg_year == 2021 & reg_month <= 9  ~ "2021 Q3",
+      reg_year == 2021 & reg_month <= 12 ~ "2021 Q4",
+      reg_year == 2022 & reg_month <= 6  ~ "2022 H1",
+      reg_year == 2022 & reg_month <= 12 ~ "2022 H2",
+      reg_year == 2023                   ~ "2023",
+      reg_year %in% c(2024, 2025)        ~ "2024–25",
+      TRUE                               ~ NA_character_
+    ),
+
+    time_period = factor(time_period, levels = c(
+      "2020 Q1", "2020 Q2", "2020 Q3", "2020 Q4",
+      "2021 Q1", "2021 Q2", "2021 Q3", "2021 Q4",
+      "2022 H1", "2022 H2",
+      "2023",
+      "2024–25"
+    ))
+  )
+```
+
+
+
+**Why we do this:**
+So later analysis chunks don’t depend on re-running everything.
+```{r}
+## 12. Save Clean2 outputs as .RData
+
+# Choose an output folder (edit as needed)
+out_dir <- "C:/Users/rchhajed/OneDrive - Nexus365/Tropical Medicine - IDDO - COVID19/COVID19 LMR 2025/Cov_Main/data"
+if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
+
+# Filename with date stamp (optional)
+rdata_file <- file.path(out_dir, paste0("covid_lmr_clean5_", format(Sys.Date(), "%Y%m%d"), ".RData"))
+
+# Save only key objects (keeps workspace clean + reproducible)
+save(
+  study_table,          # from Clean1
+  country_table,        # from Clean1 (if you created it)
+  arm_table,            # from Clean1
+  pharma_table, study_drug,drugcat_plot,
+  file = rdata_file
+)
+
+cat("Saved Clean2 objects to:\n", rdata_file, "\n")
+```
+```
