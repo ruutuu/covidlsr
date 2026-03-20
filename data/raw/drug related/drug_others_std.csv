@@ -1,0 +1,200 @@
+id,target,med_type,desc,drug_oth,drug_std_extracted
+1,pharmacological interventions,antibiotics and antiparasitics,treatments may include anti-biotics,,antibiotics (class)
+2,pharmacological interventions,antibiotics and antiparasitics,treatment may include antibiotics,,antibiotics (class)
+3,pharmacological interventions,others,stc3141,,stc3141
+4,pharmacological interventions,others,intranasal revtx-99,,intranasal revtx-99
+5,pharmacological interventions,others,lipoic acid injection,lipoic acid,lipoic acid
+6,pharmacological interventions,,kolimycin,,kolimycin
+7,advanced therapy medicinal products (atmp),,convalescent plasma transfusion,,convalescent plasma
+8,pharmacological interventions,,,,others (unspecified)
+9,advanced therapy medicinal products (atmp),,mesenchymal cells,,mesenchymal stem cells
+10,pharmacological interventions,,"supportive pharmacotherapy (antipyretic, antiallergic, cough suppressant)",,antipyretics (supportive)
+11,pharmacological interventions,,antibiotic agents for other associated infections (according to 2019 ats/idsa guidelines for non-icu and icu patients),,antibiotics (class)
+12,pharmacological interventions,antibiotics and antiparasitics,antibiotics,,antibiotics (class)
+13,pharmacological interventions,others,arogya kashayam-20,arogya kashayam-20,arogya kashayam-20
+14,pharmacological interventions,others,guduchi ghan vati,guduchi ghan vati,guduchi ghan vati
+15,pharmacological interventions,others,ashwagandha (withania somnifera),ashwagandha (withania somnifera),ashwagandha (withania somnifera)
+16,pharmacological interventions,miscellaneous other,vitamin support for 10 days,,vitamin supplement
+17,advanced therapy medicinal products (atmp),,convalescent plasma one or two units (approximately 200-250ml per unit),,convalescent plasma
+18,advanced therapy medicinal products (atmp),,convalescent plasma one or two units (approximately 200-250ml per unit),,convalescent plasma
+19,pharmacological interventions,others,tab vitamin c,,vitamin c
+20,advanced therapy medicinal products (atmp),,convalescent plasma one or two units (approximately 200-250ml per unit).,,convalescent plasma
+21,advanced therapy medicinal products (atmp),,convalescent plasma one or two units (approximately 200-250ml per unit),,convalescent plasma
+22,pharmacological interventions,miscellaneous other,anti-pyretic,,antipyretics (supportive)
+23,pharmacological interventions,antibiotics and antiparasitics,empiric antimicrobials,,antibiotics (class)
+24,pharmacological interventions,miscellaneous other,anti-pyretic,,antipyretics (supportive)
+25,pharmacological interventions,miscellaneous other,anti-tussive,,anti-tussive
+26,pharmacological interventions,miscellaneous other,multivitamins,,multivitamins
+27,pharmacological interventions,antibiotics and antiparasitics,empiric antimicrobials,,antibiotics (class)
+28,advanced therapy medicinal products (atmp),,equine anti covid antibody fragments f(ab')2 in addition to soc. 3ml vial will be supplied for each patient that need to be diluted in 100ml ns and will be given at rate of 1ml/min.,,equine anti-covid antibody
+29,pharmacological interventions,others,midazolam,benzodiazapine,midazolam
+30,pharmacological interventions,,"nutriflex lipid special consisting essential amino acids, anhydrous glucose and lipids / triglycedrides",,nutriflex lipid
+31,pharmacological interventions,,"omegaflex special consisting essential amino acids, anhydrous glucose and lipids / triglycerides",,omegaflex
+32,pharmacological interventions,,"olimel n9 consisting essential amino acids, anhydrous glucose and lipids",,olimel n9
+33,pharmacological interventions,,"smofkabiven consisting essential amino acids, anhydrous glucose and lipids / triglycerides",,smofkabiven
+34,pharmacological interventions,others,leukine (sargramostim),leukine,leukine
+35,pharmacological interventions,others,leukine (sargramostim),leukine,leukine
+36,pharmacological interventions,others,"iv infusion: in the phase 3, for patients randomized to the control arm who have worsened after 24hrs and within 14 days from randomization, reparixin will be offered as rescue medication also as a continuous i.v. infusion into a central vein or dedicated peripherally inserted central catheter at a dose of 2.772 mg/kg body weight/hour for up to 7 days (120hrs). for each 750 ml dosing solution volume, the content of a vial (250 ml) will be diluted with 500 ml of 0.9% sterile saline to dispense reparixin as 11.00 mg/ml solution.",,reparixin
+37,pharmacological interventions,others,enoxaparin sodium 1mg,anticoagulant (blood thinner),enoxaparin
+38,pharmacological interventions,others,metoprolol injection 1mg,metoprolol,metoprolol
+39,pharmacological interventions,antiviral not specified,antiviral therapy,,antivirals (class)
+40,pharmacological interventions,,ppi treatment to prevent ulcer stress,,ppi (supportive)
+41,pharmacological interventions,,anticoagulant therapy,,anticoagulants (supportive)
+42,pharmacological interventions,antiviral not specified,antiviral therapy,,antivirals (class)
+43,pharmacological interventions,,ppi treatment to prevent ulcer stress,,ppi (supportive)
+44,pharmacological interventions,,anticoagulant therapy with prophylactic dose will be performed for all patients,,anticoagulants (supportive)
+45,pharmacological interventions,others,patients continuing to consume medications inhibiting renin-angiotensin-aldestrone system,,others (unspecified)
+46,pharmacological interventions,others,discontinuation of agents inhibiting renin-angiotensin-aldosterone system substituting by calcium channel blocker,,others (unspecified)
+47,advanced therapy medicinal products (atmp),,plasmapheresis treatment,,plasmapheresis
+48,advanced therapy medicinal products (atmp),,ffp replacement method 4 units,,fresh frozen plasma
+49,advanced therapy medicinal products (atmp),,the rest of normal serum.,,convalescent serum
+50,pharmacological interventions,other antiviral,antiviral treatment,,antivirals (class)
+51,pharmacological interventions,other antiviral,antiviral,,antivirals (class)
+52,pharmacological interventions,other antiviral,antiviral drugs,,antivirals (class)
+53,pharmacological interventions,other antiviral,antivirals,,antivirals (class)
+54,pharmacological interventions,others,nanocomposit drug 400ug/ml (primary level infection group),nanocomposite,nanocomposite
+55,pharmacological interventions,antibiotics and antiparasitics,antibiotics as part of current standard treatment,,antibiotics (class)
+56,pharmacological interventions,antibiotics and antiparasitics,"the necessary care and first-line therapies such as corticosteroids, antibiotics, and hydroxychloroquine will be prescribed according to the current symptoms.",,hydroxychloroquine
+57,pharmacological interventions,others,300 mg of fars asafoetida,asafoetida capsules,asafoetida capsules
+58,pharmacological interventions,others,nbs powder 500mg x4/day,super food powder (ingredients unpublished on company website),super food powder (ingredients unpublished on company website)
+59,pharmacological interventions,,hydroxychloroquine sulfate,,hydroxychloroquine
+60,pharmacological interventions,,hydroxychloroquine sulfate,,hydroxychloroquine
+61,pharmacological interventions,others,"intervention group: second intervention group, thrombolytic ( tpa). the will be started 25 mg over 2 hours and 25 mg for next 22 hours",thrombolytic therapy,thromboprophylaxis (supportive)
+62,pharmacological interventions,antiviral not specified,"convalescent plasma injection, a 500 cc unit will be injected to the case group within 4 hours in addition to antiviral and treatments available at the hospital.",,antivirals (class)
+63,pharmacological interventions,antiviral not specified,the control group treatment will only be antiviral and inpatient care. control group either not in randomization or not satisfied with receiving plasma.,,antivirals (class)
+64,pharmacological interventions,others,nasal prong two to eight liters (depending on the patient's dyspnea condition),nasal prong,nasal prong
+65,pharmacological interventions,antibiotics and antiparasitics,antibiotics as per the hospital protocol and physician's discretion,,antibiotics (class)
+66,pharmacological interventions,antibiotics and antiparasitics,antibiotics as per the hospital protocol and physician's discretion,,antibiotics (class)
+67,pharmacological interventions,,standard of care treatment,,standard of care
+68,pharmacological interventions,miscellaneous other,statin treatment,,statins (supportive)
+69,advanced therapy medicinal products (atmp),,standard serum therapy,,convalescent serum
+70,advanced therapy medicinal products (atmp),,"patients in the tocilizumab and plasmapheresis groups will undergo three plasmapheresis sessions every 48 hours after receiving two doses of tocilizumab (temziva, aryogen pharmed)every 48 hours",,plasmapheresis
+71,pharmacological interventions,,"standard of care therapies including antivirals, steroids, anticoagulants, and other medications will be administered in both study arms as per institutional protocol.",,antivirals (supportive)
+72,pharmacological interventions,,standard of care therapies - steroid,,corticosteroids (supportive)
+73,pharmacological interventions,,standard of care therapies - anticoagulants,,anticoagulants (supportive)
+74,pharmacological interventions,,standard of care therapies - other medications will be administered in both study arms as per institutional protocol.,,standard of care
+75,pharmacological interventions,,"standard of care therapies - antivirals,",,antivirals (supportive)
+76,pharmacological interventions,,standard of care therapies - steroids.,,corticosteroids (supportive)
+77,pharmacological interventions,,"standard of care therapies - anticoagulants,",,anticoagulants (supportive)
+78,pharmacological interventions,,standard of care therapies - other medications.,,standard of care
+79,advanced therapy medicinal products (atmp),,convalescent plasma,,convalescent plasma
+80,pharmacological interventions,others,piclidenoson 2 mg orally every 12 hours for up to 28 days,piclidenoson,piclidenoson
+81,pharmacological interventions,nonspecific anti-inflammatory and immunosuppressive drugs,"nsaids as usual care according to clinician criteria, based on the current recommendations.",,nsaids (class)
+82,pharmacological interventions,nonspecific anti-inflammatory and immunosuppressive drugs,"nsaids as usual care according to clinician criteria, based on the current recommendations.",,nsaids (class)
+83,pharmacological interventions,antibiotics and antiparasitics,usual antibiotics treatment,,antibiotics (class)
+84,pharmacological interventions,others,gelatin,,gelatin
+85,pharmacological interventions,others,titanium dioxide,,titanium dioxide
+86,pharmacological interventions,,fd&c blue no. 1,,fd&c blue no. 1
+87,pharmacological interventions,,hypromellose phthalate,,hypromellose phthalate
+88,pharmacological interventions,antibiotics and antiparasitics,antibiotic agents as soc when necessary and at physician's discretion,,antibiotics (class)
+89,advanced therapy medicinal products (atmp),,renal-replacement therapy as soc when necessary and at physician's discretion,renal-replacement therapy,others (unspecified)
+90,pharmacological interventions,antiviral not specified,virally targeted agents as soc when necessary and at physician's discretion,,antivirals (class)
+91,pharmacological interventions,miscellaneous other,drug: tj003234,,tj003234
+92,pharmacological interventions,miscellaneous other,drug: tj003234,,tj003234
+93,pharmacological interventions,others,vitamin super b-complex,vitamin super b-complex,vitamin super b-complex
+94,pharmacological interventions,others,vitamin super b-complex,vitamin super b-complex,vitamin super b-complex
+95,pharmacological interventions,others,"hfno: in the high-flow-nasal cannula group, oxygen will be delivered through a heated humidifier (airvo-2, fisher and paykel healthcare) and applied continuously through large-bore binasal prongs, with a gas flow rate of 30 liters per minute and adjusted based on the clinical response. fio2 will be adjusted for the target spo2.",hfno,hfno
+96,pharmacological interventions,antiviral not specified,antiviral,,antivirals (class)
+97,pharmacological interventions,antibiotics and antiparasitics,antibacterial,,antibiotics (class)
+98,pharmacological interventions,others,camostat mesylat 200 mg,protease inhibitor,camostat mesylat
+99,pharmacological interventions,others,neuromuscular blockers,local anaesthetic,local anaesthetic
+100,pharmacological interventions,miscellaneous other,"intravenous drug: intravenous sedation in control group will be continued as initiated at the icu e.g. propofol, fentanyl, midazolam, dexmedetomidine",,midazolam
+101,pharmacological interventions,antibiotics and antiparasitics,antibiotic therapy,,antibiotics (class)
+102,pharmacological interventions,miscellaneous other,thrombus prophylaxis,,thromboprophylaxis (supportive)
+103,pharmacological interventions,miscellaneous other,pain management.,,analgesics (supportive)
+104,pharmacological interventions,miscellaneous other,fever management.,,antipyretics (supportive)
+105,pharmacological interventions,antibiotics and antiparasitics,antibiotic therapy,,antibiotics (class)
+106,pharmacological interventions,miscellaneous other,thrombus prophylaxis,,thromboprophylaxis (supportive)
+107,pharmacological interventions,miscellaneous other,pain management.,,analgesics (supportive)
+108,pharmacological interventions,miscellaneous other,fever management.,,antipyretics (supportive)
+109,pharmacological interventions,antiviral not specified,no intervention: the ncp standard treatment group antiviral treatment as combined standard treatment,,antivirals (class)
+110,pharmacological interventions,antiviral not specified,antiviral treatment as combined standard treatment,,antivirals (class)
+111,pharmacological interventions,others,a moderate amount of hormones,hormones,hormones
+112,advanced therapy medicinal products (atmp),,plasma from convalescent patients with covid-19,,convalescent plasma
+113,pharmacological interventions,others,deltarex-g escalating doses of deltarex-g i.v daily for 7 days as follows: dose level i: 3-6 patients will receive 1 x 10e11 cfu/dose dose level ii: 3-6 patients will receive 2 x 10e11 cfu/ dose dose level iii: 3-6 patients will receive 3 x 10e11 cfu/dose,deltarex-g,deltarex-g
+114,pharmacological interventions,others,rintatolimod iv,rintatolimod iv,rintatolimod iv
+115,pharmacological interventions,antimalarial,artemisinin (6 mg/ml),,artemisinin
+116,pharmacological interventions,antiviral not specified,antiviral agents as soc,,antivirals (class)
+117,pharmacological interventions,antiviral not specified,antiviral agents,,antivirals (class)
+118,pharmacological interventions,antibiotics and antiparasitics,prophylactic antibiotics,,antibiotics (class)
+119,pharmacological interventions,antibiotics and antiparasitics,prophylactic antibiotics,,antibiotics (class)
+120,pharmacological interventions,miscellaneous other,prophylaxis for deep vein thrombosis,,thromboprophylaxis
+121,pharmacological interventions,antibiotics and antiparasitics,antibiotics as soc,,antibiotics (class)
+122,pharmacological interventions,antibiotics and antiparasitics,antibiotics as soc,,antibiotics (class)
+123,pharmacological interventions,antibiotics and antiparasitics,"standard supportive treatment (oxygen, enoxaparine, antibiotic, fluid, immune modulator (steroid) and or antiviral (favipiravir or ramdesivir or lopinavir + ritonavir)",,antivirals
+124,advanced therapy medicinal products (atmp),,standard supportive treatment + 200 ml apheretic convalescent plasma single transfusion,,convalescent plasma
+125,advanced therapy medicinal products (atmp),,standard supportive treatment + 400 ml apheretic convalescent plasma single transfusion,,convalescent plasma
+126,advanced therapy medicinal products (atmp),,drug: ly3819253 other names: ly-cov555 bamlanivimab,,cov555
+127,pharmacological interventions,antibiotics and antiparasitics,antibiotics,,antibiotics (class)
+128,pharmacological interventions,antibiotics and antiparasitics,antibiotics (in all arms),,antibiotics (class)
+129,pharmacological interventions,antibiotics and antiparasitics,antibiotics,,antibiotics (class)
+130,pharmacological interventions,antibiotics and antiparasitics,antibiotic agents,,antibiotics (class)
+131,pharmacological interventions,antibiotics and antiparasitics,antibiotic agents,,antibiotics (class)
+132,pharmacological interventions,others,nangibotide,nangibotide,nangibotide
+133,pharmacological interventions,,experimental: low dose bat2020,,bat2020
+134,pharmacological interventions,,experimental: medium dose intervention: drug: bat2020,,bat2020
+135,pharmacological interventions,,experimental: high dose intervention: drug: bat2020,,bat2020
+136,pharmacological interventions,,part 1: single dose(s) of bat2020,,bat2020
+137,pharmacological interventions,,hydroxychloroquine,,hydroxychloroquine
+138,pharmacological interventions,,azithromycin,,azithromycin
+139,pharmacological interventions,antibiotics and antiparasitics,antibiotics,,antibiotics (class)
+140,pharmacological interventions,antibiotics and antiparasitics,antibiotic therapy,,antibiotics (class)
+141,advanced therapy medicinal products (atmp),,phase 2a: administration of a new polyclonal humanized anti-sars-cov2 antibodies (xav-19),,xav-19
+142,pharmacological interventions,antibiotics and antiparasitics,antibiotics for secondary bacterial infection as per institutional guidelines,,antibiotics (class)
+143,pharmacological interventions,,thrombo-prophylaxis as per local guidelines,,thromboprophylaxis (supportive)
+144,pharmacological interventions,nonspecific anti-inflammatory and immunosuppressive drugs,to consider steroids if indicated (i.e. acute exacerbation of copd or acute severe asthma),,nsaids (class)
+145,pharmacological interventions,antibiotics and antiparasitics,antibiotics for secondary bacterial infection as per institutional guidelines,,antibiotics (class)
+146,pharmacological interventions,,thrombo-prophylaxis as per local guidelines,,thromboprophylaxis (supportive)
+147,pharmacological interventions,nonspecific anti-inflammatory and immunosuppressive drugs,to consider steroids if indicated (i.e. acute exacerbation of copd or acute severe asthma),,nsaids (class)
+148,pharmacological interventions,antibiotics and antiparasitics,antibiotics,,antibiotics (class)
+149,pharmacological interventions,antibiotics and antiparasitics,antibiotics,,antibiotics (class)
+150,pharmacological interventions,antibiotics and antiparasitics,antibiotics,,antibiotics (class)
+151,pharmacological interventions,antibiotics and antiparasitics,antibiotics,,antibiotics (class)
+152,pharmacological interventions,others,"chg oral decolonization (swish and spit 15 ml 0.12% chg oral rinse for 30 seconds, four times/day) procedures.",,chg oral rinse
+153,pharmacological interventions,others,small doses of glucocorticoids,,corticosteroids (supportive)
+154,pharmacological interventions,others,general support therapy,,
+155,pharmacological interventions,,antiviral drugs,,antivirals (supportive)
+156,pharmacological interventions,antiviral not specified,antivirals,,antivirals (class)
+157,pharmacological interventions,antibiotics and antiparasitics,empirical antibiotic therapy,,antibiotics (class)
+158,pharmacological interventions,antibiotics and antiparasitics,empirical antibiotics,,antibiotics (class)
+159,pharmacological interventions,others,adjuvant in 16 groups in experimental arm,adjuvant,adjuvant
+160,pharmacological interventions,others,fisetin,fisetin,fisetin
+161,pharmacological interventions,antibiotics and antiparasitics,patients receive antibiotics as standard of care,,antibiotics (class)
+162,pharmacological interventions,antibiotics and antiparasitics,patients receive antibiotics only as standard of care,,antibiotics (class)
+163,pharmacological interventions,antibiotics and antiparasitics,best supportive care: antibiotics,,antibiotics (class)
+164,pharmacological interventions,antibiotics and antiparasitics,best supportive care: antibiotics,,antibiotics (class)
+165,pharmacological interventions,,"control patients will receive the conventional treatment that may include analgesic, anti-inflammatory, antibiotic, steroid, antiplatelet, and anticoagulant.",,anticoagulants (supportive)
+166,advanced therapy medicinal products (atmp),,plasma exchange,,plasma exchange
+167,pharmacological interventions,,"sargramostim (125 ?g) will be administered by inhalation twice daily for 5 days, in principle (up to 10 days) as add-on treatment to the standard treatment.",,sargramostim
+168,pharmacological interventions,antibiotics and antiparasitics,anti-bacterial infection treatment is given to the patients who have yellow sputum and increased levels of procalcitonin and other bacterial infection specific indicators.,,antibiotics (class)
+169,pharmacological interventions,antiviral antiretrovirals,soc: retroviral drugs,,antivirals (class)
+170,pharmacological interventions,monoclonal antibodies,anti-il-6 monoclonal antibody,,monoclonal antibody (class)
+171,pharmacological interventions,,vitamin b complex vitamin b complex components: b12=1 mg; b6=50 mg; b9=2.5 mg; b1=100 mg; b2=100 mg; b3=14 mg; b7=50 mg,,vitamin b complex
+172,pharmacological interventions,others,anti-sars-cov-2 hyperimmune serum,anti-sars-cov-2 hyperimmune serum,anti-sars-cov-2 hyperimmune serum
+173,advanced therapy medicinal products (atmp),,convalescent plasma.,,convalescent plasma
+174,advanced therapy medicinal products (atmp),,convalescent plasma.,,convalescent plasma
+175,pharmacological interventions,miscellaneous other,anticoagulants,,anticoagulants (supportive)
+176,pharmacological interventions,miscellaneous other,antihistamine,,antihistamine
+177,pharmacological interventions,antiviral not specified,anti-viral medication,,antivirals (class)
+178,pharmacological interventions,antibiotics and antiparasitics,antibiotics,,antibiotics (class)
+179,pharmacological interventions,miscellaneous other,painkillers,,analgesics (supportive)
+180,pharmacological interventions,miscellaneous other,anti-pyretics,,antipyretics (supportive)
+181,pharmacological interventions,antiviral not specified,anti-viral medication,,antivirals (class)
+182,pharmacological interventions,antibiotics and antiparasitics,antibiotics,,antibiotics (class)
+183,pharmacological interventions,miscellaneous other,painkillers,,analgesics (supportive)
+184,pharmacological interventions,miscellaneous other,anti-pyretics,,antipyretics (supportive)
+185,pharmacological interventions,miscellaneous other,anti-coagulant,,anti-coagulant
+186,advanced therapy medicinal products (atmp),,brii-198,,brii-198
+187,advanced therapy medicinal products (atmp),,azd8895,,azd8895
+188,pharmacological interventions,,standard of care,,standard of care
+189,pharmacological interventions,antibiotics and antiparasitics,antibiotic therapy when indicated,,antibiotics (class)
+190,pharmacological interventions,antibiotics and antiparasitics,antibiotic therapy when indicated,,antibiotics (class)
+191,pharmacological interventions,miscellaneous other,firazyrï¿½ (icatibant acetate 30 mg),,icatibant acetate
+192,pharmacological interventions,others,rocefin,,rocefin
+193,pharmacological interventions,others,rocefin,,rocefin
+194,pharmacological interventions,others,heberferon,heberferon,heberferon
+195,pharmacological interventions,others,heberferon,heberferon,heberferon
+196,advanced therapy medicinal products (atmp),,mononuclear cells or more containing at least 1% cd34 + progenitor cells,,mononuclear cells
+197,pharmacological interventions,other antiviral,antivirals,,antivirals (class)
+198,pharmacological interventions,miscellaneous other,vasopressors,,vasopressors
+199,pharmacological interventions,antibiotics and antiparasitics,antibiotics,,antibiotics (class)

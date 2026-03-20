@@ -1,0 +1,630 @@
+med_type_old,drug_std,med_type,broad_cat,drug_class,label,who_status
+nonspecific anti-inflammatory and immunosuppressive drugs,abatacept,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,abatacept,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+kinase inhibitors,abivertinib maleate,kinase inhibitors,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+,abx464,,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+,acalabrutinib,kinase inhibitors,Immunotherapies (kinase inhibitor),BTK inhibitors,Immunotherapy (BTK inhibitors),not_addressed_trial_only
+kinase inhibitors,acalabrutinib,kinase inhibitors,Immunotherapies (kinase inhibitor),BTK inhibitors,Immunotherapy (BTK inhibitors),not_addressed_trial_only
+miscellaneous other,ace inhibitor,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+miscellaneous other,ace2 inhibitor,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,ace2 inhibitor,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+miscellaneous other,acetaminophen,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,acetaminophen,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,acetylcysteine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,acetylcysteine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+monoclonal antibodies,adalimumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,adalimumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+monoclonal antibodies,adm03820,monoclonal antibodies,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,ak119,miscellaneous other,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+,albumin,,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,albuterol,,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,alisporivir,,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,almitrine,,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,alpha inhibitor,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+others,alpha-cyclodextrin,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,alpha-lipoic acid,,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,alteplase,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+miscellaneous other,alteplase,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+,ambrisentan,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,ambrisentan,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,amlodipine,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+antimalarial,amodiaquine,antimalarial,Antimalarials,4‑aminoquinolines and related antimalarials,Antimalarials,not_addressed_trial_only
+antibiotics and antiparasitics,amoxicillin,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,amy-101,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,anaesthetic,,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+immunosuppressive drugs,anakinra,immunosuppressive drugs,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,anakinra,immunosuppressive drugs,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,anakinra,immunosuppressive drugs,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+miscellaneous other,angiotensin 1-7,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,angiotensin 1-7,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+miscellaneous other,angiotensin receptor blockers,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,angiotensin receptor blockers,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+other antiviral,anif1,other antiviral,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,anticoagulation,,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+,antipyretic,,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,antiseptic nasal spray,,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,antroquinonol,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+kinase inhibitors,apilimod mesylate,kinase inhibitors,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+,apixaban,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+miscellaneous other,apixaban,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+miscellaneous other,apl-9,miscellaneous other,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+others,apocynin,others,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,apremilast,immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+immunosuppressive drugs,apremilast,immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,aprepitant,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+antimalarial,artemisinin derivatives,antimalarial,Antimalarials,4‑aminoquinolines and related antimalarials,Antimalarials,not_addressed_trial_only
+,artemisinin derivatives,antimalarial,Antimalarials,4‑aminoquinolines and related antimalarials,Antimalarials,not_addressed_trial_only
+,aspirin,miscellaneous other,Anti‑inflammatories (NSAIDs),NSAIDs,Anti-inflammatories (NSAIDs),not_addressed_trial_only
+miscellaneous other,aspirin,miscellaneous other,Anti‑inflammatories (NSAIDs),NSAIDs,Anti-inflammatories (NSAIDs),not_addressed_trial_only
+miscellaneous other,asunercept/asuncercept,miscellaneous other,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,asunercept/asuncercept,miscellaneous other,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+antiviral not specified,at-301,antiviral not specified,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+,at-527,,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+antiviral antiretrovirals,atazanavir,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_addressed_trial_only
+,atazanavir,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_addressed_trial_only
+miscellaneous other,ati-450,miscellaneous other,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+,atorvastatin,miscellaneous other,Metabolic / cardiometabolic agents,Statins,Metabolic agents (Statins),not_recommended
+miscellaneous other,atorvastatin,miscellaneous other,Metabolic / cardiometabolic agents,Statins,Metabolic agents (Statins),not_recommended
+antimalarial,atovaquone,antimalarial,Antiparasitics,Macrocyclic lactones,Antiparasitics,not_addressed_trial_only
+,atracurium,,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,auxora,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,auxora,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+others,aviptadil,others,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,aviptadil,others,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,aviptadil,others,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,azd-1656,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,azd1061,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+monoclonal antibodies,azd1061,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+other antiviral,azd1222,other antiviral,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,azd7442,,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+,azd8895,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+monoclonal antibodies,azd8895,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+antibiotics and antiparasitics,azithromycin,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+antibiotics and antiparasitics,azithromycin,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+immunosuppressive drugs,azoximer bromide,immunosuppressive drugs,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+other antiviral,azvudine,other antiviral,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+,azvudine,other antiviral,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+,bamlanivimab,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+monoclonal antibodies,bamlanivimab,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+miscellaneous other,bamlanivimab,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+miscellaneous other,bardoxolone methyl,miscellaneous other,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+kinase inhibitors,baricitinib,kinase inhibitors,Immunotherapies (kinase inhibitor),JAK inhibitors,Immunotherapy (JAK inhibitors),recommended
+,baricitinib,kinase inhibitors,Immunotherapies (kinase inhibitor),JAK inhibitors,Immunotherapy (JAK inhibitors),recommended
+immunosuppressive drugs,bdb001,immunosuppressive drugs,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+monoclonal antibodies,bemcentinib,monoclonal antibodies,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+,bemiparin,miscellaneous other,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),not_addressed_trial_only
+miscellaneous other,bemiparin,miscellaneous other,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),not_addressed_trial_only
+others,bemnifosbuvir,others,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+miscellaneous other,berberine,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+others,beta blocker,others,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+antiviral not specified,beta-cyclodextrin,antiviral not specified,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,betamethasone,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),not_addressed_trial_only
+,betamethasone,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),not_addressed_trial_only
+monoclonal antibodies,bevacizumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,bevacizumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,bgp-15,,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+miscellaneous other,bio 300,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+others,bisphosphonate,others,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+miscellaneous other,bivalirudin,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+,bivalirudin,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+,brensocatib,,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+miscellaneous other,brequinar,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,bromhexine,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,bromhexine,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,bromhexine hydrochloride,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,bromhexine hydrochloride,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,bronchodilators,,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,btl-tml-covid,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,bucillamine,miscellaneous other,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+,budesonide,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Inhaled corticosteroids,Corticosteroids (Inhaled),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,budesonide,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Inhaled corticosteroids,Corticosteroids (Inhaled),not_addressed_trial_only
+,budesonide formoterol fumarate,,Immunotherapies (corticosteroids),Inhaled corticosteroids,Corticosteroids (Inhaled),not_addressed_trial_only
+miscellaneous other,calcifediol,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,calcium,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,calcium,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,camostat mesilate,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,camostat mesilate,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+monoclonal antibodies,canakinumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+miscellaneous other,cannabidiol,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,captopril,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,captopril,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,carriomycin,,Antivirals (not specified),Macrolides / repurposed anti‑infectives,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,casirivimab,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+monoclonal antibodies,casirivimab,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+antibiotics and antiparasitics,ceftriaxone,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+,ceftriaxone,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+,celecoxib,,Anti‑inflammatories (NSAIDs),NSAIDs,Anti-inflammatories (NSAIDs),not_addressed_trial_only
+,cepharanthine,,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+monoclonal antibodies,cerc-002,monoclonal antibodies,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,chlorhexidine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,chlorhexidine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+antimalarial,chloroquine,antimalarial,Antimalarials,4‑aminoquinolines and related antimalarials,Antimalarials,not_recommended
+,chloroquine,antimalarial,Antimalarials,4‑aminoquinolines and related antimalarials,Antimalarials,not_recommended
+,chlorpheniramine maleate,,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,chlorpromazine,miscellaneous other,Anti-depressants,SSRI / Sigma‑1 agonist,Anti-depressants,not_addressed_trial_only
+,ciclesonide,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Inhaled corticosteroids,Corticosteroids (Inhaled),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,ciclesonide,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Inhaled corticosteroids,Corticosteroids (Inhaled),not_addressed_trial_only
+miscellaneous other,ciclesonide,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Inhaled corticosteroids,Corticosteroids (Inhaled),not_addressed_trial_only
+kinase inhibitors,cigb-258 peptide,kinase inhibitors,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+kinase inhibitors,cigb-325,kinase inhibitors,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,cilgavimab,,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+miscellaneous other,cimetidine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,citrulline,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+antibiotics and antiparasitics,clarithromycin,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+antibiotics and antiparasitics,clavulanic acid,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+monoclonal antibodies,clazakizumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,clopidogrel,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+miscellaneous other,clopidogrel,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+miscellaneous other,colchicine,miscellaneous other,Anti‑inflammatories (non‑NSAID),Microtubule inhibitor anti‑inflammatory,Anti-inflammatories (Non-NSAID),not_recommended
+,colchicine,miscellaneous other,Anti‑inflammatories (non‑NSAID),Microtubule inhibitor anti‑inflammatory,Anti-inflammatories (Non-NSAID),not_recommended
+others,coroquard,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+others,corostop solution,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,corticosteroids,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+nonspecific anti-inflammatory and immunosuppressive drugs,corticosteroids,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+,crizanlizumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+monoclonal antibodies,crizanlizumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,ct-p59,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+monoclonal antibodies,ct-p59,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+immunosuppressive drugs,cyclosporin,immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+,cyclosporin,immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+other antiviral,daclatasvir,other antiviral,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+,dalteparin,miscellaneous other,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+miscellaneous other,dalteparin,miscellaneous other,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+miscellaneous other,dapagliflozin,miscellaneous other,Metabolic / cardiometabolic agents,SGLT‑2 inhibitors,Metabolic agents (SGLT-2 inhibitors),not_recommended
+,dapagliflozin,miscellaneous other,Metabolic / cardiometabolic agents,SGLT‑2 inhibitors,Metabolic agents (SGLT-2 inhibitors),not_recommended
+nonspecific anti-inflammatory and immunosuppressive drugs,dapansutrile,nonspecific anti-inflammatory and immunosuppressive drugs,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,not_addressed_trial_only
+antiviral antiretrovirals,darunavir,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_addressed_trial_only
+,darunavir,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_addressed_trial_only
+miscellaneous other,decitabine,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,decosalin,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,deferiprone,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,deferoxamine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,defibrotide sodium,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+others,defibrotide sodium,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+miscellaneous other,degarelix,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,desidustat,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,dexamethasone,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+nonspecific anti-inflammatory and immunosuppressive drugs,dexamethasone,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+,dexmedetomidine,,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,dextrose,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,dextrose 5 serum,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,dextrose 5 serum,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,diltiazem,,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+miscellaneous other,dimethyl sulfoxide,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,dimethyl sulfoxide,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,diosmin,nonspecific anti-inflammatory and immunosuppressive drugs,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,diphenhydramine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,diphenhydramine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,dipyridamole,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+miscellaneous other,dipyrone,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,disulfiram,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,dnase,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,dornase alfa,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,dornase alfa,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,doxycycline,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+antibiotics and antiparasitics,doxycycline,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+miscellaneous other,dutasteride,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+kinase inhibitors,duvelisib,kinase inhibitors,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+miscellaneous other,dxp,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,eb05,miscellaneous other,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+miscellaneous other,ebselen glutathione peroxidase mimetic,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+monoclonal antibodies,eculizumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+miscellaneous other,edaravone,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,edoxaban,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+,edoxaban,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,edp1815,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,eftilagimod alpha,,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+others,eicosapentaenoic acid free fatty acid,others,Metabolic / cardiometabolic agents,Statins,Metabolic agents (Statins),not_addressed_trial_only
+miscellaneous other,eltrombopag,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+others,eltrombopag,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+antiviral antiretrovirals,emtricitabine,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_addressed_trial_only
+,emtricitabine,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_addressed_trial_only
+miscellaneous other,enalapril,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,enoxaparin,,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+,enoxaparin sodium,miscellaneous other,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+miscellaneous other,enoxaparin sodium,miscellaneous other,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+miscellaneous other,enzalutamide,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,epoprostenol,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,estradiol,,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,etesevimab,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+monoclonal antibodies,etesevimab,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+,ethanol,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,ethanol,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,exo 1,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,famotidine,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,famotidine,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+others,famotidine,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,fampridine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+antiviral broad spectrum,favipiravir,antiviral broad spectrum,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+,favipiravir,antiviral broad spectrum,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+others,febuxostat,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,fenofibrate,others,Metabolic / cardiometabolic agents,Statins,Metabolic agents (Statins),not_addressed_trial_only
+others,fenofibrate,others,Metabolic / cardiometabolic agents,Statins,Metabolic agents (Statins),not_addressed_trial_only
+miscellaneous other,fenretinide,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,fenretinide,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+immunosuppressive drugs,fingolimod,immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+miscellaneous other,fluvoxamine,miscellaneous other,Anti-depressants,SSRI / Sigma‑1 agonist,Anti-depressants,research_only
+,fluvoxamine,miscellaneous other,Anti-depressants,SSRI / Sigma‑1 agonist,Anti-depressants,research_only
+miscellaneous other,formoterol,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,formoterol,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,furosemide,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,furosemide,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,glucocorticoids,,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+,glutathione,,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+others,glycerol,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+kinase inhibitors,gp1681,kinase inhibitors,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+miscellaneous other,heparin,miscellaneous other,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+,heparin,miscellaneous other,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+others,heparin,miscellaneous other,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+,hepatocyte growth factor mimetic,,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+,hesperidin,nonspecific anti-inflammatory and immunosuppressive drugs,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,hesperidin,nonspecific anti-inflammatory and immunosuppressive drugs,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+monoclonal antibodies,hfb30132a,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+,hfb30132a,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,homeostec,nonspecific anti-inflammatory and immunosuppressive drugs,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,human c1-esterase inhibitor,miscellaneous other,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,human c1-esterase inhibitor,miscellaneous other,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,hydrocortisone,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+,hydrocortisone,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+miscellaneous other,hydrogen peroxide,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,hydrogen peroxide,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+antimalarial,hydroxychloroquine,antimalarial,Antimalarials,4‑aminoquinolines and related antimalarials,Antimalarials,not_recommended
+,hydroxychloroquine,antimalarial,Antimalarials,4‑aminoquinolines and related antimalarials,Antimalarials,not_recommended
+kinase inhibitors,ibrutinib,kinase inhibitors,Immunotherapies (kinase inhibitor),BTK inhibitors,Immunotherapy (BTK inhibitors),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,ibudilast,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+,ibudilast,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+miscellaneous other,ibuprofen,miscellaneous other,Anti‑inflammatories (NSAIDs),NSAIDs,Anti-inflammatories (NSAIDs),not_addressed_trial_only
+,ibuprofen,miscellaneous other,Anti‑inflammatories (NSAIDs),NSAIDs,Anti-inflammatories (NSAIDs),not_addressed_trial_only
+others,icatibant,others,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,icatibant,others,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+miscellaneous other,icosapent ethyl,miscellaneous other,Metabolic / cardiometabolic agents,Statins,Metabolic agents (Statins),not_addressed_trial_only
+miscellaneous other,ifenprodil,miscellaneous other,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+others,iloprost,others,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+kinase inhibitors,imatinib,kinase inhibitors,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+,imatinib,kinase inhibitors,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+,imdevimab,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+monoclonal antibodies,imdevimab,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+antiviral not specified,immunoglobulin,antiviral not specified,Immunotherapies (antibody based),Convalescent plasma,Immunotherapy (Conv. Plasma),not_addressed_trial_only
+,immunoglobulin,antiviral not specified,Immunotherapies (antibody based),Convalescent plasma,Immunotherapy (Conv. Plasma),not_addressed_trial_only
+miscellaneous other,imu-838,miscellaneous other,Immunotherapies (kinase inhibitor),JAK inhibitors,Immunotherapy (JAK inhibitors),not_addressed_trial_only
+miscellaneous other,indomethacin,miscellaneous other,Anti‑inflammatories (NSAIDs),NSAIDs,Anti-inflammatories (NSAIDs),not_addressed_trial_only
+monoclonal antibodies,infliximab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,infliximab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+miscellaneous other,inhaled gases,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,inhaled gases,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,inmuno-1,miscellaneous other,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+miscellaneous other,inmuno-2,miscellaneous other,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+miscellaneous other,insulin,miscellaneous other,Metabolic / cardiometabolic agents,Biguanides,Metabolic agents (Insulin-sensitizing),not_addressed_trial_only
+,insulin,miscellaneous other,Metabolic / cardiometabolic agents,Biguanides,Metabolic agents (Insulin-sensitizing),not_addressed_trial_only
+others,interferon beta -1a,others,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,interferon beta -1a,others,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+antiviral not specified,interferons,antiviral not specified,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,interferons,antiviral not specified,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+antiviral not specified,interleukin-2,antiviral not specified,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+antiviral not specified,interleukin-7,antiviral not specified,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+miscellaneous other,iodine,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,iodine,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,iota-carrageenan,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,iota-carrageenan,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,iron,,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+antiviral broad spectrum,isoprinosine,antiviral broad spectrum,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,isoquercetin,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,isoquercetin,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,isotretinoin,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,isotretinoin,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+monoclonal antibodies,itolizumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+others,itraconazole,others,Antivirals (not specified),Macrolides / repurposed anti‑infectives,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,itraconazole,others,Antivirals (not specified),Macrolides / repurposed anti‑infectives,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,itraconazole,others,Antivirals (not specified),Macrolides / repurposed anti‑infectives,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+antibiotics and antiparasitics,ivermectin,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrocyclic lactones,Antiparasitics/Antibiotics,not_recommended
+,ivermectin,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrocyclic lactones,Antiparasitics/Antibiotics,not_recommended
+monoclonal antibodies,ixekizumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,jakotinib hydrochloride,,Immunotherapies (kinase inhibitor),JAK inhibitors,Immunotherapy (JAK inhibitors),not_addressed_trial_only
+monoclonal antibodies,js016,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+others,kand567,others,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,kand567,others,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+miscellaneous other,kb109,miscellaneous other,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+miscellaneous other,ketone bodies,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+monoclonal antibodies,kin-1901,monoclonal antibodies,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+miscellaneous other,lactobacillus k8,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+others,lactoferrin,others,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,lactoferrin,others,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,lactoferrin,others,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+monoclonal antibodies,lanadelumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+other antiviral,ledipasvir,other antiviral,Antivirals (Broad spectrum / Other),Uncategorized/Other,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+immunosuppressive drugs,leflunoide,immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+,leflunoide,immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+miscellaneous other,lenalidomide,miscellaneous other,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+monoclonal antibodies,lenzilumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+others,leukocim,others,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+antibiotics and antiparasitics,levamisole,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrocyclic lactones,Antiparasitics/Antibiotics,not_addressed_trial_only
+,levamisole,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrocyclic lactones,Antiparasitics/Antibiotics,not_addressed_trial_only
+monoclonal antibodies,levilimab,monoclonal antibodies,Immunotherapies (antibody based),IL‑6 receptor blockers,Immunotherapy (IL-6 blockers),not_addressed_trial_only
+,levofloxacin,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+antibiotics and antiparasitics,levofloxacin,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+,linagliptin,miscellaneous other,Metabolic / cardiometabolic agents,Biguanides,Metabolic agents (Insulin-sensitizing),not_addressed_trial_only
+miscellaneous other,linagliptin,miscellaneous other,Metabolic / cardiometabolic agents,Biguanides,Metabolic agents (Insulin-sensitizing),not_addressed_trial_only
+,liothyronine,,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,lithium,miscellaneous other,Anti-depressants,SSRI / Sigma‑1 agonist,Anti-depressants,not_addressed_trial_only
+,lithium,miscellaneous other,Anti-depressants,SSRI / Sigma‑1 agonist,Anti-depressants,not_addressed_trial_only
+antiviral antiretrovirals,lopinavir,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_recommended
+,lopinavir,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_recommended
+miscellaneous other,losartan,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,losartan,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,losmapimod,,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+monoclonal antibodies,ly3819253,monoclonal antibodies,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,not_addressed_trial_only
+miscellaneous other,ly3819253,monoclonal antibodies,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,not_addressed_trial_only
+,ly3819253,monoclonal antibodies,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,not_addressed_trial_only
+miscellaneous other,ly3832479,miscellaneous other,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,not_addressed_trial_only
+,ly3832479,miscellaneous other,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,not_addressed_trial_only
+immunosuppressive drugs,m5049,immunosuppressive drugs,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,magnesium glycinate,,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,magnesium sulfate,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,magnesium sulfate,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,maraviroc,,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_addressed_trial_only
+miscellaneous other,mas825,miscellaneous other,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,masitinib mesylate,,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+monoclonal antibodies,mavrilimumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+antimalarial,mefloquine,antimalarial,Antimalarials,4‑aminoquinolines and related antimalarials,Antimalarials,not_addressed_trial_only
+,melatonin,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,melatonin,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+others,melatonin,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+antibiotics and antiparasitics,meropenem,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,metenkefalin,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+miscellaneous other,metformin,miscellaneous other,Metabolic / cardiometabolic agents,Biguanides,Metabolic agents (Insulin-sensitizing),not_recommended
+,metformin,miscellaneous other,Metabolic / cardiometabolic agents,Biguanides,Metabolic agents (Insulin-sensitizing),not_recommended
+,methotrexate,,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+miscellaneous other,methylene blue,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,methylene blue,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,methylprednisolone,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+,methylprednisolone,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+antibiotics and antiparasitics,metronidazole,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+,molnupiravir,other antiviral,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),recommended
+other antiviral,molnupiravir,other antiviral,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),recommended
+,monoclonal antibodies unknown/not on list,,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+miscellaneous other,montelukast,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,montelukast,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+others,montelukast,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,montmorillonite,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,na-831,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+others,nadroparin,others,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+,nadroparin,others,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+others,nafamostat mesylate,others,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,nafamostat mesylate,others,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,nafamostat mesylate,others,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,nafamostat mesylate,others,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,naltrexone,miscellaneous other,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+miscellaneous other,naltrexone,miscellaneous other,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+others,nanocurcumin,others,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,naproxen,nonspecific anti-inflammatory and immunosuppressive drugs,Anti‑inflammatories (NSAIDs),NSAIDs,Anti-inflammatories (NSAIDs),not_addressed_trial_only
+,naproxen,nonspecific anti-inflammatory and immunosuppressive drugs,Anti‑inflammatories (NSAIDs),NSAIDs,Anti-inflammatories (NSAIDs),not_addressed_trial_only
+others,nbt-nm108,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+antiviral antiretrovirals,nelfinavir,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_addressed_trial_only
+,niclosamide,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrocyclic lactones,Antiparasitics/Antibiotics,not_addressed_trial_only
+antibiotics and antiparasitics,niclosamide,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrocyclic lactones,Antiparasitics/Antibiotics,not_addressed_trial_only
+miscellaneous other,niclosamide,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrocyclic lactones,Antiparasitics/Antibiotics,not_addressed_trial_only
+,nicotine patch,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+others,nicotine patch,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,nintedanib,kinase inhibitors,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+kinase inhibitors,nintedanib,kinase inhibitors,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+antibiotics and antiparasitics,nitazoxanide,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Broad‑spectrum & host‑directed antivirals,Antiparasitics/Antibiotics,not_addressed_trial_only
+,nitazoxanide,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Broad‑spectrum & host‑directed antivirals,Antiparasitics/Antibiotics,not_addressed_trial_only
+miscellaneous other,nitric oxide,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,nitric oxide,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+others,nivasha spray,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,nonsteroidal anti-inflammatory drug,nonspecific anti-inflammatory and immunosuppressive drugs,Anti‑inflammatories (NSAIDs),NSAIDs,Anti-inflammatories (NSAIDs),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,nonsteroidal anti-inflammatory drug,nonspecific anti-inflammatory and immunosuppressive drugs,Anti‑inflammatories (NSAIDs),NSAIDs,Anti-inflammatories (NSAIDs),not_addressed_trial_only
+miscellaneous other,norelgesetromin,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,normal saline,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,normal saline,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+others,normal saline,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,noscapine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,noscapine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,nusepin,nonspecific anti-inflammatory and immunosuppressive drugs,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+monoclonal antibodies,olokizumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,olokizumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+miscellaneous other,om-85,miscellaneous other,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+miscellaneous other,omega-3,miscellaneous other,Metabolic / cardiometabolic agents,Statins,Metabolic agents (Statins),not_addressed_trial_only
+,omega-3,miscellaneous other,Metabolic / cardiometabolic agents,Statins,Metabolic agents (Statins),not_addressed_trial_only
+miscellaneous other,omeprazole,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,omeprazole,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+kinase inhibitors,opaganib,kinase inhibitors,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+,opaganib,kinase inhibitors,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+antiviral broad spectrum,oseltamivir,antiviral broad spectrum,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,oseltamivir,antiviral broad spectrum,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,ot 101,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,other,antiviral broad spectrum,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+antiviral broad spectrum,other,antiviral broad spectrum,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,other,antiviral broad spectrum,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+others,other,antiviral broad spectrum,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,other,antiviral broad spectrum,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+antiviral not specified,other,antiviral broad spectrum,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+antibiotics and antiparasitics,other,antiviral broad spectrum,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+antiviral antiretrovirals,other,antiviral broad spectrum,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+immunosuppressive drugs,other,antiviral broad spectrum,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+monoclonal antibodies,other,antiviral broad spectrum,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+antimalarial,other,antiviral broad spectrum,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+kinase inhibitors,other,antiviral broad spectrum,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,oxygen,,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,ozone,,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,pamrevlumab,,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,paracetamol,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,paracetamol,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+others,paracetamol,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+monoclonal antibodies,pd-1 mab,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+miscellaneous other,pentoxifylline,miscellaneous other,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+,pentoxifylline,miscellaneous other,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+,pf-06650833,,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+other antiviral,pf-07304814,other antiviral,Antivirals (direct acting),3CL protease inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+miscellaneous other,physiological saline,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+others,pinen hydronoplacton ribonucleic acid,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,pinen hydronoplacton ribonucleic acid,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,pioglitazone,miscellaneous other,Metabolic / cardiometabolic agents,Biguanides,Metabolic agents (Insulin-sensitizing),not_addressed_trial_only
+miscellaneous other,pioglitazone,miscellaneous other,Metabolic / cardiometabolic agents,Biguanides,Metabolic agents (Insulin-sensitizing),not_addressed_trial_only
+miscellaneous other,pirfenidone,miscellaneous other,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+,pirfenidone,miscellaneous other,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+miscellaneous other,plitidepsin,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,polymerized type i collagen,miscellaneous other,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,polymerized type i collagen,miscellaneous other,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,polyoxidonium,,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+miscellaneous other,poractant alfa,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,potassium channel blocker,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,povidone-iodine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,povidone-iodine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+others,povidone-iodine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,prednisolone,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+nonspecific anti-inflammatory and immunosuppressive drugs,prednisolone,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+,prednisone,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+nonspecific anti-inflammatory and immunosuppressive drugs,prednisone,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (corticosteroids),Systemic corticosteroids,Corticosteroids (Systemic),recommended
+antimalarial,primaquine,antimalarial,Antimalarials,4‑aminoquinolines and related antimalarials,Antimalarials,not_addressed_trial_only
+miscellaneous other,progesterone,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,progesterone,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,prolastin,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,prolectin-m,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,protease inhibitors unknown/not on list,,Antivirals (direct acting),3CL protease inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+miscellaneous other,provita capsule,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,prtx007,,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,pyridostigmine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,pyridostigmine,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,quetiapine,miscellaneous other,Anti-depressants,SSRI / Sigma‑1 agonist,Anti-depressants,not_addressed_trial_only
+antiviral antiretrovirals,raltegravir,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_addressed_trial_only
+miscellaneous other,ramipril,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,ramipril,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+other antiviral,ravidasvir,other antiviral,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+monoclonal antibodies,ravulizumab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+miscellaneous other,recombinant human thrombopoietin,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,regadenoson,,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+,regdanvimab ct-p59,,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+miscellaneous other,reginmune capsule,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,regn10933,,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+monoclonal antibodies,regn10987,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+,regn10987,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+antiviral antiretrovirals,remdesivir,antiviral antiretrovirals,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),recommended
+,remdesivir,antiviral antiretrovirals,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),recommended
+miscellaneous other,reparixin,miscellaneous other,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+,reparixin,miscellaneous other,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+miscellaneous other,resp301,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+miscellaneous other,resveratrol / copper,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+others,revtx-99,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+antiviral broad spectrum,ribavirin,antiviral broad spectrum,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+,ribavirin,antiviral broad spectrum,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+antiviral antiretrovirals,ritonavir,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_recommended
+,ritonavir,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_recommended
+,rivaroxaban,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+miscellaneous other,rivaroxaban,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+,rls-0071,,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,rph-104,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+kinase inhibitors,ruxolitinib,kinase inhibitors,Immunotherapies (kinase inhibitor),JAK inhibitors,Immunotherapy (JAK inhibitors),not_recommended
+,s-217622 or pf-07817883,,Antivirals (direct acting),3CL protease inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+miscellaneous other,s-nitrosylation,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,sabizabulin,miscellaneous other,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+,sabizabulin,miscellaneous other,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+,salmeterol/fluticasone,,Immunotherapies (corticosteroids),Inhaled corticosteroids,Corticosteroids (Inhaled),not_addressed_trial_only
+kinase inhibitors,sar443122,kinase inhibitors,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+miscellaneous other,sargramostim,miscellaneous other,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,sargramostim,miscellaneous other,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+,sargramostim,miscellaneous other,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+monoclonal antibodies,sarilumab,monoclonal antibodies,Immunotherapies (antibody based),IL‑6 receptor blockers,Immunotherapy (IL-6 blockers),recommended
+monoclonal antibodies,scta01,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+,scta01,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+,selenium,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,selenium,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+others,selenium,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+others,selinexor,others,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,selinexor,others,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,sevoflurane,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,sildenafil,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+monoclonal antibodies,siltuximab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+antibiotics and antiparasitics,sirolimus,antibiotics and antiparasitics,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+immunosuppressive drugs,sirolimus,antibiotics and antiparasitics,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+,sirolimus,antibiotics and antiparasitics,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+miscellaneous other,sitagliptin,miscellaneous other,Metabolic / cardiometabolic agents,Biguanides,Metabolic agents (Insulin-sensitizing),not_addressed_trial_only
+,sitagliptin,miscellaneous other,Metabolic / cardiometabolic agents,Biguanides,Metabolic agents (Insulin-sensitizing),not_addressed_trial_only
+,sodium bicarbonate,,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,sodium chloride,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,sodium chloride,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,sodium valproate,miscellaneous other,Anti-depressants,SSRI / Sigma‑1 agonist,Anti-depressants,not_addressed_trial_only
+other antiviral,sofusbovir,other antiviral,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+,sofusbovir,other antiviral,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+miscellaneous other,solnatide,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,sotrovimab,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+monoclonal antibodies,sotrovimab,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+miscellaneous other,spironolactone,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,spironolactone,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,spl7013,,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,sulfamethoxazole,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+antibiotics and antiparasitics,sulfamethoxazole,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+miscellaneous other,sulfonylureas,miscellaneous other,Metabolic / cardiometabolic agents,SGLT‑2 inhibitors,Metabolic agents (SGLT-2 inhibitors),not_addressed_trial_only
+others,surfactant,others,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,surfactant,others,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+,tacrolimus,immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+immunosuppressive drugs,tacrolimus,immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+miscellaneous other,tamoxifen,miscellaneous other,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+kinase inhibitors,td-0903,kinase inhibitors,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+miscellaneous other,td139,miscellaneous other,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),not_addressed_trial_only
+miscellaneous other,telmisartan,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+,telmisartan,miscellaneous other,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+miscellaneous other,tenecteplase,miscellaneous other,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),not_addressed_trial_only
+antiviral antiretrovirals,tenofovir,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_addressed_trial_only
+,tenofovir,antiviral antiretrovirals,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),not_addressed_trial_only
+,thalidomide,immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+immunosuppressive drugs,thalidomide,immunosuppressive drugs,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+miscellaneous other,thymalfasin,miscellaneous other,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+miscellaneous other,thyme oil,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,thymosin,,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+miscellaneous other,tinzaparin,miscellaneous other,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+,tinzaparin,miscellaneous other,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),recommended
+,tixagevimab,,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_recommended
+kinase inhibitors,tl-895,kinase inhibitors,Immunotherapies (kinase inhibitor),BTK inhibitors,Immunotherapy (BTK inhibitors),not_addressed_trial_only
+,tl-895,kinase inhibitors,Immunotherapies (kinase inhibitor),BTK inhibitors,Immunotherapy (BTK inhibitors),not_addressed_trial_only
+monoclonal antibodies,tocilizumab,monoclonal antibodies,Immunotherapies (antibody based),IL‑6 receptor blockers,Immunotherapy (IL-6 blockers),recommended
+,tocilizumab,monoclonal antibodies,Immunotherapies (antibody based),IL‑6 receptor blockers,Immunotherapy (IL-6 blockers),recommended
+kinase inhibitors,tofacitinib,kinase inhibitors,Immunotherapies (kinase inhibitor),JAK inhibitors,Immunotherapy (JAK inhibitors),not_recommended
+,tofacitinib,kinase inhibitors,Immunotherapies (kinase inhibitor),JAK inhibitors,Immunotherapy (JAK inhibitors),not_recommended
+miscellaneous other,tramadol,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+others,traneurocin,others,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+miscellaneous other,treamid,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,triazavirin,,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+miscellaneous other,trifluoperazine,miscellaneous other,Anti-depressants,SSRI / Sigma‑1 agonist,Anti-depressants,not_addressed_trial_only
+miscellaneous other,trihexyphenidyl,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,trimethoprim,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+antibiotics and antiparasitics,trimethoprim,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+monoclonal antibodies,ty027,monoclonal antibodies,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+,ulinastatin,,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),not_addressed_trial_only
+antiviral broad spectrum,umifenovir,antiviral broad spectrum,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+,umifenovir,antiviral broad spectrum,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),not_addressed_trial_only
+miscellaneous other,uttr1147a,miscellaneous other,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+miscellaneous other,vadadustat,miscellaneous other,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,not_addressed_trial_only
+,valsartan,,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),not_addressed_trial_only
+antibiotics and antiparasitics,vancomycin,antibiotics and antiparasitics,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,not_addressed_trial_only
+miscellaneous other,vasopressors,miscellaneous other,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,not_addressed_trial_only
+other antiviral,velpatasvir,other antiviral,Antivirals (direct acting),RdRp inhibitors,Antivirals (Direct-acting),not_addressed_trial_only
+monoclonal antibodies,vilobelimab,monoclonal antibodies,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+miscellaneous other,vitamin a,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,vitamin a,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,vitamin b,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,vitamin b,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,vitamin b12,,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,vitamin b3,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,vitamin c,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,vitamin c,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,vitamin d,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,vitamin d,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,vitamin d3,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,vitamin d3,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,vitamin e,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,vitamin k,,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,voclosporin,,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),not_addressed_trial_only
+,xav-19,,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+miscellaneous other,xc221,miscellaneous other,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+,xc221,miscellaneous other,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),not_addressed_trial_only
+kinase inhibitors,zanubrutinib,kinase inhibitors,Immunotherapies (kinase inhibitor),BTK inhibitors,Immunotherapy (BTK inhibitors),not_addressed_trial_only
+nonspecific anti-inflammatory and immunosuppressive drugs,zilucoplan,nonspecific anti-inflammatory and immunosuppressive drugs,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),not_addressed_trial_only
+,zinc,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,zinc,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,zinc chloride,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,zinc chloride,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,zinc citrate,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,zinc citrate,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+,zinc sulphate,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only
+miscellaneous other,zinc sulphate,miscellaneous other,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,not_addressed_trial_only

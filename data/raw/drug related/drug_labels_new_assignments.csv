@@ -1,0 +1,143 @@
+drug_std,n,broad_cat,drug_class,label,review_needed
+2-deoxy-d-glucose,3,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),✅ OK
+adjuvant,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+aliskiren,1,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),✅ OK
+alkaline phosphatase,2,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,⚠️ REVIEW
+ampion,1,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),⚠️ REVIEW
+analgesics,4,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+ankylosaurus m1 macrophages target,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+anti-hypertensive,1,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),✅ OK
+anti-sars-cov-2 hyperimmune serum,1,Immunotherapies (antibody based),Biologic cytokine / receptor blockers,Immunotherapy (Conv. Plasma),✅ OK
+antibiotics,43,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,✅ OK
+antihistamine,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+antitussives,3,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+antivirals,23,Antivirals (not specified),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),✅ OK
+aprotinin,1,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),✅ OK
+argatroban,1,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),✅ OK
+arogya kashayam-20,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+artemic,1,Antimalarials,4‑aminoquinolines and related antimalarials,Antimalarials,⚠️ REVIEW
+artemisinin,1,Antimalarials,4‑aminoquinolines and related antimalarials,Antimalarials,✅ OK
+asafoetida capsules,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+ascoril,1,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,⚠️ REVIEW
+ashwagandha,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+avasopasem manganese,2,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,⚠️ REVIEW
+axatilimab,1,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),⚠️ REVIEW
+bat2020,4,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),⚠️ REVIEW
+bendroflumethiazide,1,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),✅ OK
+beta carotene,1,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,✅ OK
+bicalutamide,2,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+bismuth,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,⚠️ REVIEW
+bms-986253,1,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),⚠️ REVIEW
+brii-196,7,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),✅ OK
+brii-198,1,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),✅ OK
+cefixime,2,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,✅ OK
+chg oral rinse,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+cobicistat,3,Antivirals (Antiretrovirals),HIV antiretrovirals,Antivirals (Antiretrovirals),✅ OK
+convalescent plasma,33,Immunotherapies (antibody based),Convalescent plasma,Immunotherapy (Conv. Plasma),✅ OK
+convalescent serum,2,Immunotherapies (antibody based),Convalescent plasma,Immunotherapy (Conv. Plasma),✅ OK
+cov555,1,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),⚠️ REVIEW
+covi-amg,2,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),⚠️ REVIEW
+deltarex-g,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+dexpanthenol,1,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,✅ OK
+dialyzable leukocyte extract,1,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),⚠️ REVIEW
+dibutyl sebacate,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+dociparstat sodium,1,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),✅ OK
+dwj1248,1,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),⚠️ REVIEW
+ebastine,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+eflornithine,3,Antiparasitics/Antibiotics,Macrocyclic lactones,Antiparasitics/Antibiotics,⚠️ REVIEW
+emapalumab,1,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),✅ OK
+equine anti-covid antibody,1,Immunotherapies (antibody based),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),✅ OK
+etanercept,1,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),✅ OK
+etoposide,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+f61,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+fd c blue no 1,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+fexofenadine,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+fisetin,1,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),⚠️ REVIEW
+fresh frozen plasma,1,Immunotherapies (antibody based),Convalescent plasma,Immunotherapy (Conv. Plasma),✅ OK
+gabapentin,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+gelatin,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+glycine,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,⚠️ REVIEW
+guduchi ghan vati,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+heberferon,2,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),⚠️ REVIEW
+hfno,1,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,✅ OK
+hlx70,3,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),⚠️ REVIEW
+hormones,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+hypromellose phthalate,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+ic14,1,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),⚠️ REVIEW
+immunoglobulin from cured patients,4,Immunotherapies (antibody based),Convalescent plasma,Immunotherapy (Conv. Plasma),✅ OK
+inb03,1,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),⚠️ REVIEW
+intranasal revtx-99,1,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),⚠️ REVIEW
+ipratropium bromide,1,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,✅ OK
+ketotifen,2,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+kolimycin,1,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,⚠️ REVIEW
+lb1148,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+lignocaine,2,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+ly3127804,1,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),⚠️ REVIEW
+merimepodib,1,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),⚠️ REVIEW
+mesenchymal stem cells,3,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),✅ OK
+mesenchymal stem cells exosomes atomization,1,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),✅ OK
+metoprolol,1,Metabolic / cardiometabolic agents,Metabolic / cardiometabolic agents,Metabolic agents (Other),✅ OK
+midazolam,2,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+mononuclear cells,1,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),✅ OK
+multivitamins,1,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,✅ OK
+nangibotide,1,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),⚠️ REVIEW
+nanocomposite,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+nasal prong,1,Adjuvant / Supportive,Respiratory & hemodynamic support,Respiratory/Hemodynamic Support,✅ OK
+ngm621,4,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),⚠️ REVIEW
+nsaids,4,Anti‑inflammatories (NSAIDs),NSAIDs,Anti-inflammatories (NSAIDs),✅ OK
+nutriflex lipid,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+olimel n9,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+omegaflex,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+oxycodone,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+oxytocin,2,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+ozanimod,1,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),⚠️ REVIEW
+pacritinib,1,Immunotherapies (kinase inhibitor),Other TK / multi‑kinase inhibitors,Immunotherapy (Other kinases),✅ OK
+pantoprazole,11,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+piclidenoson,1,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),⚠️ REVIEW
+piperacillin,3,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,✅ OK
+plasma exchange,1,Immunotherapies (antibody based),Convalescent plasma,Immunotherapy (Conv. Plasma),✅ OK
+plasma treatment,5,Immunotherapies (antibody based),Convalescent plasma,Immunotherapy (Conv. Plasma),⚠️ REVIEW
+plasmapheresis,2,Immunotherapies (antibody based),Convalescent plasma,Immunotherapy (Conv. Plasma),✅ OK
+pln-74809,3,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),⚠️ REVIEW
+potassium,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+ppi,2,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+ptc299,1,Antivirals (Broad spectrum / Other),Broad‑spectrum & host‑directed antivirals,Antivirals (Broad-spectrum/Other),⚠️ REVIEW
+rabeprazole,3,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+rapamycin,2,Immunotherapies (other immunomodulators),Small‑molecule immunosuppressants / DMARDs,Immunotherapy (Small molecule),✅ OK
+razuprotafib,1,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),⚠️ REVIEW
+rbt-9,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+recombinant bacterial ace2 receptors,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+rintatolimod iv,1,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),⚠️ REVIEW
+rituximab,2,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),✅ OK
+rocefin,2,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,⚠️ REVIEW
+saline,17,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+sarconeos,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+sars-cov-2 antiserum immunoglobulins,1,Immunotherapies (antibody based),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),✅ OK
+smofkabiven,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+sodium copper chlorophyllin,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+sorbitol,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+squalene,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+standard of care,4,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,✅ OK
+statins,1,Metabolic / cardiometabolic agents,Statins,Metabolic agents (Statins),✅ OK
+stc3141,2,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+sti-2020,1,Immunotherapies (antibody based),Anti‑spike monoclonal antibodies,Immunotherapy (Anti-spike mAbs),⚠️ REVIEW
+super food powder,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+superoxide dismutase,1,Adjuvant / Supportive,Other symptomatic & supportive agents,Other Supportive Care,⚠️ REVIEW
+symbicort,1,Adjuvant / Supportive,Inhaled corticosteroids,Corticosteroids (Inhaled),✅ OK
+tazobactam,3,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,✅ OK
+teicoplanin,1,Antiparasitics/Antibiotics,Macrolides / repurposed anti‑infectives,Antiparasitics/Antibiotics,✅ OK
+thromboprophylaxis,6,Anticoagulants,Heparin anticoagulants,Anticoagulants (Heparins),✅ OK
+tinefcon,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+titanium dioxide,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+tj003234,2,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),⚠️ REVIEW
+toremifene,1,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+tozumab,1,Immunotherapies (antibody based),IL‑6 receptor blockers,Immunotherapy (IL-6 blockers),⚠️ REVIEW
+tranexamic acid,3,Anticoagulants,Non‑heparin anticoagulants / thrombolytics,Anticoagulants (Non-heparin),✅ OK
+trefoil factor 2,4,Uncategorized/Other,Uncategorized/Other,Other/Uncategorized,⚠️ REVIEW
+umbilical cord -derived mesenchymal stem cells,1,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),✅ OK
+umbilical cord blood mononuclear cells,1,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),✅ OK
+umbilical cord mesenchymal stem cells,2,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),✅ OK
+umbilical cord wharton jelly derived mesenchymal stem cells,2,Immunotherapies (other immunomodulators),Innate immune modulators and others,Immunotherapy (Innate/Other),✅ OK
+vib7734,1,Immunotherapies (other immunomodulators),Biologic cytokine / receptor blockers,Immunotherapy (Other biologics),⚠️ REVIEW
+vitamin supplement,1,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,✅ OK
+zinc (any salt),113,Adjuvant / Supportive,Vitamins & supplements,Vitamins & Supplements,✅ OK
