@@ -29,7 +29,7 @@ parse_dmy_safe <- function(x) {
 }
 
 # ---- Load data (if not already in session from earlier scripts) ----
-if (!exists("pharma_table1")) {
+if (!exists("pharma_table")) {
   rdata_in <- list.files(in_dir, pattern = "^covid_lmr_clean7_\\d{8}\\.RData$", full.names = TRUE)
   stopifnot(length(rdata_in) >= 1)
   rdata_in <- rdata_in[which.max(file.info(rdata_in)$mtime)]
@@ -38,14 +38,14 @@ if (!exists("pharma_table1")) {
   cat("Loaded:", basename(rdata_in), "\n")
   study_table   <- study_table   %>% mutate(st_reg_id = clean_id(st_reg_id), reg_date = parse_dmy_safe(st_reg_date))
   pharma_table  <- pharma_table  %>% mutate(st_reg_id = clean_id(st_reg_id), reg_date = parse_dmy_safe(st_reg_date))
-  pharma_table1 <- pharma_table1 %>% mutate(st_reg_id = clean_id(st_reg_id), reg_date = parse_dmy_safe(st_reg_date))
+  pharma_table <- pharma_table %>% mutate(st_reg_id = clean_id(st_reg_id), reg_date = parse_dmy_safe(st_reg_date))
   country_table <- country_table %>% mutate(st_reg_id = clean_id(st_reg_id))
   arm_table     <- arm_table     %>% mutate(st_reg_id = clean_id(st_reg_id))
 }
 
-# Ensure reg_date is parsed in pharma_table1 even if loaded from a prior script
-if (!"reg_date" %in% names(pharma_table1)) {
-  pharma_table1 <- pharma_table1 %>% mutate(reg_date = parse_dmy_safe(st_reg_date))
+# Ensure reg_date is parsed in pharma_table even if loaded from a prior script
+if (!"reg_date" %in% names(pharma_table)) {
+  pharma_table <- pharma_table %>% mutate(reg_date = parse_dmy_safe(st_reg_date))
 }
 
 # ---- WHO / NIH stop dates ----
@@ -108,26 +108,26 @@ plot_drug_redundancy <- function(data, group_name, subtitle = NULL) {
 
 ```{r fig6_who_drugs, message=FALSE, warning=FALSE}
 # ── Hydroxychloroquine / Chloroquine ──────────────────────────────────────────
-hcq_data <- pharma_table1 %>%
+hcq_data <- pharma_table %>%
   filter(drug_std %in% c("hydroxychloroquine", "chloroquine")) %>%
   mutate(plot_group = "Hydroxychloroquine")
 
 # ── Ivermectin ────────────────────────────────────────────────────────────────
-ivm_data <- pharma_table1 %>%
+ivm_data <- pharma_table %>%
   filter(drug_std == "ivermectin") %>%
   mutate(plot_group = "Ivermectin")
 
 # ── Convalescent Plasma ───────────────────────────────────────────────────────
-cp_data <- pharma_table1 %>%
+cp_data <- pharma_table %>%
   filter(drug_class == "Convalescent plasma" | label == "Immunotherapy (Conv. Plasma)") %>%
   mutate(plot_group = "Convalescent Plasma")
 
 # ── Lopinavir/Ritonavir (arms containing both drugs) ─────────────────────────
-lop_arms <- pharma_table1 %>% filter(drug_std == "lopinavir")  %>% select(st_reg_id, arm_id)
-rit_arms <- pharma_table1 %>% filter(drug_std == "ritonavir")  %>% select(st_reg_id, arm_id)
+lop_arms <- pharma_table %>% filter(drug_std == "lopinavir")  %>% select(st_reg_id, arm_id)
+rit_arms <- pharma_table %>% filter(drug_std == "ritonavir")  %>% select(st_reg_id, arm_id)
 combo_arms <- inner_join(lop_arms, rit_arms, by = c("st_reg_id", "arm_id"))
 
-lpv_data <- pharma_table1 %>%
+lpv_data <- pharma_table %>%
   semi_join(combo_arms, by = c("st_reg_id", "arm_id")) %>%
   distinct(st_reg_id, arm_id, .keep_all = TRUE) %>%
   mutate(plot_group = "Lopinavir/Ritonavir")
@@ -157,7 +157,7 @@ for (g in unique(who_drug_data$plot_group)) {
 ## NIH-discredited supplements — Zinc and Vitamin C
 
 ```{r fig6_supplements, message=FALSE, warning=FALSE}
-supplements_data <- pharma_table1 %>%
+supplements_data <- pharma_table %>%
   filter(str_detect(str_to_lower(drug_std), "zinc|vitamin c|ascorbic")) %>%
   filter(!is.na(reg_date), reg_date >= "2020-01-01", reg_date <= "2025-12-31") %>%
   mutate(
